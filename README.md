@@ -45,8 +45,7 @@ JS :
 supprimer compte : event listener -> afficher popup "Indiquez votre adresse mail et mot de passe" -> qui est un formulaire HTML, qui s'affiche uniquement quand on clique sur le bouton "supprimer compte" -> avec un bouton type submit, et l'autre qui ferme le popup quand tu cliques
 
 #Ma bibliothèque
-- Fonction afficher livre en fct de la catégorie : paramètre : string return Object livre 
-
+- Fonction afficher livre en fct de la catégorie : paramètre : string , return : string (JSON) --> utiliser fetch pour en faire un objet
 
 
 
