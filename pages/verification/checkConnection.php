@@ -1,8 +1,8 @@
 <?php
 
-use Exception;
+//use Exception;
 
-require_once('../db/Database.php');
+require_once('../../db/Database.php');
 session_start();
 
 $donneeConnexion = [];
