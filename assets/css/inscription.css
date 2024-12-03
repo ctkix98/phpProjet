@@ -85,26 +85,26 @@ main {
 /* Champs de saisie de mot de passe */
 .password-wrapper input {
     flex: 1;
-    padding-right: 40px; /* Crée de l'espace pour l'icône à droite */
-    font-size: 16px; /* Taille de la police */
-    height: 40px; /* Hauteur de l'input (ajuste selon tes préférences) */
+    padding-right: 40px; 
+    font-size: 16px; 
+    height: 40px; 
 }
 
 /* Icône d'œil */
 .icon-toggle-password,
 .icon-toggle-confirm-password {
     position: absolute;
-    right: 10px; /* L'icône est positionnée 10px à partir de la droite */
+    right: 10px; 
     cursor: pointer;
-    font-size: 18px; /* Taille de l'icône */
-    color: var(--medium-green); /* Change la couleur à ton goût */
+    font-size: 18px; 
+    color: var(--medium-green); 
     transition: color 0.3s;
 }
 
 /* Changer la couleur de l'icône au survol */
 .icon-toggle-password:hover,
 .icon-toggle-confirm-password:hover {
-    color: var(--warm-brown); /* Changer la couleur quand l'icône est survolée */
+    color: var(--warm-brown); 
 }
 
   
