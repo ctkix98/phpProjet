@@ -5,9 +5,9 @@ class Personne {
     private $id;
     private $pseudo;
     private $email;
-    private $mdp;
+    private $password;
 
-    public function __construct(string $pseudo,  string $email, string $mdp, int $id = 0) {
+    public function __construct(string $pseudo,  string $email, string $password, int $id = 0) {
         if (empty($pseudo)) {
             throw new Exception('Il faut un pseudo');
         }
@@ -16,7 +16,7 @@ class Personne {
             throw new Exception('Il faut un email');
         }
 
-        if (empty($mdp)) {
+        if (empty($password)) {
             throw new Exception('Le mot de passe est vide');
         }
         if ($id < 0) {
@@ -25,7 +25,7 @@ class Personne {
 
         $this->pseudo = $pseudo;
         $this->email = $email;
-        $this->mdp = $mdp;
+        $this->password = $password;
         $this->id = $id;
     }
 
@@ -65,7 +65,7 @@ class Personne {
 
 
     public function rendMdp(): string { 
-        return $this->mdp; 
+        return $this->password; 
     }
 
 
