@@ -1,39 +1,31 @@
 <?php
-use \Exception;
+//use Exception;
 class Personne {
 
     private $id;
-    private $nom;
-    private $prenom;
+    private $pseudo;
     private $email;
-    private $noTel;
-    private $mdp;
+    private $password;
 
-    public function __construct(string $prenom, string $nom, string $email, string $noTel, string $mdp, int $id = 0) {
-        if (empty($prenom)) {
-            throw new Exception('Il faut un prénom');
+    public function __construct(string $pseudo,  string $email, string $password, int $id = 0) {
+        if (empty($pseudo)) {
+            throw new Exception('Il faut un pseudo');
         }
-        if (empty($nom)) {
-            throw new Exception('Il faut un nom');
-        }
+
         if (empty($email)) {
             throw new Exception('Il faut un email');
         }
-        if (empty($noTel)) {
-            throw new Exception('Il faut un numéro de téléphone');
-        }
-        if (empty($mdp)) {
+
+        if (empty($password)) {
             throw new Exception('Le mot de passe est vide');
         }
         if ($id < 0) {
             throw new Exception('Il faut un id valide');
         }
 
-        $this->prenom = $prenom;
-        $this->nom = $nom;
+        $this->pseudo = $pseudo;
         $this->email = $email;
-        $this->noTel = $noTel;
-        $this->mdp = $mdp;
+        $this->password = $password;
         $this->id = $id;
     }
 
@@ -56,19 +48,11 @@ class Personne {
         }
     }
     /**
-     * Rend le prénom
-     * @return string Le prénom
+     * Rend le pseudo
+     * @return string Le pseudo
      */
-    public function rendPrenom(): string {
-        return $this->prenom;
-    }
-
-        /**
-     * Rend le nom
-     * @return string Le nom
-     */
-    public function rendNom(): string {
-        return $this->nom;
+    public function rendPseudo(): string {
+        return $this->pseudo;
     }
 
         /**
@@ -79,16 +63,9 @@ class Personne {
         return $this->email;
     }
 
-        /**
-     * Rend le numéro de téléphone
-     * @return string Le numéro de téléphone
-     */
-    public function rendNoTel(): string {
-        return $this->noTel;
-    }
 
     public function rendMdp(): string { 
-        return $this->mdp; 
+        return $this->password; 
     }
 
 

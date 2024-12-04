@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../assets/css/style.css">
   <!-- Lien vers le fichier de styles spécifiques -->
   <link rel="stylesheet" href="../assets/css/inscription.css">
-  <script src="../assets/js/inscription.js" defer></script>
+  <!--<script src="../assets/js/inscription.js" defer></script>-->
 </head>
 <body>
     <main>
@@ -19,9 +19,11 @@
             <form id="inscription-form" action="../pages/verification/checkNewAccount.php" method="POST">
                 <!--pseudo-->
                 <div class="form-group">
-                    <label for="username">Pseudo <span class="required">*</span></label>
-                    <input type="text" id="username" name="username" placeholder="Entrez votre pseudo" required>
+                    <label for="pseudo" class="required">Pseudo</label>
+                    <input type="text" id="pseudo" name="pseudo" placeholder="Doe" required>
                 </div>
+
+
 
                 <div class="form-group">
                     <!--email-->
@@ -37,19 +39,10 @@
                         <i class="fa-solid fa-eye icon-toggle-password" id="icon-toggle-password"></i>
 
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <!--mdp confirmation-->
-                    <label for="confirm-password">Confirmez le mot de passe <span class="required">*</span></label>
-                    <div class="password-wrapper">
-                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmez votre mot de passe" required>
-                        <i class="fa-solid fa-eye icon-toggle-confirm-password" id="icon-toggle-confirm-password"></i>
-                    </div>
-                  </div>
+                </div>        
 
                 <!--bouton soumission-->
-                <button type="submit" class="button-soumission">Créer un compte</button>
+                <button type="submit" name="submit"  class="button-soumission">Créer un compte</button>
 
             </form>
         </section>
