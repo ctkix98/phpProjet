@@ -23,10 +23,8 @@ public function creerTablePersonnes(): bool {
     $sql = <<<COMMANDE_SQL
         CREATE TABLE IF NOT EXISTS personnes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nom VARCHAR(120) NOT NULL,
-            prenom VARCHAR(120) NOT NULL,
+            pseudo VARCHAR(120) NOT NULL UNIQUE,
             email VARCHAR(120) NOT NULL UNIQUE,
-            noTel VARCHAR(20) NOT NULL UNIQUE,
             mdp VARCHAR(255) NOT NULL
         );
 COMMANDE_SQL;
@@ -43,17 +41,15 @@ COMMANDE_SQL;
 
 public function ajouterPersonne(Personne $personne): int {
     $datas = [
-        'nom' => $personne->rendNom(),
-        'prenom' => $personne->rendPrenom(),
+        'prenom' => $personne->rendPseudo(),
         'email' => $personne->rendEmail(),
-        'noTel' => $personne->rendNoTel(),
         'mdp' => $personne->rendMdp(),
     ];
 
     // Appeler la méthode recupereContact avec le numéro de téléphone et email
-    if (!$this->recupererContact($datas['noTel'], $datas['email'])) {
-        $sql = "INSERT INTO personnes (nom, prenom, email, noTel, mdp) VALUES "
-                . "(:nom, :prenom, :email, :noTel, :mdp)";
+    if (!$this->recupererContact($datas['pseudo'], $datas['email'])) {
+        $sql = "INSERT INTO personnes (pseudo, email, mdp) VALUES "
+                . "(:pseudo, :email, :mdp)";
         $stmt = $this->db->prepare($sql);
         
         // Exécutez la requête et gérez les erreurs
@@ -65,30 +61,30 @@ public function ajouterPersonne(Personne $personne): int {
             return 0;
         }
     } else {
-        echo "Le numéro ou l'email existe déjà";
+        echo "Le pseudo ou l'email existe déjà";
         echo "<br>";
         return 0; // Retourner une valeur pour indiquer l'échec
     }
 }
 
-public function verifierConnection(string $email, string $mdp):bool{
+public function verifierConnection(string $pseudo, string $mdp):bool{
     $retour = false;
-    if(empty($email)OR empty($mdp)){
-        echo("Il faut un mot de passe ET un email");
+    if(empty($pseudo)OR empty($mdp)){
+        echo("Il faut un mot de passe ET un pseudo");
     }
-    if (!$this->recupererContact($email, $mdp)) {
+    if (!$this->recupererContact($pseudo, $mdp)) {
         $retour = true;       
     }
     return $retour;
 }
 
 
-public function recupererContact(string $noTel, string $email):bool{
-    $sql = "SELECT * FROM personnes WHERE noTel = :noTel OR email = :email";
+public function recupererContact(string $pseudo, string $email):bool{
+    $sql = "SELECT * FROM personnes WHERE pseudo = :pseudo OR email = :email";
     $stmt = $this->db->prepare($sql);
     
     // Lier les paramètres
-    $stmt->bindParam(':noTel', $noTel, \PDO::PARAM_STR);
+    $stmt->bindParam(':pseudo', $pseudo, \PDO::PARAM_STR);
     $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
     
     // Exécuter la requête
@@ -98,14 +94,14 @@ public function recupererContact(string $noTel, string $email):bool{
     return $stmt->fetch(\PDO::FETCH_ASSOC) !== false;
 }
 
-//Fonction pour vérifier mdp et email
-public function verifierAccesEtRecupererUtilisateur(string $email): ?array {
+//Fonction pour vérifier mdp et pseudo
+public function verifierAccesEtRecupererUtilisateur(string $pseudo): ?array {
     // Prépare la requête pour récupérer les données de l'utilisateur
-    $sql = "SELECT * FROM personnes WHERE email = :email";
+    $sql = "SELECT * FROM personnes WHERE pseudo = :pseudo";
     $stmt = $this->db->prepare($sql);
     
     // Lier l'adresse e-mail
-    $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
+    $stmt->bindParam(':pseudo', $pseudo, \PDO::PARAM_STR);
     
     // Exécuter la requête
     $stmt->execute();
