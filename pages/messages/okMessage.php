@@ -2,17 +2,14 @@
 require_once __DIR__ . '/../../config/session.php';
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erreur dans la connexion du compte</title>
+    <title>Connecté</title>
     <link rel="stylesheet" href="../stylesheet.css">
-
 </head>
 
 <body>
@@ -21,16 +18,21 @@ require_once __DIR__ . '/../../config/session.php';
             <li><a href="../index.php">Verdo Sàrl</a></li>
             <li><a href="histoire.php">Notre histoire</a></li>
             <li><a href="monCompte.php">Mon compte</a></li>
+            <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
         </ul>
     </header>
     <main class="pages">
-        <div class="erreur">
-            <p>Il y a eu un souci :/ </p>
-            <p><?php echo $messageErreur; ?> </p>
+        <div class="confirmation">
+            <h1>Salut <?php echo $prenom; ?> ! </h1>
+            <p>Félicitation tu es connecté.e !</p>
         </div>
 
-        <div>
-            <a href="../index.php" id="accueil">Accueil</a>
+        <div id='donneesUtilisateur'>
+            <h2>Voici tes données </h2>
+            <p><?php echo $prenom; ?></p>
+            <p><?php echo $nom; ?> </p>
+            <p><?php echo $email; ?></p>
+            <p><?php echo $tel; ?></p>
         </div>
 
     </main>

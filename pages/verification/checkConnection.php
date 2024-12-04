@@ -36,7 +36,7 @@ if ($donnesCompletesUtilisateur !== null) {
     if (password_verify($donneeConnexion['mdp'], $donnesCompletesUtilisateur['mdp'])) {
         // Mot de passe correct, établir la session
         $_SESSION['utilisateur'] = $donnesCompletesUtilisateur;
-        header('Location: ../messages/errorMessage.php', true, 303);
+        header('Location: ../messages/okMessage.php', true, 303);
         exit();
     } else {
         // Mot de passe incorrect
