@@ -1,6 +1,6 @@
 <?php
-require_once '../Personne.php';
-require_once '../config/db.ini';
+require_once __DIR__ . '/../class/Personne.php';
+require_once __DIR__ . '/../config/session.php';
 
 
 class Database {
