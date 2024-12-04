@@ -1,1 +1,89 @@
 /* Styles communs */
+/* Palette de couleurs */
+:root {
+    --dark-green: #183D2C;
+    --medium-green: #5B7769;
+    --beige: #F9E6D8;
+    --warm-brown: #C66D4D;
+    --light-brown: #E2C6B0;
+    --medium-brown: #B4875D;
+  }
+  
+  /* Reset de base pour tous les éléments */
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Style global pour le body */
+  body {
+    font-family: 'Merriweather', serif;  /* Police principale */
+    color: var(--dark-green); /* Couleur du texte principale */
+    background-color: var(--beige); /* Couleur de fond claire */
+    line-height: 1.6; /* Espacement des lignes */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    overflow: hidden;
+  }
+  
+  /* Titres principaux */
+  h1, h2, h3 {
+    color: var(--dark-green); /* Titre en vert foncé */
+    font-weight: bold;
+  }
+  
+  /* Liens */
+  a {
+    text-decoration: none;
+    color: var(--warm-brown); /* Lien de couleur brune */
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: var(--medium-brown); /* Couleur du lien au survol */
+  }
+  
+  /* Formulaires (communs à toutes les pages) */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  button {
+    font-family: 'Merriweather', serif; /* Police uniforme */
+    border-radius: 10px;
+    padding: 12px;
+    border: none;
+    background-color: rgba(226, 198, 176, 0.4); /* Fond clair */
+    color: var(--dark-green); /* Texte sombre */
+    transition: background-color 0.3s, transform 0.2s ease;
+  }
+  
+  /* Responsivité commune */
+  @media (max-width: 480px) {
+    body {
+      flex-direction: column;
+      padding: 20px;
+    }
+  
+    h1 {
+      font-size: 22px;
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      font-size: 14px;
+    }
+  
+    button {
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+  }
+  
