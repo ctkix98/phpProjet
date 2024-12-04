@@ -1,23 +1,26 @@
 <?php
 require_once __DIR__ . '/../class/Personne.php';
-require_once __DIR__ . '/../config/session.php';
+require_once __DIR__ . '/../config/db.ini';
+
 
 
 class Database {
-private $db;
-
-public function __construct() {
-    $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'db.ini', true);
-
-    $dsn = $config['dsn'];
-    $username = $config['username'];
-    $password = $config['password'];
-    //initialisation à la DB
-    $this->db = new \PDO($dsn, $username, $password); 
-    if (!$this->db) { //ici permet de voir si la DB est bien connectée
-        die("Problème de connection à la base de données");
+    private $db;
+    
+    public function __construct() {
+        $path = realpath(dirname(__DIR__) . '/db/dbpsw.sqlite');
+        
+        $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'db.ini', true);
+    
+        $dsn = 'sqlite:' . $path;
+        $username = $config['username'];
+        $password = $config['password'];
+        //initialisation à la DB
+        $this->db = new \PDO($dsn, $username, $password); 
+        if (!$this->db) { //ici permet de voir si la DB est bien connectée
+            die("Problème de connexion à la base de données");
+        }
     }
-}
 //Créer table Personnes
 public function creerTablePersonnes(): bool {
     $sql = <<<COMMANDE_SQL
