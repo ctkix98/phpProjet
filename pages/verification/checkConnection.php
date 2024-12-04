@@ -8,7 +8,7 @@ session_start();
 $donneeConnexion = [];
 
 if (filter_has_var(INPUT_POST, 'submit')) {
-    $donneeConnexion['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $donneeConnexion['pseudo'] = filter_input(INPUT_POST, 'pseudo', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{8,20}$/"]]);
     $donneeConnexion['mdp'] = filter_input(INPUT_POST, 'mdp', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{8,20}$/"]]);
 } else {
     $_SESSION['message'] = "Les informations entrées ne sont pas conformes à la demande";
@@ -16,7 +16,7 @@ if (filter_has_var(INPUT_POST, 'submit')) {
     exit();
 }
 
-$required = ['email', 'mdp'];
+$required = ['pseudo', 'mdp'];
 foreach ($required as $champ) {
     if (empty($donneeConnexion[$champ])) {
         $_SESSION['message'] = "Tous les champs doivent être complétés ! ";
@@ -25,11 +25,10 @@ foreach ($required as $champ) {
     }
 }
 
-$donneeConnexion['email'] = strtolower($donneeConnexion['email']);
 
 // Accéder à la base de données
 $db = new Database();
-$donnesCompletesUtilisateur = $db->verifierAccesEtRecupererUtilisateur($donneeConnexion['email']);
+$donnesCompletesUtilisateur = $db->verifierAccesEtRecupererUtilisateur($donneeConnexion['pseudo']);
 
 if ($donnesCompletesUtilisateur !== null) {
     // Vérifiez le mot de passe
