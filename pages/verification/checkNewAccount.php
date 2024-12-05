@@ -61,7 +61,7 @@ $personne = new Personne(
 $id = $db->ajouterPersonne($personne);
 if ($id > 0) {
     //Redirection sur la page de confirmation de création de compte
-    header('Location: ../pages/confirmationCreationCompte.php', true, 303);
+    header('Location: ../messages/okMessage.php', true, 303);
     exit();
 } else {
     $message = "Le compte n'a pas pu être créé, car le numéro de téléphone ou l'email est déjà utilisé";

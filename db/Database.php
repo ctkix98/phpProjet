@@ -8,11 +8,10 @@ class Database {
     private $db;
     
     public function __construct() {
-        $path = realpath(dirname(__DIR__) . '/db/dbpsw.sqlite');
+        //$path = realpath(dirname(__DIR__) . '/db/dbpsw.sqlite');
         
-        $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'db.ini', true);
-    
-        $dsn = 'sqlite:' . $path;
+        $config = parse_ini_file(__DIR__ . '/../config/db.ini');        
+        $dsn = $config['dsn'];
         $username = $config['username'];
         $password = $config['password'];
         //initialisation à la DB
