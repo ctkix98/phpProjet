@@ -40,7 +40,7 @@ JS :
 
 #Page du compte privée (compte)
 2 formulaires sur la même page, utiliser des eventlisteners pour savoir si on clique sur le bouton pour afficher un des formulaires
-- Fonction changer mot de passe :  string (email), string (nv mdp), return bool
+- Fonction changer mot de passe :  string (email), string (nv password), return bool
 - Fonction supprimer le compte : paramètre : string, string, return bool (déconnexion + formulaire pour envoyer à la DB de supprimer aec les paramètres)
 supprimer compte : event listener -> afficher popup "Indiquez votre adresse mail et mot de passe" -> qui est un formulaire HTML, qui s'affiche uniquement quand on clique sur le bouton "supprimer compte" -> avec un bouton type submit, et l'autre qui ferme le popup quand tu cliques
 

@@ -28,7 +28,7 @@ public function creerTablePersonnes(): bool {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             pseudo VARCHAR(120) NOT NULL UNIQUE,
             email VARCHAR(120) NOT NULL UNIQUE,
-            mdp VARCHAR(255) NOT NULL
+            password VARCHAR(255) NOT NULL
         );
 COMMANDE_SQL;
 
@@ -44,15 +44,15 @@ COMMANDE_SQL;
 
 public function ajouterPersonne(Personne $personne): int {
     $datas = [
-        'prenom' => $personne->rendPseudo(),
+        'pseudo' => $personne->rendPseudo(),
         'email' => $personne->rendEmail(),
-        'mdp' => $personne->rendMdp(),
+        'password' => $personne->rendpassword(),
     ];
 
     // Appeler la méthode recupereContact avec le numéro de téléphone et email
     if (!$this->recupererContact($datas['pseudo'], $datas['email'])) {
-        $sql = "INSERT INTO personnes (pseudo, email, mdp) VALUES "
-                . "(:pseudo, :email, :mdp)";
+        $sql = "INSERT INTO personnes (pseudo, email, password) VALUES "
+                . "(:pseudo, :email, :password)";
         $stmt = $this->db->prepare($sql);
         
         // Exécutez la requête et gérez les erreurs
@@ -70,12 +70,12 @@ public function ajouterPersonne(Personne $personne): int {
     }
 }
 
-public function verifierConnection(string $pseudo, string $mdp):bool{
+public function verifierConnection(string $pseudo, string $password):bool{
     $retour = false;
-    if(empty($pseudo)OR empty($mdp)){
+    if(empty($pseudo)OR empty($password)){
         echo("Il faut un mot de passe ET un pseudo");
     }
-    if (!$this->recupererContact($pseudo, $mdp)) {
+    if (!$this->recupererContact($pseudo, $password)) {
         $retour = true;       
     }
     return $retour;
@@ -97,7 +97,7 @@ public function recupererContact(string $pseudo, string $email):bool{
     return $stmt->fetch(\PDO::FETCH_ASSOC) !== false;
 }
 
-//Fonction pour vérifier mdp et pseudo
+//Fonction pour vérifier password et pseudo
 public function verifierAccesEtRecupererUtilisateur(string $pseudo): ?array {
     // Prépare la requête pour récupérer les données de l'utilisateur
     $sql = "SELECT * FROM personnes WHERE pseudo = :pseudo";

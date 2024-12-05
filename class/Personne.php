@@ -64,7 +64,7 @@ class Personne {
     }
 
 
-    public function rendMdp(): string { 
+    public function rendpassword(): string { 
         return $this->password; 
     }
 
