@@ -6,10 +6,16 @@ $donneeUtilisateur = [];
 $message = "";
 
 //Recevoir les données, et vérifier si c'est juste
-if (filter_has_var(INPUT_POST, 'submit')) { //ok ça fonctionne
+if (filter_has_var(INPUT_POST, 'submit')) {
     $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo');
     $donneeUtilisateur['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $donneeUtilisateur['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{8,20}$/"]]);
+
+    echo'<br>';
+    foreach($donneeUtilisateur as $champ){
+        echo $champ;
+        echo '<br>';
+    }
 } else {
     $message = "Les informations entrées ne sont pas conformes à la demande";
     $_SESSION['message'] = $message;
@@ -35,7 +41,7 @@ foreach ($required as $champ) {
 //Traitement des données
 $donneeUtilisateur['email'] = strtolower($donneeUtilisateur['email']);
 
-//changer mdp pour un hash
+//changer password pour un hash
 $donneeUtilisateur['password'] = password_hash($donneeUtilisateur['password'], PASSWORD_DEFAULT);
 
 
@@ -55,7 +61,7 @@ $personne = new Personne(
 $id = $db->ajouterPersonne($personne);
 if ($id > 0) {
     //Redirection sur la page de confirmation de création de compte
-    header('Location: ../pages/confirmationCreationCompte.php', true, 303);
+    header('Location: ../messages/okMessage.php', true, 303);
     exit();
 } else {
     $message = "Le compte n'a pas pu être créé, car le numéro de téléphone ou l'email est déjà utilisé";
