@@ -2,10 +2,8 @@
 session_start();
 $isConnected = false;
 if (isset($_SESSION['utilisateur'])) {
-    $prenom = $_SESSION['utilisateur']['prenom'];
-    $nom = $_SESSION['utilisateur']['nom'];
+    $pseudo = $_SESSION['utilisateur']['pseudo'];
     $email = $_SESSION['utilisateur']['email'];
-    $tel = $_SESSION['utilisateur']['noTel'];
     $isConnected = true;
     
 } else {

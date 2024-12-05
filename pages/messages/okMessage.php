@@ -23,16 +23,14 @@ require_once __DIR__ . '/../../config/session.php';
     </header>
     <main class="pages">
         <div class="confirmation">
-            <h1>Salut <?php echo $prenom; ?> ! </h1>
+            <h1>Salut <?php echo $pseudo; ?> ! </h1>
             <p>Félicitation tu es connecté.e !</p>
         </div>
 
         <div id='donneesUtilisateur'>
             <h2>Voici tes données </h2>
-            <p><?php echo $prenom; ?></p>
-            <p><?php echo $nom; ?> </p>
+            <p><?php echo $pseudo; ?></p>
             <p><?php echo $email; ?></p>
-            <p><?php echo $tel; ?></p>
         </div>
 
     </main>

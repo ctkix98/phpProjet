@@ -61,6 +61,7 @@ $personne = new Personne(
 $id = $db->ajouterPersonne($personne);
 if ($id > 0) {
     //Redirection sur la page de confirmation de création de compte
+    $_SESSION['utilisateur'] = $donneeUtilisateur;
     header('Location: ../messages/okMessage.php', true, 303);
     exit();
 } else {
