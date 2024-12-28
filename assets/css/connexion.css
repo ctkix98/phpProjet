@@ -156,20 +156,4 @@ main {
     }
   }
   
-  /* Responsivité */
-  @media (max-width: 480px) {
-    h1 {
-      font-size: 22px;
-    }
-  
-    input[type="text"],
-    input[type="password"] {
-      font-size: 14px;
-    }
-  
-    .button-connexion {
-      font-size: 14px;
-      padding: 10px 20px;
-    }
-  }
   

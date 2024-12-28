@@ -90,6 +90,24 @@ main {
     height: 40px; 
 }
 
+.password-requirements {
+  text-align: left;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--dark-green);
+}
+
+.requirement {
+  margin: 5px 0;
+  color: red; /* Rouge par défaut */
+}
+
+.requirement.valid {
+  color: green; /* Vert lorsque le critère est satisfait */
+  font-weight: bold;
+}
+
+
 /* Icône d'œil */
 .icon-toggle-password,
 .icon-toggle-confirm-password {
