@@ -8,7 +8,7 @@ echo "start";
 //Recevoir les données, et vérifier si c'est juste
 if (filter_has_var(INPUT_POST, 'submit1')) {
     echo "dans le if1";
-    $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo');
+    $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo',FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{6,20}$/"]]);
     $donneeUtilisateur['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $donneeUtilisateur['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{8,20}$/"]]);
     echo "dans le if";
