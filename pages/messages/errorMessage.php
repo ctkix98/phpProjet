@@ -16,11 +16,12 @@ require_once __DIR__ . '/../../config/session.php';
 </head>
 
 <body>
-    <header>
+<header>
         <ul>
-            <li><a href="../index.php">Verdo Sàrl</a></li>
-            <li><a href="histoire.php">Notre histoire</a></li>
-            <li><a href="monCompte.php">Mon compte</a></li>
+            <li><a href="../index.php">Page d'accueil</a></li>
+            <li><a href="../about.html">Notre histoire</a></li>
+            <li><a href="../dashboardUser.html">Mon compte</a></li>
+            <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
         </ul>
     </header>
     <main class="pages">
