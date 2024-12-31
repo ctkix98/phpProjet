@@ -8,7 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
 </head>
 
 <body>
@@ -24,14 +24,15 @@ session_start();
             <?php endif; ?>
         </ul>
     </header>
-
-    <div class="content">
-        <?php if (isset($_SESSION['utilisateur'])): ?>
-            <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['prenom']); ?> !</h1>
-        <?php else: ?>
-            <h1>Bienvenue ! </h1>
-        <?php endif; ?>
-    </div>
+    <main>
+        <div class="content">
+            <?php if (isset($_SESSION['utilisateur'])): ?>
+                <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['prenom']); ?> !</h1>
+            <?php else: ?>
+                <h1>Bienvenue ! </h1>
+            <?php endif; ?>
+        </div>
+    </main>
 
     <footer>
         <p>made with &nbsp; &#9829;&nbsp; by Cédrine Tille </p>

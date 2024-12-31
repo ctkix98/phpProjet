@@ -11,7 +11,7 @@ require_once __DIR__ . '/../../config/session.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erreur dans la connexion du compte</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
 
 </head>
 

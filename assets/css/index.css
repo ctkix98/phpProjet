@@ -1,0 +1,301 @@
+/* Styles communs */
+/* Palette de couleurs */
+:root {
+    --dark-green: #183D2C;
+    --medium-green: #5B7769;
+    --beige: #F9E6D8;
+    --warm-brown: #C66D4D;
+    --light-brown: #E2C6B0;
+    --medium-brown: #B4875D;
+  }
+  
+  /* Reset de base pour tous les éléments */
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+body {
+    font-family: 'Merriweather', serif;  /* Police principale */
+    color: var(--dark-green); /* Couleur du texte principale */
+    background-color: var(--beige); /* Couleur de fond claire */
+    line-height: 1.6; /* Espacement des lignes */
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    min-height: 75vh;
+}
+
+h1, h2, h3 {
+    color: var(--dark-green); /* Titre en vert foncé */
+    font-weight: bold;
+  }
+
+footer {
+    background-color: var(--dark-green);
+    color: var(--light-brown);
+    text-align: center;
+    padding: 50px 0;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+/* Header
+=======================================================================================================================
+*/
+
+/* Style général du header */
+header {
+    background-color: var(--dark-green);
+    padding: 50px 20px;
+}
+
+
+
+/* Enlève les puces et aligne les éléments du menu horizontalement */
+header ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Style commun pour tous les liens */
+header ul li a {
+    color: var(--light-brown);
+    text-decoration: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.accueil a{
+    font-size: 50px;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: #4CAF50;
+  }
+  
+  
+
+#connexion a, 
+#nouveauCompte a,
+#deconnexion a {
+    background-color: var(--beige);
+    margin-left: 15px;
+    
+}
+#connexion a:hover, 
+#nouveauCompte a:hover,
+#deconnexion a:hover {
+    background-color: var(--medium-brown);
+}
+
+/* "Verdo Sàrl" à gauche */
+header ul li:first-child {
+    font-size: 1.5rem;
+    margin-right: auto;
+}
+
+/* Formulaire
+=======================================================================================================================
+*/ 
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: auto; 
+ 
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+form div {
+    padding-bottom: 20px;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='number'],
+input[type='tel'],
+input[type='password']{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 10px
+}
+
+
+input:valid {
+    border-left: 5px solid #218838;
+  }
+    
+  input:invalid {
+    border-left: 5px solid #c82333;
+  }
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.showMDP {
+    display: flex;
+    align-items: center;
+}
+
+.showMDP label {
+    margin-left: 5px;  
+    padding-bottom: 0;
+}
+#min_required p {
+    color: red;
+    margin : 3px;
+    font-size: 0.9rem;
+
+}
+  
+/* Pages d'erreur
+=======================================================================================================================
+*/
+
+.pages {
+    display: flex;
+    flex-direction: column; /* Aligne les éléments en colonne */
+    align-items: center;    /* Centre les éléments horizontalement */
+    justify-content: center; /* Centre les éléments verticalement */
+    min-height: 100vh;      /* Prend la hauteur minimale de la fenêtre */
+}
+
+.erreur p {
+    text-align: center; /* Centre le texte à l'intérieur */
+    font-size: 2rem; /* Taille de la police */
+}
+
+.confirmation {
+    text-align: center;
+}
+
+#idNvCompte,
+#idConnexion {
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 10px 15px; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    display: inline-block; 
+    margin: 10px; /* Ajoute un espace autour des boutons */
+}
+
+#idNvCompte:hover,
+#idConnexion:hover {
+    background-color: #45a049; /* Change la couleur au survol */
+}
+
+.confirmation {
+    
+    border: 2px solid #00796b;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.confirmation h1 {
+    font-size: 2.5rem;
+    color: #00796b;
+    margin: 0 0 10px;
+}
+
+.confirmation p {
+    font-size: 1.2rem;
+    color: #004d40;
+    margin: 0;
+}
+
+/* Style pour les données utilisateur */
+#donneesUtilisateur {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#donneesUtilisateur h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0 0 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+#donneesUtilisateur p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 8px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+#donneesUtilisateur p:last-of-type {
+    border-bottom: none;
+}
+
+#histoire p{
+    margin: 50px;
+}
+  
+#information {
+    display: flex;
+    flex-direction: column; /* Aligne les éléments verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
+    text-align: center; /* Centre le texte dans les paragraphes et titres */
+}

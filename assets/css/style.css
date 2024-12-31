@@ -31,6 +31,10 @@ body {
   align-items: center;
 }
 
+main {
+  min-height: 75vh;
+}
+
 /* Titres principaux */
 h1, h2, h3 {
   color: var(--dark-green); /* Titre en vert foncé */
@@ -48,17 +52,52 @@ a:hover {
   color: var(--medium-brown); /* Couleur du lien au survol */
 }
 
-  /* Formulaires (communs à toutes les pages) */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  button {
-    font-family: 'Merriweather', serif; /* Police uniforme */
-    border-radius: 10px;
-    padding: 12px;
-    border: none;
-    background-color: rgba(226, 198, 176, 0.4); /* Fond clair */
-    color: var(--dark-green); /* Texte sombre */
-    transition: background-color 0.3s, transform 0.2s ease;
-  }
-  
+/* Barre de navigation */
+header ul {
+  list-style: none; /* Supprimer les points de la liste */
+  display: flex; /* Alignement horizontal des éléments */
+  justify-content: center; /* Centrer les éléments */
+  background-color: var(--medium-green); /* Couleur de fond pour la navigation */
+  padding: 10px;
+  border-radius: 5px; /* Coins arrondis pour un look moderne */
+}
+
+header ul li {
+  margin: 0 15px; /* Espacement horizontal entre les éléments */
+}
+
+header ul li a {
+  color: var(--beige); /* Couleur des liens dans la barre de navigation */
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header ul li a:hover {
+  background-color: var(--light-brown); /* Fond au survol */
+  color: var(--dark-green); /* Texte au survol */
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 50px 0;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+/* Formulaires (communs à toutes les pages) */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+  font-family: 'Merriweather', serif; /* Police uniforme */
+  border-radius: 10px;
+  padding: 12px;
+  border: none;
+  background-color: rgba(226, 198, 176, 0.4); /* Fond clair */
+  color: var(--dark-green); /* Texte sombre */
+  transition: background-color 0.3s, transform 0.2s ease;
+}
