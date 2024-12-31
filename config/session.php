@@ -6,10 +6,8 @@ if (isset($_SESSION['utilisateur'])) {
     $pseudo = $_SESSION['utilisateur']['pseudo'];
     $email = $_SESSION['utilisateur']['email'];
     $isConnected = true;   
-}else{
-    echo "Problème ici";
 }
 
 if (isset($_SESSION['message'])) {
-    echo $_SESSION['message'];
+    //echo $_SESSION['message'];
 }

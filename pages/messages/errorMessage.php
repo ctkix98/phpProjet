@@ -18,16 +18,16 @@ require_once __DIR__ . '/../../config/session.php';
 <body>
 <header>
         <ul>
-            <li><a href="../index.php">Page d'accueil</a></li>
+            <li><a href="../index.php">Babel</a></li>
             <li><a href="../about.php">Notre histoire</a></li>
-            <li><a href="../dashboardUser.html">Mon compte</a></li>
-            <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
+            <li id="connexion"><a href="../connexion.html">Se connecter</a></li>
+            <li id="nouveauCompte"><a href="../inscription.html">Créer un compte</a></li>
         </ul>
     </header>
     <main class="pages">
         <div class="erreur">
             <p>Il y a eu un souci :/ </p>
-            <p><?php echo $messageErreur; ?> </p>
+            <p><?php echo $_SESSION['message']; ?> </p>
         </div>
 
         <div>

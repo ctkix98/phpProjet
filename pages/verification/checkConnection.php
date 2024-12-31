@@ -46,7 +46,7 @@ if ($donnesCompletesUtilisateur !== null) {
     }
 } else {
     // Utilisateur non trouvé
-    $_SESSION['message'] = "Le compte avec cet identifiant n'existe pas";
+    $_SESSION['message'] = "Le compte avec ce pseudo n'existe pas";
     header('Location: ../messages/errorMessage.php', true, 303);
     exit();
 }
