@@ -73,7 +73,9 @@ class Database
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             pseudo VARCHAR(120) NOT NULL UNIQUE,
             email VARCHAR(120) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL
+            password VARCHAR(255) NOT NULL,
+            token VARCHAR(255) DEFAULT NULL,
+            is_confirmed BOOLEAN DEFAULT 0
         );
 COMMANDE_SQL;
 
@@ -158,7 +160,8 @@ COMMANDE_SQL;
         return $ok;
     }
     public function initialistion(): bool
-    { echo "coucou";
+    {
+        echo "coucou";
         $this->creerTableBookState();
         $this->creerTableBook();
         $this->creerTableusers();
@@ -174,12 +177,13 @@ COMMANDE_SQL;
             'pseudo' => $personne->rendPseudo(),
             'email' => $personne->rendEmail(),
             'password' => $personne->rendpassword(),
+            'token' => $personne->rendToken(),
         ];
 
         // Appeler la méthode recupereContact avec le numéro de téléphone et email
         if (!$this->recupererContact($datas['pseudo'], $datas['email'])) {
-            $sql = "INSERT INTO users (pseudo, email, password) VALUES "
-                . "(:pseudo, :email, :password)";
+            $sql = "INSERT INTO users (pseudo, email, password, token) VALUES "
+                . "(:pseudo, :email, :password, :token)";
             $stmt = $this->db->prepare($sql);
 
             // Exécutez la requête et gérez les erreurs
@@ -195,6 +199,14 @@ COMMANDE_SQL;
             echo "<br>";
             return 0; // Retourner une valeur pour indiquer l'échec
         }
+    }
+    public function getUserByToken($token)
+    {
+        $sql = "SELECT * FROM users WHERE token = :token";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':token', $token);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function verifierConnection(string $pseudo, string $password): bool
@@ -232,18 +244,18 @@ COMMANDE_SQL;
         // Prépare la requête pour récupérer les données de l'utilisateur, y compris l'id
         $sql = "SELECT id, pseudo, password FROM users WHERE pseudo = :pseudo";
         $stmt = $this->db->prepare($sql);
-    
+
         // Lier l'adresse e-mail
         $stmt->bindParam(':pseudo', $pseudo, \PDO::PARAM_STR);
-    
+
         // Exécuter la requête
         $stmt->execute();
-    
+
         // Récupérer les résultats
         $utilisateur = $stmt->fetch(\PDO::FETCH_ASSOC);
-    
+
         // Retourne toutes les données de l'utilisateur, y compris l'id
         return $utilisateur ? $utilisateur : null; // Si l'utilisateur existe, retourne ses données, sinon null
     }
-    
+
 }
