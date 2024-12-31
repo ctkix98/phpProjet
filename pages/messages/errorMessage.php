@@ -11,22 +11,23 @@ require_once __DIR__ . '/../../config/session.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erreur dans la connexion du compte</title>
-    <link rel="stylesheet" href="../stylesheet.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
 
 </head>
 
 <body>
-    <header>
+<header>
         <ul>
-            <li><a href="../index.php">Verdo Sàrl</a></li>
-            <li><a href="histoire.php">Notre histoire</a></li>
-            <li><a href="monCompte.php">Mon compte</a></li>
+            <li><a href="../index.php">Babel</a></li>
+            <li><a href="../about.php">Notre histoire</a></li>
+            <li id="connexion"><a href="../connexion.html">Se connecter</a></li>
+            <li id="nouveauCompte"><a href="../inscription.html">Créer un compte</a></li>
         </ul>
     </header>
     <main class="pages">
         <div class="erreur">
             <p>Il y a eu un souci :/ </p>
-            <p><?php echo $messageErreur; ?> </p>
+            <p><?php echo $_SESSION['message']; ?> </p>
         </div>
 
         <div>

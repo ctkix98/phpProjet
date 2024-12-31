@@ -32,6 +32,8 @@ $db = new Database();
 $donnesCompletesUtilisateur = $db->verifierAccesEtRecupererUtilisateur($donneeConnexion['pseudo']);
 
 if ($donnesCompletesUtilisateur !== null) {
+    //Récupérer l'id 
+    $utilisateurId = $donnesCompletesUtilisateur['id'];
     // Vérifiez le mot de passe
     if (password_verify($donneeConnexion['password'], $donnesCompletesUtilisateur['password'])) {
         // Mot de passe correct, établir la session
@@ -46,7 +48,7 @@ if ($donnesCompletesUtilisateur !== null) {
     }
 } else {
     // Utilisateur non trouvé
-    $_SESSION['message'] = "Le compte avec cet identifiant n'existe pas";
+    $_SESSION['message'] = "Le compte avec ce pseudo n'existe pas";
     header('Location: ../messages/errorMessage.php', true, 303);
     exit();
 }

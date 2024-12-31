@@ -229,20 +229,21 @@ COMMANDE_SQL;
     //Fonction pour vérifier password et pseudo
     public function verifierAccesEtRecupererUtilisateur(string $pseudo): ?array
     {
-        // Prépare la requête pour récupérer les données de l'utilisateur
-        $sql = "SELECT * FROM users WHERE pseudo = :pseudo";
+        // Prépare la requête pour récupérer les données de l'utilisateur, y compris l'id
+        $sql = "SELECT id, pseudo, password FROM users WHERE pseudo = :pseudo";
         $stmt = $this->db->prepare($sql);
-
+    
         // Lier l'adresse e-mail
         $stmt->bindParam(':pseudo', $pseudo, \PDO::PARAM_STR);
-
+    
         // Exécuter la requête
         $stmt->execute();
-
+    
         // Récupérer les résultats
         $utilisateur = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        // Retourne toutes les données de l'utilisateur
+    
+        // Retourne toutes les données de l'utilisateur, y compris l'id
         return $utilisateur ? $utilisateur : null; // Si l'utilisateur existe, retourne ses données, sinon null
     }
+    
 }

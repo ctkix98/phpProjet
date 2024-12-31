@@ -9,15 +9,16 @@ require_once __DIR__ . '/../../config/session.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connecté</title>
-    <link rel="stylesheet" href="../stylesheet.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
 </head>
 
 <body>
     <header>
         <ul>
-            <li><a href="../index.php">Page d'accueil</a></li>
-            <li><a href="../about.html">Notre histoire</a></li>
+            <li><a href="../index.php">Babel</a></li>
+            <li><a href="../about.php">Notre histoire</a></li>
             <li><a href="../dashboardUser.html">Mon compte</a></li>
+            <li> <a href="../libraryUser.php">Ma bibliothèque</a></li>
             <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
         </ul>
     </header>
@@ -29,8 +30,9 @@ require_once __DIR__ . '/../../config/session.php';
 
         <div id='donneesUtilisateur'>
             <h2>Voici tes données </h2>
-            <p><?php echo $pseudo; ?></p>
-            <p><?php echo $email; ?></p>
+            <p>Ton pseudo : <?php echo $pseudo; ?></p>
+            <p>Ton email : <?php echo $email; ?></p>
+            <p>Ton ID : <?php echo $id; ?></p>
         </div>
 
     </main>
