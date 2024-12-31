@@ -7,24 +7,19 @@ $message = "";
 echo "start";
 //Recevoir les données, et vérifier si c'est juste
 if (filter_has_var(INPUT_POST, 'submit1')) {
-    echo "dans le if1";
     $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo',FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{6,20}$/"]]);
     $donneeUtilisateur['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $donneeUtilisateur['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{8,20}$/"]]);
-    echo "dans le if";
-    echo '<br>';
     foreach ($donneeUtilisateur as $champ) {
         echo $champ;
         echo '<br>';
     }
 } else {
-    echo "dans le else";
     $message = "Les informations entrées ne sont pas conformes à la demande".$_POST;
     $_SESSION['message'] = $message;
     header('Location: ../messages/errorMessage.php', true, 303);
     exit();
 }
-echo "on est ici";
 //Vérifier si tous les champs sont remplis
 $required = [
     'pseudo',
