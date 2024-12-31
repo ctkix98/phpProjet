@@ -17,15 +17,15 @@ function isValidEmail(email) {
 }
 
 // Fonction de validation des mots de passe
-function validatePasswords(password, confirmPassword) {
-  if (password !== confirmPassword) {
-    return "Les mots de passe ne correspondent pas.";
-  }
-  if (password.length < 6) {
-    return "Le mot de passe doit contenir au moins 6 caractères.";
-  }
-  return "";
-}
+//function validatePasswords(password, confirmPassword) {
+//  if (password !== confirmPassword) {
+//    return "Les mots de passe ne correspondent pas.";
+//  }
+//  if (password.length < 6) {
+//    return "Le mot de passe doit contenir au moins 6 caractères.";
+//  }
+//  return "";
+//}
 
 // Gestion de la soumission du formulaire
 form.addEventListener("submit", function (event) {
@@ -72,4 +72,3 @@ togglePasswordBtn.addEventListener('click', function () {
 toggleConfirmPasswordBtn.addEventListener('click', function () {
     togglePasswordVisibility(confirmPasswordInput, toggleConfirmPasswordBtn); 
 });
-
