@@ -57,6 +57,7 @@ form.addEventListener("submit", function (event) {
 function togglePasswordVisibility(inputField, toggleButton) {
     const isPasswordHidden = inputField.type === "password";
     inputField.type = isPasswordHidden ? "text" : "password";
+    console.log("COCOUU")
 
     // Change l'icône
     toggleButton.classList.toggle('fa-eye'); // Icône d'œil ouvert
