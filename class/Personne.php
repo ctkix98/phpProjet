@@ -6,6 +6,7 @@ class Personne {
     private $pseudo;
     private $email;
     private $password;
+    private $token;
 
     public function __construct(string $pseudo,  string $email, string $password, int $id = 0) {
         if (empty($pseudo)) {
