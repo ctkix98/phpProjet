@@ -4,25 +4,27 @@ session_start();
 
 $donneeUtilisateur = [];
 $message = "";
-
+echo "start";
 //Recevoir les données, et vérifier si c'est juste
-if (filter_has_var(INPUT_POST, 'submit')) {
+if (filter_has_var(INPUT_POST, 'submit1')) {
+    echo "dans le if1";
     $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo');
     $donneeUtilisateur['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $donneeUtilisateur['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{8,20}$/"]]);
-
-    echo'<br>';
-    foreach($donneeUtilisateur as $champ){
+    echo "dans le if";
+    echo '<br>';
+    foreach ($donneeUtilisateur as $champ) {
         echo $champ;
         echo '<br>';
     }
 } else {
-    $message = "Les informations entrées ne sont pas conformes à la demande";
+    echo "dans le else";
+    $message = "Les informations entrées ne sont pas conformes à la demande".$_POST;
     $_SESSION['message'] = $message;
     header('Location: ../messages/errorMessage.php', true, 303);
     exit();
 }
-
+echo "on est ici";
 //Vérifier si tous les champs sont remplis
 $required = [
     'pseudo',
@@ -31,7 +33,7 @@ $required = [
 ];
 foreach ($required as $champ) {
     if (empty($donneeUtilisateur[$champ])) {
-        $message = "Le champ ".$champ ."est vide";
+        $message = "Le champ " . $champ . "est vide";
         $_SESSION['message'] = $message;
         header('Location: ../messages/errorMessage.php', true, 303);
         exit();
@@ -47,8 +49,8 @@ $donneeUtilisateur['password'] = password_hash($donneeUtilisateur['password'], P
 
 //Appel de la DB
 $db = new Database();
-if ($db->creerTablePersonnes()) {
-    echo "Création de la table 'personnes' réussie :-) <br>";
+if ($db->initialistion()) {
+    echo "Initialisation réussie :-) <br>";
 }
 
 
