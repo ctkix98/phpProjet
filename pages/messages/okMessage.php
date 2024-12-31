@@ -30,8 +30,9 @@ require_once __DIR__ . '/../../config/session.php';
 
         <div id='donneesUtilisateur'>
             <h2>Voici tes données </h2>
-            <p><?php echo $pseudo; ?></p>
-            <p><?php echo $email; ?></p>
+            <p>Ton pseudo : <?php echo $pseudo; ?></p>
+            <p>Ton email : <?php echo $email; ?></p>
+            <p>Ton ID : <?php echo $id; ?></p>
         </div>
 
     </main>

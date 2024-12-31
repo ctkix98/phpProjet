@@ -32,6 +32,8 @@ $db = new Database();
 $donnesCompletesUtilisateur = $db->verifierAccesEtRecupererUtilisateur($donneeConnexion['pseudo']);
 
 if ($donnesCompletesUtilisateur !== null) {
+    //Récupérer l'id 
+    $utilisateurId = $donnesCompletesUtilisateur['id'];
     // Vérifiez le mot de passe
     if (password_verify($donneeConnexion['password'], $donnesCompletesUtilisateur['password'])) {
         // Mot de passe correct, établir la session
