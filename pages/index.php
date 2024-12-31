@@ -27,7 +27,7 @@ session_start();
     <main>
         <div class="content">
             <?php if (isset($_SESSION['utilisateur'])): ?>
-                <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['prenom']); ?> !</h1>
+                <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>
             <?php else: ?>
                 <h1>Bienvenue ! </h1>
             <?php endif; ?>
