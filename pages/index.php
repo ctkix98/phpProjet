@@ -15,8 +15,9 @@ session_start();
     <header>
         <ul>
             <li><a href="index.php">Babel</a></li>
-            <li><a href="about.html">A propos</a></li>
+            <li><a href="about.php">A propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
+                <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
                 <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
                 <li id="connexion"><a href="connexion.html">Se connecter</a></li>
@@ -33,9 +34,8 @@ session_start();
             <?php endif; ?>
         </div>
     </main>
-
     <footer>
-        <p>made with &nbsp; &#9829;&nbsp; by Cédrine Tille </p>
+        <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
     </footer>
 </body>
 

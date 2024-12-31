@@ -19,7 +19,7 @@ require_once __DIR__ . '/../../config/session.php';
 <header>
         <ul>
             <li><a href="../index.php">Page d'accueil</a></li>
-            <li><a href="../about.html">Notre histoire</a></li>
+            <li><a href="../about.php">Notre histoire</a></li>
             <li><a href="../dashboardUser.html">Mon compte</a></li>
             <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
         </ul>
