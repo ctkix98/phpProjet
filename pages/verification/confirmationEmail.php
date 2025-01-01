@@ -1,15 +1,15 @@
 <?php
 // Connexion à la base de données et chargement des classes nécessaires
 require_once('../../db/Database.php');
-session_start();
+//session_start();
 
 // Initialisation de la base de données
 $db = new Database();
-if (!$db->initialistion()) {
-    $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
-    header('Location: ../messages/errorMessage.php', true, 303);
-    exit();
-}
+//if (!$db->initialistion()) {
+//    $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
+//    header('Location: ../messages/errorMessage.php', true, 303);
+//    exit();
+//}
 
 ?>
 <!DOCTYPE html>

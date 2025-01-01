@@ -21,12 +21,6 @@ class Database
             error_log("Erreur de connexion : " . $e->getMessage());
             die("Erreur de connexion. Veuillez réessayer plus tard.");
         }
-        
-
-        //$this->db = new \PDO($dsn, $username, $password);
-        //if (!$this->db) { //ici permet de voir si la DB est bien connectée
-        //    die("Problème de connexion à la base de données");
-        //}
     }
 
     //TOUT CE QUI CONCERNE LES LIVRES
@@ -251,7 +245,7 @@ COMMANDE_SQL;
     public function verifierAccesEtRecupererUtilisateur(string $pseudo): ?array
     {
         // Prépare la requête pour récupérer les données de l'utilisateur, y compris l'id
-        $sql = "SELECT id, pseudo, password FROM users WHERE pseudo = :pseudo";
+        $sql = "SELECT id, pseudo, password, email FROM users WHERE pseudo = :pseudo";
         $stmt = $this->db->prepare($sql);
 
         // Lier l'adresse e-mail
