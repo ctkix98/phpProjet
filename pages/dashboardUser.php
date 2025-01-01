@@ -27,13 +27,20 @@ session_start();
         </ul>
     </header>
     <main>
-        <div class="content">
-            <?php if (isset($_SESSION['utilisateur'])): ?>
-                <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>
+        <?php if (isset($_SESSION['utilisateur'])): ?>
+            <div>
+                <h1>Bonjour <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>
+                <p>Que veux-tu faire ?</p>
+            </div>
+            <div class="content">
+                <ul>
+                    <li>Changer le mot de passe</li>
+                    <li>Supprimer le compte</li>
+                </ul>
             <?php else: ?>
-                <h1>Bienvenue ! </h1>
+                <h1>Il semblerait que tu ne sois pas connecté :/</h1>
             <?php endif; ?>
-        </div>
+            </div>
     </main>
     <footer>
         <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>

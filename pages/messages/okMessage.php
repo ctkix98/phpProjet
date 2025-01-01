@@ -17,7 +17,7 @@ require_once __DIR__ . '/../../config/session.php';
         <ul>
             <li><a href="../index.php">Babel</a></li>
             <li><a href="../about.php">Notre histoire</a></li>
-            <li><a href="../dashboardUser.html">Mon compte</a></li>
+            <li><a href="../dashboardUser.php">Mon compte</a></li>
             <li> <a href="../libraryUser.php">Ma bibliothèque</a></li>
             <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
         </ul>
