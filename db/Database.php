@@ -10,19 +10,20 @@ class Database
 
     public function __construct()
     {
-        //$path = realpath(dirname(__DIR__) . '/db/dbpsw.sqlite');
-
         $config = parse_ini_file(__DIR__ . '/../config/db.ini');
         $dsn = $config['dsn'];
         $username = $config['username'];
         $password = $config['password'];
         //initialisation à la DB
-        $this->db = new \PDO($dsn, $username, $password);
-        if (!$this->db) { //ici permet de voir si la DB est bien connectée
-            die("Problème de connexion à la base de données");
+        try {
+            $this->db = new \PDO($dsn, $username, $password);
+        } catch (PDOException $e) {
+            error_log("Erreur de connexion : " . $e->getMessage());
+            die("Erreur de connexion. Veuillez réessayer plus tard.");
         }
     }
 
+    //TOUT CE QUI CONCERNE LES LIVRES
     public function creerTableBookState(): bool
     {
         $sql = <<<COMMANDE_SQL
@@ -66,28 +67,6 @@ class Database
         return $ok;
     }
     //Créer table users
-    public function creerTableusers(): bool
-    {
-        $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            pseudo VARCHAR(120) NOT NULL UNIQUE,
-            email VARCHAR(120) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            token VARCHAR(255) DEFAULT NULL,
-            is_confirmed BOOLEAN DEFAULT 0
-        );
-COMMANDE_SQL;
-
-        try {
-            $this->db->exec($sql);
-            $ok = true;
-        } catch (PDOException $e) {
-            $e->getMessage();
-            $ok = false;
-        }
-        return $ok;
-    }
     public function creerTablelecture(): bool
     {
         $sql = <<<COMMANDE_SQL
@@ -159,9 +138,32 @@ COMMANDE_SQL;
         }
         return $ok;
     }
+
+    //TABLE USERS
+    public function creerTableusers(): bool
+    {
+        $sql = <<<COMMANDE_SQL
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pseudo VARCHAR(120) NOT NULL UNIQUE,
+            email VARCHAR(120) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL,
+            token VARCHAR(255) DEFAULT NULL,
+            is_confirmed BOOLEAN DEFAULT 0
+        );
+COMMANDE_SQL;
+
+        try {
+            $this->db->exec($sql);
+            $ok = true;
+        } catch (PDOException $e) {
+            $e->getMessage();
+            $ok = false;
+        }
+        return $ok;
+    }
     public function initialistion(): bool
     {
-        echo "coucou";
         $this->creerTableBookState();
         $this->creerTableBook();
         $this->creerTableusers();
@@ -171,6 +173,8 @@ COMMANDE_SQL;
 
         return true;
     }
+
+    //Méthodes users
     public function ajouterPersonne(Personne $personne): int
     {
         $datas = [
@@ -221,7 +225,6 @@ COMMANDE_SQL;
         return $retour;
     }
 
-
     public function recupererContact(string $pseudo, string $email): bool
     {
         $sql = "SELECT * FROM users WHERE pseudo = :pseudo OR email = :email";
@@ -242,7 +245,7 @@ COMMANDE_SQL;
     public function verifierAccesEtRecupererUtilisateur(string $pseudo): ?array
     {
         // Prépare la requête pour récupérer les données de l'utilisateur, y compris l'id
-        $sql = "SELECT id, pseudo, password FROM users WHERE pseudo = :pseudo";
+        $sql = "SELECT id, pseudo, password, email FROM users WHERE pseudo = :pseudo";
         $stmt = $this->db->prepare($sql);
 
         // Lier l'adresse e-mail
@@ -258,4 +261,11 @@ COMMANDE_SQL;
         return $utilisateur ? $utilisateur : null; // Si l'utilisateur existe, retourne ses données, sinon null
     }
 
+    public function confirmeInscription($id)
+{
+    $sql = "UPDATE users SET is_confirmed = 1 WHERE id = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+    return $stmt->execute();
+}
 }

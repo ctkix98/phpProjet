@@ -219,8 +219,8 @@ button:hover {
 
 #idNvCompte,
 #idConnexion {
-    background-color: #4CAF50; 
-    color: white; 
+    background-color: var(--dark-green); 
+    color: var(--light-brown); 
     padding: 10px 15px; 
     text-decoration: none; 
     border-radius: 5px; 
@@ -230,7 +230,7 @@ button:hover {
 
 #idNvCompte:hover,
 #idConnexion:hover {
-    background-color: #45a049; /* Change la couleur au survol */
+    background-color: var(--medium-brown); /* Change la couleur au survol */
 }
 
 .confirmation {

@@ -1,5 +1,6 @@
 <?php
 require_once('../../db/Database.php');
+require_once('../../lib/vendor/autoload.php');
 session_start();
 
 use Symfony\Component\Mailer\Transport;
@@ -8,7 +9,6 @@ use Symfony\Component\Mime\Email;
 
 $donneeUtilisateur = [];
 $message = "";
-echo "start";
 // Recevoir les données et vérifier si elles sont valides
 if (filter_has_var(INPUT_POST, 'submit1')) {
     $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo');
@@ -63,8 +63,6 @@ $personne = new Personne(
 $token = $personne->rendToken();
 $id = $db->ajouterPersonne($personne);
 if ($id > 0) {
-    // Redirection sur la page de confirmation de création de compte
-    $_SESSION['utilisateur'] = $donneeUtilisateur;
 
     // Envoi du mail de confirmation
     $confirmationLink = "http://localhost/phpProjet/pages/verification/confirmationEmail.php?token=" . urlencode($token);
@@ -75,7 +73,7 @@ if ($id > 0) {
         $mailer = new Mailer($transport);
 
         $message = (new Email())
-            ->from('inscription-du-fun@duplicata.ch')
+            ->from('support@babel.com')
             ->to($donneeUtilisateur['email'])
             ->subject('Confirmation de votre inscription')
             ->html("
@@ -84,11 +82,10 @@ if ($id > 0) {
                 <p><a href='$confirmationLink'>Confirmer mon inscription</a></p>
             ");
 
-        $mailer->send($message);
-        
+        $mailer->send($message);        
         // Si l'e-mail a été envoyé, redirection vers une page de succès
-        //header('Location: ../messages/okMessage.php', true, 303);
-        //exit();
+        header('Location: ../messages/okInscription.php', true, 303);
+        exit();
 
     } catch (Exception $e) {
         $message = "Une erreur est survenue lors de l'envoi du mail de confirmation.";

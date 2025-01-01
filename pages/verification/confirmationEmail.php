@@ -1,25 +1,44 @@
 <?php
-require_once '../../lib/vendor/autoload.php';
+// Connexion à la base de données et chargement des classes nécessaires
+require_once('../../db/Database.php');
+session_start();
 
-use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mailer\Mailer;
-use Symfony\Component\Mime\Email;
-$transport = Transport::fromDsn('smtp://localhost:1025');
-$mailer = new Mailer($transport);
-$email = (new Email())
-->from('babel@gmail.com')
-->to('desti.nataire@quelquepart.com')
-//->cc('cc@exemple.com')
-//->bcc('bcc@exemple.com')
-//->replyTo('replyto@exemple.com')
-//->priority(Email::PRIORITY_HIGH)
-->subject('Concerne : Envoi de mail')
-->text('Un peu de texte')
-->html('<h1>Un peu de html</h1>');
-$result = $mailer->send($email);
-if ($result==null) {
-echo "Un mail a été envoyé ! <a href='http://localhost:8025'>voir le
-mail</a>";
+// Initialisation de la base de données
+$db = new Database();
+if (!$db->initialistion()) {
+    $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
+    header('Location: ../messages/errorMessage.php', true, 303);
+    exit();
+}
+
+// Récupération du token depuis l'URL
+$token = filter_input(INPUT_GET, 'token', FILTER_DEFAULT);
+
+if ($token) {
+    // Vérifier si une personne est associée au token
+    $personne = $db->getUserByToken($token);
+    if ($personne) {
+        // Confirmer l'inscription
+        if ($db->confirmeInscription($personne['id'])) {
+            $message = "ok";
+            $_SESSION['message'] = $message;
+            header('Location: ../messages/mailMessage.php', true, 303);
+            exit();
+        } else {
+            $message = "Une erreur est survenue lors de la confirmation. Veuillez réessayer plus tard".$_POST;
+            $_SESSION['message'] = $message;
+            header('Location: ../messages/mailMessage.php', true, 303);
+            exit();
+        }
+    } else {
+        $message = "Lien de confirmation invalide ou expiré".$_POST;
+        $_SESSION['message'] = $message;
+        header('Location: ../messages/mailMessage.php', true, 303);
+        exit();
+    }
 } else {
-echo "Un problème lors de l'envoi du mail est survenu";
+    $message = "Aucun token fourni pour la confirmation".$_POST;
+    $_SESSION['message'] = $message;
+    header('Location: ../messages/mailMessage.php', true, 303);
+    exit();
 }
