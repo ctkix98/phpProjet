@@ -63,8 +63,6 @@ $personne = new Personne(
 $token = $personne->rendToken();
 $id = $db->ajouterPersonne($personne);
 if ($id > 0) {
-    // Redirection sur la page de confirmation de création de compte
-    $_SESSION['utilisateur'] = $donneeUtilisateur;
 
     // Envoi du mail de confirmation
     $confirmationLink = "http://localhost/phpProjet/pages/verification/confirmationEmail.php?token=" . urlencode($token);
