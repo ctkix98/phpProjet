@@ -73,7 +73,7 @@ if ($id > 0) {
         $mailer = new Mailer($transport);
 
         $message = (new Email())
-            ->from('inscription-du-fun@duplicata.ch')
+            ->from('support@babel.com')
             ->to($donneeUtilisateur['email'])
             ->subject('Confirmation de votre inscription')
             ->html("
