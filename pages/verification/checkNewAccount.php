@@ -11,9 +11,9 @@ $donneeUtilisateur = [];
 $message = "";
 // Recevoir les données et vérifier si elles sont valides
 if (filter_has_var(INPUT_POST, 'submit')) {
-    $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{1,100}$/"]]);
+    $donneeUtilisateur['pseudo'] = filter_input(INPUT_POST, 'pseudo', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{4,100}$/"]]);
     $donneeUtilisateur['email'] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $donneeUtilisateur['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{1,100}$/"]]);
+    $donneeUtilisateur['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{8,100}$/"]]);
     foreach ($donneeUtilisateur as $champ) {
         echo $champ;
         echo '<br>';
