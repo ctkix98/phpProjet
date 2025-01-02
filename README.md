@@ -46,6 +46,3 @@ supprimer compte : event listener -> afficher popup "Indiquez votre adresse mail
 
 #Ma bibliothèque
 - Fonction afficher livre en fct de la catégorie : paramètre : string , return : string (JSON) --> utiliser fetch pour en faire un objet
-
-
-
