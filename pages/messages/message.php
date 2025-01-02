@@ -26,15 +26,17 @@ require_once __DIR__ . '/../../config/session.php';
             <?php endif; ?>
         </ul>
     </header>
-    <main>
-        <div class="content">
+    <main class="pages">
+        <div class="confirmation">
             <?php if (isset($_SESSION['message'])): ?>
                 <h1><?php echo $_SESSION['message']; ?></h1>
+                <a href="../index.php">Retour à la page d'accueil</a>
             <?php else: ?>
                 <h1>Il y a un problème ! </h1>
+                <a href="../index.php">Retour à la page d'accueil</a>
             <?php endif; ?>
-            <a href="../index.php">Retour à la page d'accueil</a>
         </div>
+
     </main>
     <footer>
         <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
