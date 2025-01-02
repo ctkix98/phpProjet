@@ -30,6 +30,9 @@ session_start();
         <div class="content">
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>
+                <form>
+                    
+                </form>
             <?php else: ?>
                 <h1>Bienvenue ! </h1>
             <?php endif; ?>
