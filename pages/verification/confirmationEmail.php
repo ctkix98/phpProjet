@@ -7,7 +7,7 @@ session_start();
 $db = new Database();
 if (!$db->initialistion()) {
     $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
-    header('Location: ../messages/errorMessage.php', true, 303);
+    header('Location: ../messages/message.php', true, 303);
     exit();
 }
 

@@ -9,5 +9,6 @@ if (isset($_SESSION['utilisateur'])) {
 }
 
 if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
     //echo $_SESSION['message'];
 }

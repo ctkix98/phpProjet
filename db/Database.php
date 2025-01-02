@@ -174,7 +174,7 @@ COMMANDE_SQL;
         return true;
     }
 
-    //Méthodes users
+    //Méthodes pour récupérer / vérifier table Personne
     public function ajouterPersonne(Personne $personne): int
     {
         $datas = [
@@ -212,6 +212,16 @@ COMMANDE_SQL;
         $stmt->execute();
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
+
+    public function getUserById($id)
+    {
+        $sql = "SELECT * FROM users WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
 
     public function verifierConnection(string $pseudo, string $password): bool
     {
@@ -261,11 +271,27 @@ COMMANDE_SQL;
         return $utilisateur ? $utilisateur : null; // Si l'utilisateur existe, retourne ses données, sinon null
     }
 
+    //Méthodes pour update table Personne
     public function confirmeInscription($id)
-{
-    $sql = "UPDATE users SET is_confirmed = 1 WHERE id = :id";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
-    return $stmt->execute();
-}
+    {
+        $sql = "UPDATE users SET is_confirmed = 1 WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function updatePassword($id, $newPassword)
+    {
+        $sql = "UPDATE users SET password = :password WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':password', $newPassword, \PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function deleteUser($id)
+    {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }

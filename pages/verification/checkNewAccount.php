@@ -21,7 +21,7 @@ if (filter_has_var(INPUT_POST, 'submit1')) {
 } else {
     $message = "Les informations entrées ne sont pas conformes à la demande".$_POST;
     $_SESSION['message'] = $message;
-    header('Location: ../messages/errorMessage.php', true, 303);
+    header('Location: ../messages/message.php', true, 303);
     exit();
 }
 
@@ -35,7 +35,7 @@ foreach ($required as $champ) {
     if (empty($donneeUtilisateur[$champ])) {
         $message = "Le champ " . $champ . "est vide";
         $_SESSION['message'] = $message;
-        header('Location: ../messages/errorMessage.php', true, 303);
+        header('Location: ../messages/message.php', true, 303);
         exit();
     }
 }
@@ -84,19 +84,21 @@ if ($id > 0) {
 
         $mailer->send($message);        
         // Si l'e-mail a été envoyé, redirection vers une page de succès
-        header('Location: ../messages/okInscription.php', true, 303);
+        $message = "Bravo, tu as réussi ton inscription ! Un mail de confirmation a été envoyé à ton adresse";
+        $_SESSION['message'] = $message;
+        header('Location: ../messages/message.php', true, 303);
         exit();
 
     } catch (Exception $e) {
         $message = "Une erreur est survenue lors de l'envoi du mail de confirmation.";
         $_SESSION['message'] = $message;
-        header('Location: ../messages/errorMessage.php', true, 303);
+        header('Location: ../messages/message.php', true, 303);
         exit();
     }
 } else {
     $message = "Le compte n'a pas pu être créé, car l'email est déjà utilisé";
     $_SESSION['message'] = $message;
-    header('Location: ../messages/errorMessage.php', true, 303);
+    header('Location: ../messages/message.php', true, 303);
     exit();
 }
 ?>
