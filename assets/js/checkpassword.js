@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pseudoMessage.style.color = "green";
     } else {
       pseudoMessage.style.color = "red"; 
+    }
   });
 
   //PASSWORD
