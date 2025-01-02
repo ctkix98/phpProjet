@@ -61,7 +61,7 @@ if (filter_has_var(INPUT_POST, 'submit')) {
         if ($db->deleteUser($utilisateurId)) {
             // Déconnecter l'utilisateur après la suppression
             session_destroy();
-            header('Location: ../messages/message.php?message=Compte supprimé');
+            header('Location: ../messages/deleteAccount.php?');
             exit();
         } else {
             $message = "Erreur lors de la suppression du compte.";
