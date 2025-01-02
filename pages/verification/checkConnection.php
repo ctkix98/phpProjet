@@ -8,8 +8,8 @@ session_start();
 $donneeConnexion = [];
 
 if (filter_has_var(INPUT_POST, 'submit')) {
-    $donneeConnexion['pseudo'] = filter_input(INPUT_POST, 'pseudo', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{6,20}$/"]]);
-    $donneeConnexion['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[A-Za-z0-9$!€£]{6,20}$/"]]);
+    $donneeConnexion['pseudo'] = filter_input(INPUT_POST, 'pseudo', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{1,100}$/"]]);
+    $donneeConnexion['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{1,100}$/"]]);
 }else {
     $_SESSION['message'] = "Les informations entrées ne sont pas conformes à la demande";
     header('Location: ../messages/message.php', true, 303);
@@ -39,7 +39,7 @@ if ($donnesCompletesUtilisateur !== null) {
         // Mot de passe correct, établir la session
         $_SESSION['utilisateur'] = $donnesCompletesUtilisateur;
         $_SESSION['message'] = "Tu es connecté !";
-        header('Location: ../messages/message.pphp', true, 303);
+        header('Location: ../messages/message.php', true, 303);
         exit();
     } else {
         // Mot de passe incorrect
