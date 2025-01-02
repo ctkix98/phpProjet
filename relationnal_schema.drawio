@@ -1,0 +1,95 @@
+<mxfile host="65bd71144e">
+    <diagram id="hxAFpiNVnYTk_TpAs3Ui" name="Page-1">
+        <mxGraphModel dx="1482" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Book&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Id&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Title&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Author&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Editor&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Parution date&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ISBN&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="120" width="120" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=none;html=1;endArrow=none;endFill=0;entryX=0.001;entryY=0.593;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="80" y="615"/>
+                        </Array>
+                        <mxPoint x="80" y="500" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" style="edgeStyle=none;html=1;entryX=0;entryY=0.643;entryDx=0;entryDy=0;endArrow=none;endFill=0;entryPerimeter=0;exitX=-0.001;exitY=0.44;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;" parent="1" source="3" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="80" y="410"/>
+                            <mxPoint x="80" y="760"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="39" style="edgeStyle=none;html=1;entryX=-0.001;entryY=0.876;entryDx=0;entryDy=0;endArrow=none;endFill=0;entryPerimeter=0;" parent="1" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="80" y="540" as="sourcePoint"/>
+                        <Array as="points">
+                            <mxPoint x="80" y="560"/>
+                            <mxPoint x="190" y="560"/>
+                            <mxPoint x="330" y="560"/>
+                            <mxPoint x="330" y="480"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="user&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;u&gt;id (numeric)&lt;/u&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;u&gt;Pseudo (varchar)&lt;/u&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;u&gt;email (varchar)&lt;/u&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;password (varchar)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="340" width="120" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="book_state&lt;hr&gt;&lt;div style=&quot;&quot;&gt;id&lt;/div&gt;&lt;div style=&quot;&quot;&gt;book_state&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="185" y="80" width="120" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;endArrow=classic;endFill=1;entryX=1;entryY=0.375;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="6" target="2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="560" y="240" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="760" y="600"/>
+                            <mxPoint x="760" y="180"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="comment&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (numeric)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;book_id&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;user_id&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;content (varchar)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;date (datetime)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="520" width="120" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" style="edgeStyle=none;html=1;exitX=-0.018;exitY=0.687;exitDx=0;exitDy=0;endArrow=classic;endFill=1;exitPerimeter=0;entryX=1.002;entryY=0.563;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="7" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="170" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="360" y="450"/>
+                            <mxPoint x="360" y="170"/>
+                        </Array>
+                        <mxPoint x="359.6400000000001" y="377.34000000000003" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="58" style="edgeStyle=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;startArrow=none;startFill=0;endArrow=none;endFill=0;" edge="1" parent="1" source="7">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="760" y="450" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="760" y="460"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="lecture&lt;hr&gt;id (numeric)&lt;br&gt;actual page (numeric)&lt;br&gt;date_begin(datetime)&lt;br&gt;date_end(datetime)&lt;br&gt;book_state_id&lt;br&gt;book_id&lt;br&gt;&lt;div style=&quot;&quot;&gt;user_id&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="340" width="120" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" style="edgeStyle=none;html=1;endArrow=none;endFill=0;exitX=1.005;exitY=0.524;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="8" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="760" y="740"/>
+                            <mxPoint x="760" y="490"/>
+                        </Array>
+                        <mxPoint x="240" y="750" as="sourcePoint"/>
+                        <mxPoint x="760" y="480" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="8" value="grade&lt;hr&gt;&lt;div style=&quot;text-align: left;&quot;&gt;id (numeric)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;book_id&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;user_id&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;grade (numeric)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="670" width="120" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="0..*" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="590" y="580" width="30" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

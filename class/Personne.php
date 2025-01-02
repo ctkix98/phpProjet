@@ -6,6 +6,7 @@ class Personne {
     private $pseudo;
     private $email;
     private $password;
+    private $token;
 
     public function __construct(string $pseudo,  string $email, string $password, int $id = 0) {
         if (empty($pseudo)) {
@@ -27,6 +28,7 @@ class Personne {
         $this->email = $email;
         $this->password = $password;
         $this->id = $id;
+        $this->token = bin2hex(random_bytes(16));
     }
 
     //Récupérer les données
@@ -62,11 +64,18 @@ class Personne {
     public function rendEmail(): string {
         return $this->email;
     }
-
-
+    /**
+     * Rend le password
+     */
     public function rendpassword(): string { 
         return $this->password; 
     }
 
+    /**
+     * Rend le token
+     */
+    public function rendToken(): string {
+        return $this->token;
+    }
 
 }
