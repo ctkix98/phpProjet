@@ -21,6 +21,7 @@ class Database
             error_log("Erreur de connexion : " . $e->getMessage());
             die("Erreur de connexion. Veuillez réessayer plus tard.");
         }
+        $this->initialistion();
     }
 
     //TOUT CE QUI CONCERNE LES LIVRES
@@ -182,8 +183,7 @@ COMMANDE_SQL;
         }
         return $ok;
     }
-
-    public function initialistion(): bool
+        public function initialistion(): bool
     {
         $this->createTableBookState();
         $this->createTableBook();
