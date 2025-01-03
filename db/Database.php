@@ -183,17 +183,18 @@ COMMANDE_SQL;
         }
         return $ok;
     }
-        public function initialistion(): bool
+    public function initialistion(): bool
     {
-        $this->createTableBookState();
-        $this->createTableBook();
-        $this->createTableusers();
-        $this->createTablelecture();
-        $this->createTablecomment();
-        $this->createTablegrade();
-        $this->createTableSettings();
+        $ok = true;
+        $ok = $ok && $this->createTableBookState();
+        $ok = $ok && $this->createTableBook();
+        $ok = $ok && $this->createTableusers();
+        $ok = $ok && $this->createTablelecture();
+        $ok = $ok && $this->createTablecomment();
+        $ok = $ok && $this->createTablegrade();
+        $ok = $ok && $this->createTableSettings();
 
-        return true;
+        return $ok;
     }
 
     //Méthodes pour récupérer / vérifier table Personne
