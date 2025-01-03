@@ -24,7 +24,7 @@ class Database
     }
 
     //TOUT CE QUI CONCERNE LES LIVRES
-    public function creerTableBookState(): bool
+    public function createTableBookState(): bool
     {
         $sql = <<<COMMANDE_SQL
             CREATE TABLE book_state (
@@ -43,7 +43,7 @@ class Database
         }
         return $ok;
     }
-    public function creerTableBook(): bool
+    public function createTableBook(): bool
     {
         $sql = <<<COMMANDE_SQL
         CREATE TABLE if not existsBook (
@@ -67,7 +67,7 @@ class Database
         return $ok;
     }
     //Créer table users
-    public function creerTablelecture(): bool
+    public function createTablelecture(): bool
     {
         $sql = <<<COMMANDE_SQL
         CREATE TABLE lecture (
@@ -93,7 +93,7 @@ COMMANDE_SQL;
         }
         return $ok;
     }
-    public function creerTablecomment(): bool
+    public function createTablecomment(): bool
     {
         $sql = <<<COMMANDE_SQL
       CREATE TABLE comment (
@@ -116,7 +116,7 @@ COMMANDE_SQL;
         }
         return $ok;
     }
-    public function creerTablegrade(): bool
+    public function createTablegrade(): bool
     {
         $sql = <<<COMMANDE_SQL
      CREATE TABLE grade (
@@ -140,7 +140,7 @@ COMMANDE_SQL;
     }
 
     //TABLE USERS
-    public function creerTableusers(): bool
+    public function createTableusers(): bool
     {
         $sql = <<<COMMANDE_SQL
         CREATE TABLE IF NOT EXISTS users (
@@ -162,14 +162,36 @@ COMMANDE_SQL;
         }
         return $ok;
     }
+    public function createTableSettings(): bool
+    {
+        $sql = <<<COMMANDE_SQL
+        CREATE TABLE settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    key_name VARCHAR(255) UNIQUE NOT NULL, 
+    key_value VARCHAR(255) NOT NULL        
+
+        );
+COMMANDE_SQL;
+
+        try {
+            $this->db->exec($sql);
+            $ok = true;
+        } catch (PDOException $e) {
+            $e->getMessage();
+            $ok = false;
+        }
+        return $ok;
+    }
+
     public function initialistion(): bool
     {
-        $this->creerTableBookState();
-        $this->creerTableBook();
-        $this->creerTableusers();
-        $this->creerTablelecture();
-        $this->creerTablecomment();
-        $this->creerTablegrade();
+        $this->createTableBookState();
+        $this->createTableBook();
+        $this->createTableusers();
+        $this->createTablelecture();
+        $this->createTablecomment();
+        $this->createTablegrade();
+        $this->createTableSettings();
 
         return true;
     }
