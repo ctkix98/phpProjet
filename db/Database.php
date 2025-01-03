@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../class/Personne.php';
-require_once __DIR__ . '/../config/db.ini';
-//require_once __DIR__ . 'addBooks.php';
+//require_once __DIR__ . '/../config/db.ini';
+//require_once __DIR__ . '/addBooks.php';
 
 
 
@@ -22,7 +22,6 @@ class Database
             error_log("Erreur de connexion : " . $e->getMessage());
             die("Erreur de connexion. Veuillez réessayer plus tard.");
         }
-       // addingBooks ();
         $this->initialistion();
     }
 
@@ -338,12 +337,13 @@ COMMANDE_SQL;
                 'isbn' => $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null,
             ];
         }
-
+        echo "salut";
         return $bookList;
     }
 
     public function addBooksToDatabase(array $books): bool
     {
+        echo "coucou";
         $ok = true;
         foreach ($books as $book) {
             $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN) VALUES (:title, :author, :editor, :parution_date, :isbn)";
