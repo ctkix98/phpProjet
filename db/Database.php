@@ -47,7 +47,7 @@ class Database
     public function createTableBook(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS Book (
+        CREATE TABLE IF NOT EXISTS book (
             id INT AUTO_INCREMENT PRIMARY KEY,
             Title VARCHAR(255),
             Author VARCHAR(255),
@@ -80,7 +80,7 @@ class Database
     book_id INTEGER,
     user_id INTEGER,
     FOREIGN KEY (book_state_id) REFERENCES book_state(id),
-    FOREIGN KEY (book_id) REFERENCES Book(id),
+    FOREIGN KEY (book_id) REFERENCES book(id),
     FOREIGN KEY (user_id) REFERENCES user(id)
         );
 COMMANDE_SQL;
@@ -103,7 +103,7 @@ COMMANDE_SQL;
     user_id INTEGER,
     content TEXT,
     date TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    FOREIGN KEY (book_id) REFERENCES Book(id),
+    FOREIGN KEY (book_id) REFERENCES book(id),
     FOREIGN KEY (user_id) REFERENCES user(id)
         );
 COMMANDE_SQL;
@@ -125,7 +125,7 @@ COMMANDE_SQL;
     book_id INTEGER,
     user_id INTEGER,
     grade INTEGER,
-    FOREIGN KEY (book_id) REFERENCES Book(id),
+    FOREIGN KEY (book_id) REFERENCES book(id),
     FOREIGN KEY (user_id) REFERENCES user(id)
         );
 COMMANDE_SQL;
@@ -316,5 +316,43 @@ COMMANDE_SQL;
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+
+    public function fetchTopBooksFromOpenLibrary(): array
+    {
+        $url = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538,LCCN:2005041551&format=json&jscmd=data';
+        $response = file_get_contents($url);
+        $books = json_decode($response, true);
+
+        // Extraire les informations nécessaires des livres
+        $bookList = [];
+        foreach ($books as $book) {
+            $bookList[] = [
+                'title' => $book['title'],
+                'author' => $book['authors'][0]['name'],
+                'editor' => $book['publishers'][0]['name'],
+                'parution_date' => $book['publish_date'],
+                'isbn' => $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null,
+            ];
+        }
+
+        return $bookList;
+    }
+
+    public function addBooksToDatabase(array $books): bool
+    {
+        $ok = true;
+        foreach ($books as $book) {
+            $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN) VALUES (:title, :author, :editor, :parution_date, :isbn)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':title', $book['title']);
+            $stmt->bindParam(':author', $book['author']);
+            $stmt->bindParam(':editor', $book['editor']);
+            $stmt->bindParam(':parution_date', $book['parution_date']);
+            $stmt->bindParam(':isbn', $book['isbn']);
+            $ok = $ok && $stmt->execute();
+        }
+        return $ok;
     }
 }
