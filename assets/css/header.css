@@ -1,0 +1,37 @@
+/* Style général du header */
+header {
+    background-color: var(--dark-green);
+    padding: 50px 20px;
+}
+
+/* Enlève les puces et aligne les éléments du menu horizontalement */
+header ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Styles spécifiques à un utilisateur connecté */
+#deconnexion a {
+    background-color: var(--dark-green);
+    color: var(--beige);
+}
+
+#connexion a,
+#nouveauCompte a {
+    display: none; /* Cacher ces liens lorsqu'un utilisateur est connecté */
+}
+
+/* Styles spécifiques à un utilisateur non connecté */
+#connexion a,
+#nouveauCompte a {
+    display: block;
+    color: var(--warm-brown);
+    text-transform: uppercase;
+}
+
+#deconnexion a {
+    display: none; /* Cacher le lien de déconnexion lorsqu'un utilisateur n'est pas connecté */
+}
