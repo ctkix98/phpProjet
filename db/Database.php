@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../class/Personne.php';
-require_once __DIR__ . '/../config/db.ini';
+//require_once __DIR__ . '/../config/db.ini';
+//require_once __DIR__ . '/addBooks.php';
 
 
 
@@ -21,13 +22,14 @@ class Database
             error_log("Erreur de connexion : " . $e->getMessage());
             die("Erreur de connexion. Veuillez réessayer plus tard.");
         }
+        $this->initialistion();
     }
 
     //TOUT CE QUI CONCERNE LES LIVRES
     public function createTableBookState(): bool
     {
         $sql = <<<COMMANDE_SQL
-            CREATE TABLE book_state (
+            CREATE TABLE IF NOT EXISTS book_state (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     book_state TEXT
             )
@@ -46,7 +48,7 @@ class Database
     public function createTableBook(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE if not existsBook (
+        CREATE TABLE IF NOT EXISTS book (
             id INT AUTO_INCREMENT PRIMARY KEY,
             Title VARCHAR(255),
             Author VARCHAR(255),
@@ -70,7 +72,7 @@ class Database
     public function createTablelecture(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE lecture (
+        CREATE TABLE IF NOT EXISTS lecture (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     `actual page` INTEGER,
     `date_begin` TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
@@ -79,7 +81,7 @@ class Database
     book_id INTEGER,
     user_id INTEGER,
     FOREIGN KEY (book_state_id) REFERENCES book_state(id),
-    FOREIGN KEY (book_id) REFERENCES Book(id),
+    FOREIGN KEY (book_id) REFERENCES book(id),
     FOREIGN KEY (user_id) REFERENCES user(id)
         );
 COMMANDE_SQL;
@@ -96,13 +98,13 @@ COMMANDE_SQL;
     public function createTablecomment(): bool
     {
         $sql = <<<COMMANDE_SQL
-      CREATE TABLE comment (
+      CREATE TABLE IF NOT EXISTS comment (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     book_id INTEGER,
     user_id INTEGER,
     content TEXT,
     date TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    FOREIGN KEY (book_id) REFERENCES Book(id),
+    FOREIGN KEY (book_id) REFERENCES book(id),
     FOREIGN KEY (user_id) REFERENCES user(id)
         );
 COMMANDE_SQL;
@@ -119,12 +121,12 @@ COMMANDE_SQL;
     public function createTablegrade(): bool
     {
         $sql = <<<COMMANDE_SQL
-     CREATE TABLE grade (
+     CREATE TABLE IF NOT EXISTS grade (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     book_id INTEGER,
     user_id INTEGER,
     grade INTEGER,
-    FOREIGN KEY (book_id) REFERENCES Book(id),
+    FOREIGN KEY (book_id) REFERENCES book(id),
     FOREIGN KEY (user_id) REFERENCES user(id)
         );
 COMMANDE_SQL;
@@ -165,7 +167,7 @@ COMMANDE_SQL;
     public function createTableSettings(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE settings (
+        CREATE TABLE IF NOT EXISTS settings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     key_name VARCHAR(255) UNIQUE NOT NULL, 
     key_value VARCHAR(255) NOT NULL        
@@ -182,18 +184,18 @@ COMMANDE_SQL;
         }
         return $ok;
     }
-
     public function initialistion(): bool
     {
-        $this->createTableBookState();
-        $this->createTableBook();
-        $this->createTableusers();
-        $this->createTablelecture();
-        $this->createTablecomment();
-        $this->createTablegrade();
-        $this->createTableSettings();
+        $ok = true;
+        $ok = $ok && $this->createTableBookState();
+        $ok = $ok && $this->createTableBook();
+        $ok = $ok && $this->createTableusers();
+        $ok = $ok && $this->createTablelecture();
+        $ok = $ok && $this->createTablecomment();
+        $ok = $ok && $this->createTablegrade();
+        $ok = $ok && $this->createTableSettings();
 
-        return true;
+        return $ok;
     }
 
     //Méthodes pour récupérer / vérifier table Personne
@@ -315,5 +317,44 @@ COMMANDE_SQL;
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+
+    public function fetchTopBooksFromOpenLibrary(): array
+    {
+        $url = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538,LCCN:2005041551&format=json&jscmd=data';
+        $response = file_get_contents($url);
+        $books = json_decode($response, true);
+
+        // Extraire les informations nécessaires des livres
+        $bookList = [];
+        foreach ($books as $book) {
+            $bookList[] = [
+                'title' => $book['title'],
+                'author' => $book['authors'][0]['name'],
+                'editor' => $book['publishers'][0]['name'],
+                'parution_date' => $book['publish_date'],
+                'isbn' => $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null,
+            ];
+        }
+        echo "salut";
+        return $bookList;
+    }
+
+    public function addBooksToDatabase(array $books): bool
+    {
+        echo "coucou";
+        $ok = true;
+        foreach ($books as $book) {
+            $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN) VALUES (:title, :author, :editor, :parution_date, :isbn)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':title', $book['title']);
+            $stmt->bindParam(':author', $book['author']);
+            $stmt->bindParam(':editor', $book['editor']);
+            $stmt->bindParam(':parution_date', $book['parution_date']);
+            $stmt->bindParam(':isbn', $book['isbn']);
+            $ok = $ok && $stmt->execute();
+        }
+        return $ok;
     }
 }
