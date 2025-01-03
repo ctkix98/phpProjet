@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../class/Personne.php';
 require_once __DIR__ . '/../config/db.ini';
-require_once __DIR__ . '/addBook.php';
+//require_once __DIR__ . 'addBooks.php';
 
 
 
@@ -22,7 +22,7 @@ class Database
             error_log("Erreur de connexion : " . $e->getMessage());
             die("Erreur de connexion. Veuillez réessayer plus tard.");
         }
-        addingBooks ();
+       // addingBooks ();
         $this->initialistion();
     }
 
