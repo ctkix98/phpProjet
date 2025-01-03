@@ -27,7 +27,7 @@ class Database
     public function createTableBookState(): bool
     {
         $sql = <<<COMMANDE_SQL
-            CREATE TABLE book_state (
+            CREATE TABLE IF NOT EXISTS book_state (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     book_state TEXT
             )
@@ -46,7 +46,7 @@ class Database
     public function createTableBook(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE if not existsBook (
+        CREATE TABLE IF NOT EXISTS Book (
             id INT AUTO_INCREMENT PRIMARY KEY,
             Title VARCHAR(255),
             Author VARCHAR(255),
@@ -70,7 +70,7 @@ class Database
     public function createTablelecture(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE lecture (
+        CREATE TABLE IF NOT EXISTS lecture (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     `actual page` INTEGER,
     `date_begin` TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
@@ -96,7 +96,7 @@ COMMANDE_SQL;
     public function createTablecomment(): bool
     {
         $sql = <<<COMMANDE_SQL
-      CREATE TABLE comment (
+      CREATE TABLE IF NOT EXISTS comment (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     book_id INTEGER,
     user_id INTEGER,
@@ -119,7 +119,7 @@ COMMANDE_SQL;
     public function createTablegrade(): bool
     {
         $sql = <<<COMMANDE_SQL
-     CREATE TABLE grade (
+     CREATE TABLE IF NOT EXISTS grade (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     book_id INTEGER,
     user_id INTEGER,
@@ -165,7 +165,7 @@ COMMANDE_SQL;
     public function createTableSettings(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE settings (
+        CREATE TABLE IF NOT EXISTS settings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     key_name VARCHAR(255) UNIQUE NOT NULL, 
     key_value VARCHAR(255) NOT NULL        
