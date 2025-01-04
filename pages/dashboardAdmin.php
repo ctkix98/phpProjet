@@ -14,13 +14,36 @@ $booksData = file_exists($booksFile) ? json_decode(file_get_contents($booksFile)
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord administrateur</title>
+    <title>Page d'accueil</title>
+    <link rel="stylesheet" href="../assets/css/dashboard-admin.css">
+    <script src="../assets/js/checkisbn.js" defer></script>
 </head>
+
 <body>
+    <header>
+        <ul>
+            <li><a href="index.php">Babel</a></li>
+            <li><a href="about.php">A propos</a></li>
+            <?php if (isset($_SESSION['utilisateur'])): ?>
+                <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
+                    <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
+                    <li> <a href="dashboardAdmin.php">Compte admin</a></li>
+                <?php else: ?>
+                    <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
+                    <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
+                    <li> <a href="dashboardUser.php">Mon compte</a></li>
+                <?php endif; ?>
+                <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
+            <?php else: ?>
+                <li id="connexion"><a href="connexion.html">Se connecter</a></li>
+                <li id="nouveauCompte"><a href="inscription.html">Créer un compte</a></li>
+            <?php endif; ?>
+        </ul>
+    </header>
     <h1>Livres soumis pour validation</h1>
     <table>
         <thead>
@@ -53,4 +76,5 @@ $booksData = file_exists($booksFile) ? json_decode(file_get_contents($booksFile)
         </tbody>
     </table>
 </body>
+
 </html>

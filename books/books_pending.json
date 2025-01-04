@@ -6,6 +6,13 @@
         "year": "1943",
         "isbn": "978-3-16-148410-0",
         "status": "pending"
+    },
+    {
+        "title": "dfgthz",
+        "writer": "swdgtf",
+        "editor": "dasfgt",
+        "year": "1946",
+        "isbn": "978-1-45678-123-4",
+        "status": "pending"
     }
-  
 ]
