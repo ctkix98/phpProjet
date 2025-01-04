@@ -1,0 +1,147 @@
+/* Styles communs */
+/* Palette de couleurs */
+:root {
+    --dark-green: #183D2C;
+    --medium-green: #5B7769;
+    --beige: #F9E6D8;
+    --warm-brown: #C66D4D;
+    --light-brown: #E2C6B0;
+    --medium-brown: #B4875D;
+}
+
+/* Reset de base pour tous les éléments */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Merriweather', serif;  /* Police principale */
+    color: var(--dark-green); /* Couleur du texte principale */
+    background-color: var(--beige); /* Couleur de fond claire */
+    line-height: 1.6; /* Espacement des lignes */
+    margin: 0;
+    padding: 0;
+}
+main {
+    min-height: 75vh;
+}
+
+header {
+    background-color: var(--dark-green);
+    padding: 50px 20px;
+}
+
+header ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+header ul li a {
+    color: var(--light-brown);
+    text-decoration: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+header ul li:first-child {
+    font-size: 1.5rem;
+    margin-right: auto;
+}
+
+#connexion a, #nouveauCompte a, #deconnexion a {
+    background-color: var(--beige);
+    margin-left: 15px;
+    color: #183D2C;
+}
+
+#connexion a:hover, #nouveauCompte a:hover, #deconnexion a:hover {
+    background-color: var(--medium-brown);
+}
+
+/* Contenu principal */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Mise en forme du tableau */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--medium-green);
+}
+
+thead {
+    background-color: var(--medium-green);
+    color: white;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--light-brown); /* Ligne paire plus foncée */
+}
+
+button {
+    background-color: var(--warm-brown);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--medium-brown);
+}
+
+form {
+    display: flex;
+    gap: 10px; /* Ajout d'un espace entre les boutons */
+}
+
+h1 {
+    font-size: 2rem;
+    color: var(--dark-green);
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Pied de page */
+footer {
+    background-color: var(--dark-green);
+    color: var(--light-brown);
+    text-align: center;
+    padding: 50px 0;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+/* Centrer les boutons */
+.button-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Espacement entre les sections */
+table {
+    margin-bottom: 30px;
+}

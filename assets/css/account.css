@@ -226,7 +226,7 @@ label {
     color: var(--dark-green);
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -238,7 +238,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
     background-color: var(--light-brown);
     outline: none;
     transform: scale(1.02);
@@ -273,17 +273,21 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     color: green;
 }
 
-.icon-toggle-password {
+/* Icône d'œil */
+.icon-toggle-password,
+.icon-toggle-confirm-password {
     position: absolute;
-    right: 10px;
+    right: 10px; 
     cursor: pointer;
-    font-size: 18px;
-    color: var(--medium-green);
+    font-size: 18px; 
+    color: var(--medium-green); 
     transition: color 0.3s;
 }
 
-.icon-toggle-password:hover {
-    color: var(--warm-brown);
+/* Changer la couleur de l'icône au survol */
+.icon-toggle-password:hover,
+.icon-toggle-confirm-password:hover {
+    color: var(--warm-brown); 
 }
 
 /* Bouton de soumission */

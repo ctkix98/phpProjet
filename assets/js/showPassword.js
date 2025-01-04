@@ -6,6 +6,7 @@ const confirmPasswordInput = document.querySelector("#confirm-password");
 const togglePasswordBtn = document.querySelector("#icon-toggle-password");
 const toggleConfirmPasswordBtn = document.querySelector("#icon-toggle-confirm-password");
 
+
 // Fonction pour afficher ou masquer les mots de passe
 function togglePasswordVisibility(inputField, toggleButton) {
     const isPasswordHidden = inputField.type === "password";
@@ -24,3 +25,6 @@ togglePasswordBtn.addEventListener('click', function () {
 toggleConfirmPasswordBtn.addEventListener('click', function () {
     togglePasswordVisibility(confirmPasswordInput, toggleConfirmPasswordBtn); 
 });
+
+
+
