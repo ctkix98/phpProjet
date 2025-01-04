@@ -50,7 +50,7 @@ class Database
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Title TEXT,
                 Author TEXT,
-                Editor TEXT,
+                Theme TEXT,
                 Parution_date TEXT, -- SQLite stores dates as text (ISO8601)
                 ISBN TEXT UNIQUE
             );
@@ -320,6 +320,7 @@ class Database
 
     public function fetchTopBooksFromOpenLibrary($url): void
     {
+        echo "Loading top books from";
         try {
             // Récupérer les données de l'URL
             if (!file_exists($url)) {
@@ -343,13 +344,11 @@ class Database
                 $bookObject = new Book(
                     $book['title'],
                     $book['authors'][0]['name'] ?? 'Unknown',
-                    $book['publishers'][0]['name'] ?? 'Unknown',
+                    $book['subject'][0] ?? 'Unknown',
                     $book['first_publish_year'] ?? 'Unknown',
-                    $book['avilability']['isbn'] ?? 'Unknown'
+                    $book['avilability']['isbn'] ?? 'NULL'
                 );
                 $this->addBook($bookObject);
-                //error_log("Book: " . $book['title']);
-                // Manipulez les données du livre ici.
             }
         } catch (Exception $e) {
             error_log("Error: " . $e->getMessage());
@@ -395,25 +394,30 @@ class Database
     // }
 
     public function addBook(Book $book): bool
+
     {
         try {
             $ok = true;
-            $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN)
-             VALUES (:title, :author, :editor, :parution_date, :isbn)";
+            $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN)
+                VALUES (:title, :author, :theme, :parution_date, :isbn)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':title', $book->title);
             $stmt->bindParam(':author', $book->author);
-            $stmt->bindParam(':editor', $book->editor);
+            $stmt->bindParam(':theme', $book->theme);
             $stmt->bindParam(':parution_date', $book->parution_date);
-            $stmt->bindParam(':isbn', $book->isbn);
+
+            // Vérifier si l'ISBN est fourni
+            if ($book->isbn === 'NULL' || empty($book->isbn)) {
+                $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
+            } else {
+                $stmt->bindParam(':isbn', $book->isbn);
+            }
+
             $ok = $ok && $stmt->execute();
-            echo $book->title . " added";
+            echo $book->title . " added" ;
         } catch (\PDOException $e) {
-            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage() . PHP_EOL;
+            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage() . "<br>";
         }
-
-
-        echo $book->title . " added";
         return $ok;
     }
 }
