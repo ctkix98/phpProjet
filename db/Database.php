@@ -318,35 +318,73 @@ class Database
     }
 
 
-    public function fetchTopBooksFromOpenLibrary(): void
-    {
-        $url = 'https://openlibrary.org/subject/love.json?limit=5';
-        $response = @file_get_contents($url);
-
-        if ($response === FALSE) {
-            error_log("Failed to fetch data from OpenLibrary");
-            return;
-        }
-
-        $books = json_decode($response, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            error_log("Failed to decode JSON response: " . json_last_error_msg());
-            return;
-        }
-        var_dump($books);
-        // Extraire les informations nécessaires des livres
-        // foreach ($books as $book) {
-        //     $returnedBook = new Book(
-        //         $book['title'],
-        //         $book['authors'][0]['name'],
-        //         $book['publishers'][0]['name'],
-        //         $book['publish_date'],
-        //         $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null
-        //     );
-        //     return $returnedBook;
-        }
+//     public function fetchTopBooksFromOpenLibrary(): void
+// {
+//     $url = 'https://openlibrary.org/subjects/love.json?limit=5';
     
+//     try {
+//         // Récupérer les données de l'URL
+//         $response = file_get_contents($url);
+//         if ($response === false) {
+//             throw new Exception("Failed to fetch data from URL: $url");
+//         }
+        
+//         // Décoder le JSON
+//         $books = json_decode($response, true);
+//         if (json_last_error() !== JSON_ERROR_NONE) {
+//             throw new Exception("Failed to decode JSON: " . json_last_error_msg());
+//         }
+        
+//         // Afficher les données pour débogage
+//         var_dump($books);
+
+//         // Exemple d'extraction des livres
+//         foreach ($books['works'] as $book) {
+//             error_log("Book: " . $book['title']);
+//             // Manipulez les données du livre ici.
+//         }
+//     } catch (Exception $e) {
+//         error_log("Error: " . $e->getMessage());
+//     }
+// }
+
+    
+public function fetchTopBooksFromOpenLibrary(): void
+{
+    $url = 'https://openlibrary.org/subjects/love.json?limit=5';
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'PHP cURL Test'); // Ajout d'un User-Agent
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Timeout après 10 secondes
+
+    $response = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        error_log("cURL error: " . curl_error($ch));
+        curl_close($ch);
+        return;
+    }
+
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if ($httpCode !== 200) {
+        error_log("Failed to fetch data. HTTP status: $httpCode");
+        curl_close($ch);
+        return;
+    }
+
+    curl_close($ch);
+
+    $books = json_decode($response, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log("Failed to decode JSON response: " . json_last_error_msg());
+        return;
+    }
+
+    var_dump($books);
+}
 
     public function addBooksToDatabase(Book $book): bool
     {

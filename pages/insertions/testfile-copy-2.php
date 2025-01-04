@@ -1,5 +1,6 @@
 <?php
-require_once('../../Database.php');
+ini_set('curl.cainfo', '../../config/cacert.pem');
+require_once('../../db/Database.php');
 require_once('../../class/Book.php');
 
 // Accéder à la base de données
