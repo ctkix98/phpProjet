@@ -320,7 +320,7 @@ class Database
 
     public function fetchTopBooksFromOpenLibrary(): void
     {
-        $url = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538,LCCN:2005041551&format=json&jscmd=data';
+        $url = 'https://openlibrary.org/api/subject/love.json?limit=100';
         $response = file_get_contents($url);
         $books = json_decode($response, true);
         var_dump($books);
