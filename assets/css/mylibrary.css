@@ -2,6 +2,12 @@
   width: 100vw;
 }
 
+body {
+    background-color: #ffffff; /* Couleur de fond de la page */
+    margin: 30px; /* Supprime les marges par défaut du body */
+    font-family: Arial, sans-serif; /* Police optionnelle pour un style moderne */
+}
+
 @supports not (-ms-ime-align: auto) {
 
   details summary { 
@@ -21,24 +27,6 @@ summary {
   padding-right: 30px; /* Ajoute de l'espace pour la flèche */
 }
 
-/* bouton d'ouverture */
-summary::after {
-  content: "↓";
-  position: absolute; 
-  right: 10px; 
-  top: 50%; 
-  transform: translateY(-50%); 
-  font-size: 1.2rem; 
-  color: rgb(0, 0, 0); 
-
-  
-}
-
-/* bouton de fermeture */
-details[open] summary::after {
-  content: "—";
-}
-
 
 details>summary {
   list-style: none;
@@ -52,14 +40,26 @@ details>summary::-webkit-details-marker {
 
 /* Styles pour les états de lecture */
 .summary {
-  background-color: #259c60;
-  color: #ffffff;
+  background-color: #022011;
+  color: #E2C6B0;
   border-radius: 5px;
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;
 
+}
+
+summary h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.3s ease; /* Effet visuel au survol */
 }
 
 /* Style spécifique pour chaque classe */
@@ -88,11 +88,87 @@ details>summary::-webkit-details-marker {
   margin-bottom: 20px;
 }
 
-/* Changement de style dynamique lors de l'ouverture du la classe*/
-details[open] summary {
-  background-color: rgb(175, 192, 189);
+/*-----------------------------------effet des conteuneurs --------------------------------*/
+
+/* Changement de coloris */
+details[open] summary.reading {
+  background-color: #183D2C;
   border-color: #fff;
 }
+
+details[open] summary.read-want {
+  background-color: #e8954f;
+  border-color: #fff;
+}
+
+details[open] summary.read-done {
+  background-color: #21867a;
+  border-color: #fff;
+}
+
+details[open] summary.read-dropped {
+  background-color:  #c62836; 
+  border-color: #fff;
+}
+
+/* Effets au survol */
+.reading:hover {
+  background-color: #183D2C; /* Couleur plus foncée au survol */
+  color: #d4f1d5; /* Texte légèrement plus clair */
+}
+
+.read-want:hover {
+  background-color: #e8954f; /* Couleur plus foncée au survol */
+  color: #ffefd5; /* Texte légèrement plus clair */
+}
+
+.read-done:hover {
+  background-color: #21867a; /* Couleur plus foncée au survol */
+  color: #d4f9f1; /* Texte légèrement plus clair */
+}
+
+.read-dropped:hover {
+  background-color: #c62836; /* Couleur plus foncée au survol */
+  color: #ffccd5; /* Texte légèrement plus clair */
+}
+
+/*-------------------------------- conteneurs (livres) -------------------------------------------*/
+
+/* Arrondir les coins du conteneur */
+.container, .details-container {
+  border-radius: 10px; /* Arrondit les coins avec un rayon de 10px */
+  overflow: hidden; /* S'assure que le contenu ne dépasse pas les coins arrondis */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre subtile */
+  background-color: #f5f0ec; /* Couleur de fond pour une meilleure visibilité */
+}
+
+
+/*-----------------------------------bouton d'ouverture et fermeture --------------------------------*/
+/* bouton d'ouverture */
+summary::after {
+  content: ""; 
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg); /* Rotation pour former une flèche */
+  width: 8px; 
+  height: 8px; 
+  border-right: 3px solid rgb(0, 0, 0);
+  border-bottom: 3px solid rgb(0, 0, 0); 
+  transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Bouton de fermeture (tiret lorsque le conteneur est ouvert) */
+details[open] summary::after {
+  content: "—"; 
+  border: none; /* Supprime les bordures de la flèche graphique */
+  width: auto; 
+  height: auto; 
+  font-size: 1.5rem; 
+  color: rgb(0, 0, 0); 
+  transform: translateY(-50%); /* Supprime la rotation */
+}
+
 
 /*-------------------------------- conteneurs (livres) -------------------------------------------*/
 
@@ -105,6 +181,7 @@ details[open] summary {
   padding: 16px; /* Ajoute de l'espace interne autour des éléments */
   margin: 0 auto; /* Centre horizontalement */
   justify-content: center; /* Centre les éléments horizontalement */
+  align-items: flex-start; /* Aligne les livres en haut si leur contenu varie */
 }
 
 .details-container li {
@@ -125,6 +202,7 @@ details[open] summary {
 
 .details-container img:hover {
   transform: scale(1.05); /* Zoom léger au survol */
+
 }
 
 .details-container h3 {
@@ -135,6 +213,13 @@ details[open] summary {
   margin: 8px 0 0; /* Espacement au-dessus des titres */
 }
 
-.details-container ul {
-  align-items: flex-start; /* Aligne les livres en haut si leur contenu varie */
+.author {
+  font-size: 0.9rem; /* Taille légèrement plus petite que le titre */
+  color: #555; /* Couleur grise pour distinguer le texte */
+  margin-top: 4px; /* Espacement entre le titre et l'auteur */
+  font-style: italic; /* Met en italique pour un effet stylé */
 }
+
+
+
+
