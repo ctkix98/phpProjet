@@ -318,25 +318,24 @@ class Database
     }
 
 
-    public function fetchTopBooksFromOpenLibrary(): array
+    public function fetchTopBooksFromOpenLibrary(): void
     {
         $url = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538,LCCN:2005041551&format=json&jscmd=data';
         $response = file_get_contents($url);
         $books = json_decode($response, true);
-
+        var_dump($books);
         // Extraire les informations nécessaires des livres
-        $bookList = [];
-        foreach ($books as $book) {
-            $bookList[] = [
-                'title' => $book['title'],
-                'author' => $book['authors'][0]['name'],
-                'editor' => $book['publishers'][0]['name'],
-                'parution_date' => $book['publish_date'],
-                'isbn' => $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null,
-            ];
+        // foreach ($books as $book) {
+        //     $returnedBook = new Book(
+        //         $book['title'],
+        //         $book['authors'][0]['name'],
+        //         $book['publishers'][0]['name'],
+        //         $book['publish_date'],
+        //         $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null
+        //     );
+        //     return $returnedBook;
         }
-        return $bookList;
-    }
+    
 
     public function addBooksToDatabase(Book $book): bool
     {
