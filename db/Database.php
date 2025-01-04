@@ -369,7 +369,6 @@ class Database
 
             // Vérifier si l'ISBN est fourni
             if ($book->isbn === 'NULL' || empty($book->isbn)) {
-                echo "on est ici";
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':isbn', $book->isbn);
@@ -382,5 +381,14 @@ class Database
             echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
         }
         return $ok;
+    }
+
+    public function addBookState($state){
+        // Vérifier si l'état du livre est déjà présent dans la base de données
+        echo "Ajout de l'état du livre";
+        $sql = "INSERT INTO book_state (book_state) VALUES ('$state')";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        echo "Etat du livre ajouté";
     }
 }
