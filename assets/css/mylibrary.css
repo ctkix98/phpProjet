@@ -13,14 +13,32 @@
   }
 }
 
-summary::after {
-  content: "↓";
-  margin-left: 1rem;
+/*-----------------------------------summmary---------------------------------------*/
+
+/* Positionner le content à droite */
+summary {
+  position: relative; /* Nécessaire pour le positionnement absolu des éléments enfants */
+  padding-right: 30px; /* Ajoute de l'espace pour la flèche */
 }
 
+/* bouton d'ouverture */
+summary::after {
+  content: "↓";
+  position: absolute; 
+  right: 10px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  font-size: 1.2rem; 
+  color: rgb(0, 0, 0); 
+
+  
+}
+
+/* bouton de fermeture */
 details[open] summary::after {
   content: "—";
 }
+
 
 details>summary {
   list-style: none;
@@ -30,6 +48,53 @@ details>summary::marker,
 details>summary::-webkit-details-marker {
   display: none;
 }
+
+
+/* Styles pour les états de lecture */
+.summary {
+  background-color: #259c60;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+
+}
+
+/* Style spécifique pour chaque classe */
+.reading h2, .read-want h2, .read-done h2, .read-dropped h2 {
+  margin: 0;
+}
+
+.reading {
+  background-color: #5B7769;
+}
+
+.read-want {
+  background-color: #5B7769;
+}
+
+.read-done {
+  background-color: #5B7769;
+}
+
+.read-dropped {
+  background-color: #5B7769;
+}
+
+/* marges pour espacer les conteneurs */
+.container {
+  margin-bottom: 20px;
+}
+
+/* Changement de style dynamique lors de l'ouverture du la classe*/
+details[open] summary {
+  background-color: rgb(175, 192, 189);
+  border-color: #fff;
+}
+
+/*-------------------------------- conteneurs -------------------------------------------*/
 
 .details-container {
   position: static;
