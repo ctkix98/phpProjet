@@ -61,16 +61,18 @@ header ul li a:hover {
   color: var(--dark-green);
 }
 
-#connexion a,
-#nouveauCompte a {
-  background-color: var(--beige);
-  color: var(--dark-green);
+#connexion a, 
+#nouveauCompte a,
+#deconnexion a {
+    background-color: var(--beige);
+    margin-left: 15px;
+    color: #183D2C;
+    
 }
-
-#connexion a:hover,
-#nouveauCompte a:hover {
-  background-color: var(--medium-brown);
-  color: var(--beige);
+#connexion a:hover, 
+#nouveauCompte a:hover,
+#deconnexion a:hover {
+    background-color: var(--medium-brown);
 }
 
 /* Style global pour le body */
