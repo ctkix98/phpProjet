@@ -2,13 +2,14 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
     <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/form-add-book.css">
 </head>
 
 <body>
@@ -30,6 +31,38 @@ session_start();
         <div class="content">
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>
+                <div>
+                    <form action="../pages/verification/checkNewBook.php" method="POST">
+                        <h2>Ajouter un livre</h2>
+
+                        <div class="form-group">
+                            <label for="title">Titre</label>
+                            <input type="text" id="title" name="title" placeholder="Le Petit Prince" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="writer">Auteur</label>
+                            <input type="text" id="writer" name="writer" placeholder="Antoine de Saint-Exupéry" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editor">Maison d'édition </label>
+                            <input type="text" id="editor" name="editor" placeholder="Gallimard" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year">Année de publication </label>
+                            <input type="number" id="year" name="year" min="1000" max="9999" placeholder="1943" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="isbn">ISBN </label>
+                            <input type="text" id="isbn" name="isbn" placeholder="978-3-16-148410-0" required>
+                        </div>
+
+                        <button type="submit" name="submit" class="button-soumission">Soumettre l'ouvrage</button>
+                    </form>
+                </div>
             <?php else: ?>
                 <h1>Bienvenue ! </h1>
             <?php endif; ?>

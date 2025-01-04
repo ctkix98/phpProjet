@@ -1,0 +1,46 @@
+.main {
+  width: 100vw;
+}
+
+@supports not (-ms-ime-align: auto) {
+
+  details summary { 
+    cursor: pointer;
+  }
+
+  details summary > * { 
+    display: inline;
+  }
+}
+
+summary::after {
+  content: "↓";
+  margin-left: 1rem;
+}
+
+details[open] summary::after {
+  content: "—";
+}
+
+details>summary {
+  list-style: none;
+}
+
+details>summary::marker,
+details>summary::-webkit-details-marker {
+  display: none;
+}
+
+.details-container {
+  position: static;
+  inset: 0;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  place-items: center;
+  justify-content: center;
+  gap: 50px;
+  padding: 16px; 
+}
