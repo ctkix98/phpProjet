@@ -21,7 +21,6 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
 ?>
 
 <!DOCTYPE html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,6 +58,7 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
             <?php endif; ?>
         </ul>
     </header>
+
     <main>
         <h1>Tableau de bord</h1>
 
@@ -104,61 +104,69 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
         <!-- Section des livres validés (cachée par défaut) -->
         <div id="approvedBooks" style="display:none;">
             <h2>Livres validés</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Auteur</th>
-                        <th>Maison d'édition</th>
-                        <th>Année de publication</th>
-                        <th>ISBN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($booksApprovedData as $book): ?>
+            <?php if (empty($booksApprovedData)): ?>
+                <p>Aucun livre validé à afficher.</p>
+            <?php else: ?>
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($book['title']); ?></td>
-                            <td><?= htmlspecialchars($book['writer']); ?></td>
-                            <td><?= htmlspecialchars($book['editor']); ?></td>
-                            <td><?= htmlspecialchars($book['year']); ?></td>
-                            <td><?= htmlspecialchars($book['isbn']); ?></td>
+                            <th>Titre</th>
+                            <th>Auteur</th>
+                            <th>Maison d'édition</th>
+                            <th>Année de publication</th>
+                            <th>ISBN</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($booksApprovedData as $book): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($book['title']); ?></td>
+                                <td><?= htmlspecialchars($book['writer']); ?></td>
+                                <td><?= htmlspecialchars($book['editor']); ?></td>
+                                <td><?= htmlspecialchars($book['year']); ?></td>
+                                <td><?= htmlspecialchars($book['isbn']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
 
         <!-- Section des livres rejetés (cachée par défaut) -->
         <div id="rejectedBooks" style="display:none;">
             <h2>Livres rejetés</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Auteur</th>
-                        <th>Maison d'édition</th>
-                        <th>Année de publication</th>
-                        <th>ISBN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($booksRejectedData as $book): ?>
+            <?php if (empty($booksRejectedData)): ?>
+                <p>Aucun livre rejeté à afficher.</p>
+            <?php else: ?>
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($book['title']); ?></td>
-                            <td><?= htmlspecialchars($book['writer']); ?></td>
-                            <td><?= htmlspecialchars($book['editor']); ?></td>
-                            <td><?= htmlspecialchars($book['year']); ?></td>
-                            <td><?= htmlspecialchars($book['isbn']); ?></td>
+                            <th>Titre</th>
+                            <th>Auteur</th>
+                            <th>Maison d'édition</th>
+                            <th>Année de publication</th>
+                            <th>ISBN</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($booksRejectedData as $book): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($book['title']); ?></td>
+                                <td><?= htmlspecialchars($book['writer']); ?></td>
+                                <td><?= htmlspecialchars($book['editor']); ?></td>
+                                <td><?= htmlspecialchars($book['year']); ?></td>
+                                <td><?= htmlspecialchars($book['isbn']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
     </main>
+
     <footer>
         <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
     </footer>
 
 </body>
-
 </html>
