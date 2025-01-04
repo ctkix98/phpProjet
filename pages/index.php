@@ -27,6 +27,24 @@ session_start();
         </ul>
     </header>
     <main>
+    <div class="container">
+            <!-- Section des livres les plus lus -->
+            <aside class="most-read-books">
+                <h2>Les livres les plus lus</h2>
+                <ul>
+                    <li>
+                    <img src="../assets/images/book-cover-reading/le-petit-prince-antoine-de-saint-exupery.jpeg" alt="Cover of the book Le Petit Prince">
+                    </li>
+                    <li>
+                    <img src="../assets/images/book-cover-reading/Les-Misérables–Victor-Hugo.jpeg" alt="Cover of the book Les-Misérables">
+                    </li>
+                    <li>
+                    <img src="../assets/images/book-cover-reading/Dune – Frank Herbert.jpeg" alt="Cover of the book Dune">
+                    </li>
+                </ul>
+            </aside>
+    </div>
+        <!-- Contenu principal --> 
         <div class="content">
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>

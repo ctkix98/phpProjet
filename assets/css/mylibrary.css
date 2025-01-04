@@ -139,7 +139,7 @@ details[open] summary.read-dropped {
   border-radius: 10px; /* Arrondit les coins avec un rayon de 10px */
   overflow: hidden; /* S'assure que le contenu ne dépasse pas les coins arrondis */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre subtile */
-  background-color: #f5f0ec; /* Couleur de fond pour une meilleure visibilité */
+  background-color: #F9E6D8; /* Couleur de fond pour une meilleure visibilité */
 }
 
 
