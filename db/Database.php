@@ -320,9 +320,20 @@ class Database
 
     public function fetchTopBooksFromOpenLibrary(): void
     {
-        $url = 'https://openlibrary.org/api/subject/love.json?limit=100';
-        $response = file_get_contents($url);
+        $url = 'https://openlibrary.org/subject/love.json?limit=5';
+        $response = @file_get_contents($url);
+
+        if ($response === FALSE) {
+            error_log("Failed to fetch data from OpenLibrary");
+            return;
+        }
+
         $books = json_decode($response, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log("Failed to decode JSON response: " . json_last_error_msg());
+            return;
+        }
         var_dump($books);
         // Extraire les informations nécessaires des livres
         // foreach ($books as $book) {
