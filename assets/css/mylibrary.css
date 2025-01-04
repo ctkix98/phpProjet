@@ -94,18 +94,47 @@ details[open] summary {
   border-color: #fff;
 }
 
-/*-------------------------------- conteneurs -------------------------------------------*/
+/*-------------------------------- conteneurs (livres) -------------------------------------------*/
 
-.details-container {
-  position: static;
-  inset: 0;
-  width: fit-content;
-  height: fit-content;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  place-items: center;
-  justify-content: center;
-  gap: 50px;
-  padding: 16px; 
+.details-container ul {
+  /* Centralisation et disposition en grille */
+  display: flex; /* Disposition flexible */
+  flex-wrap: wrap; /* Retour à la ligne si nécessaire */
+  gap: 20px; /* Espacement uniforme entre les éléments */
+  list-style: none; /* Supprime les puces de la liste */
+  padding: 16px; /* Ajoute de l'espace interne autour des éléments */
+  margin: 0 auto; /* Centre horizontalement */
+  justify-content: center; /* Centre les éléments horizontalement */
+}
+
+.details-container li {
+  /* Largeur dynamique des livres */
+  flex: 0 1 calc(20% - 20px); /* Chaque livre occupe 20% de la largeur disponible */
+  box-sizing: border-box; /* Inclut padding et bordure dans le calcul de la largeur */
+  text-align: center; /* Centre le contenu textuel */
+}
+
+.details-container img {
+  /* Images responsives */
+  max-width: 100%; /* L'image s'adapte à la largeur du conteneur */
+  height: auto; /* Maintient les proportions */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre subtile */
+  transition: transform 0.3s ease; /* Effet de zoom au survol */
+}
+
+.details-container img:hover {
+  transform: scale(1.05); /* Zoom léger au survol */
+}
+
+.details-container h3 {
+  /* Styles des titres des livres */
+  font-size: 1.2rem; /* Taille des titres */
+  font-weight: bold; /* Gras pour les titres */
+  color: #333; /* Couleur du texte */
+  margin: 8px 0 0; /* Espacement au-dessus des titres */
+}
+
+.details-container ul {
+  align-items: flex-start; /* Aligne les livres en haut si leur contenu varie */
 }
