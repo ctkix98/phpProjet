@@ -1,7 +1,5 @@
 <?php
 require_once __DIR__ . '/../class/Personne.php';
-//require_once __DIR__ . '/../config/db.ini';
-//require_once __DIR__ . '/addBooks.php';
 
 
 
@@ -15,7 +13,7 @@ class Database
         $dsn = $config['dsn'];
         $username = $config['username'];
         $password = $config['password'];
-        //initialisation à la DB
+         //initialisation à la DB
         try {
             $this->db = new \PDO($dsn, $username, $password);
         } catch (PDOException $e) {
@@ -30,156 +28,156 @@ class Database
     {
         $sql = <<<COMMANDE_SQL
             CREATE TABLE IF NOT EXISTS book_state (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    book_state TEXT
-            )
-    COMMANDE_SQL;
-
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                book_state TEXT
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTableBook(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS book (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            Title VARCHAR(255),
-            Author VARCHAR(255),
-            Editor VARCHAR(255),
-            Parution_date DATE,
-            ISBN VARCHAR(20) UNIQUE
+            CREATE TABLE IF NOT EXISTS book (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Title TEXT,
+                Author TEXT,
+                Editor TEXT,
+                Parution_date TEXT, -- SQLite stores dates as text (ISO8601)
+                ISBN TEXT UNIQUE
             );
-    COMMANDE_SQL;
-
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
-    //Créer table users
+
     public function createTablelecture(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS lecture (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    `actual page` INTEGER,
-    `date_begin` TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    `date_end` TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    book_state_id INTEGER,
-    book_id INTEGER,
-    user_id INTEGER,
-    FOREIGN KEY (book_state_id) REFERENCES book_state(id),
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS lecture (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                actual_page INTEGER,
+                date_begin TEXT, -- SQLite stores dates as text (ISO8601)
+                date_end TEXT, -- SQLite stores dates as text (ISO8601)
+                book_state_id INTEGER,
+                book_id INTEGER,
+                user_id INTEGER,
+                FOREIGN KEY (book_state_id) REFERENCES book_state(id),
+                FOREIGN KEY (book_id) REFERENCES book(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTablecomment(): bool
     {
         $sql = <<<COMMANDE_SQL
-      CREATE TABLE IF NOT EXISTS comment (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    book_id INTEGER,
-    user_id INTEGER,
-    content TEXT,
-    date TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS comment (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                book_id INTEGER,
+                user_id INTEGER,
+                content TEXT,
+                date TEXT, -- SQLite stores dates as text (ISO8601)
+                FOREIGN KEY (book_id) REFERENCES book(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTablegrade(): bool
     {
         $sql = <<<COMMANDE_SQL
-     CREATE TABLE IF NOT EXISTS grade (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    book_id INTEGER,
-    user_id INTEGER,
-    grade INTEGER,
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS grade (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                book_id INTEGER,
+                user_id INTEGER,
+                grade INTEGER,
+                FOREIGN KEY (book_id) REFERENCES book(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
 
-    //TABLE USERS
     public function createTableusers(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            pseudo VARCHAR(120) NOT NULL UNIQUE,
-            email VARCHAR(120) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            token VARCHAR(255) DEFAULT NULL,
-            is_confirmed BOOLEAN DEFAULT 0
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                pseudo VARCHAR(120) NOT NULL UNIQUE,
+                email VARCHAR(120) NOT NULL UNIQUE,
+                password VARCHAR(255) NOT NULL,
+                token VARCHAR(255) DEFAULT NULL,
+                is_confirmed BOOLEAN DEFAULT 0
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTableSettings(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS settings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    key_name VARCHAR(255) UNIQUE NOT NULL, 
-    key_value VARCHAR(255) NOT NULL        
-
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS settings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                key_name VARCHAR(255) UNIQUE NOT NULL, 
+                key_value VARCHAR(255) NOT NULL
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
@@ -337,24 +335,23 @@ COMMANDE_SQL;
                 'isbn' => $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null,
             ];
         }
-        echo "salut";
         return $bookList;
     }
 
-    public function addBooksToDatabase(array $books): bool
+    public function addBooksToDatabase(array $book): bool
     {
-        echo "coucou";
         $ok = true;
-        foreach ($books as $book) {
-            $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN) VALUES (:title, :author, :editor, :parution_date, :isbn)";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':title', $book['title']);
-            $stmt->bindParam(':author', $book['author']);
-            $stmt->bindParam(':editor', $book['editor']);
-            $stmt->bindParam(':parution_date', $book['parution_date']);
-            $stmt->bindParam(':isbn', $book['isbn']);
-            $ok = $ok && $stmt->execute();
-        }
+        $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN)
+             VALUES (:title, :author, :editor, :parution_date, :isbn)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':title', $book['title']);
+        $stmt->bindParam(':author', $book['author']);
+        $stmt->bindParam(':editor', $book['editor']);
+        $stmt->bindParam(':parution_date', $book['parution_date']);
+        $stmt->bindParam(':isbn', $book['isbn']);
+        $ok = $ok && $stmt->execute();
+
+        echo "book successfully added";
         return $ok;
     }
 }
