@@ -65,36 +65,40 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
         <!-- Section des livres en attente de validation (toujours visible) -->
         <div id="pendingBooks">
             <h2>Livres en attente de validation</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Auteur</th>
-                        <th>Maison d'édition</th>
-                        <th>Année de publication</th>
-                        <th>ISBN</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($booksPendingData as $book): ?>
+            <?php if (empty($booksPendingData)): ?>
+                <p>Aucun livre en attente de validation.</p>
+            <?php else: ?>
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($book['title']); ?></td>
-                            <td><?= htmlspecialchars($book['writer']); ?></td>
-                            <td><?= htmlspecialchars($book['editor']); ?></td>
-                            <td><?= htmlspecialchars($book['year']); ?></td>
-                            <td><?= htmlspecialchars($book['isbn']); ?></td>
-                            <td>
-                                <form action="validateBook.php" method="POST">
-                                    <input type="hidden" name="isbn" value="<?= htmlspecialchars($book['isbn']); ?>">
-                                    <button type="submit" name="action" value="approve">Approuver</button>
-                                    <button type="submit" name="action" value="reject">Rejeter</button>
-                                </form>
-                            </td>
+                            <th>Titre</th>
+                            <th>Auteur</th>
+                            <th>Maison d'édition</th>
+                            <th>Année de publication</th>
+                            <th>ISBN</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($booksPendingData as $book): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($book['title']); ?></td>
+                                <td><?= htmlspecialchars($book['writer']); ?></td>
+                                <td><?= htmlspecialchars($book['editor']); ?></td>
+                                <td><?= htmlspecialchars($book['year']); ?></td>
+                                <td><?= htmlspecialchars($book['isbn']); ?></td>
+                                <td>
+                                    <form action="validateBook.php" method="POST">
+                                        <input type="hidden" name="isbn" value="<?= htmlspecialchars($book['isbn']); ?>">
+                                        <button type="submit" name="action" value="approve">Approuver</button>
+                                        <button type="submit" name="action" value="reject">Rejeter</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
 
         <!-- Boutons pour afficher ou cacher les livres validés et rejetés -->
