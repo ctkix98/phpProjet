@@ -1,5 +1,5 @@
 <?php
-//session_start();
+//session_start(); // Démarrer la session
 require_once __DIR__ . '/../config/session.php';
 ?>
 
@@ -37,15 +37,17 @@ require_once __DIR__ . '/../config/session.php';
         </ul>
     </header>
     <main>
-    <section class="my-library">
-            <h1>Ma bibliothèque</h1>
-            <div class="container-all">
-                <div class="container">
-                    <details open>
-                        <summary class="reading">
-                            <h2>En cours</h2>
-                        </summary>
-                        <div class="details-container">
+        <?php if (isset($_SESSION['utilisateur'])): ?>
+            <section class="my-library">
+                <h1>Ma bibliothèque</h1>
+                <div class="container-all">
+                    <div class="container">
+                        <details open>
+                            <summary class="reading">
+                                <h2>En cours</h2>
+                            </summary>
+                            <div class="details-container">
+                                <!-- Exemple de livres en cours -->
                                 <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre 1</h3>
@@ -61,74 +63,58 @@ require_once __DIR__ . '/../config/session.php';
                                     <h3 class="book-title">Livre 3</h3>
                                     <h4 class="author">Auteur 3</h4>
                                 </div>
-                                <div class="book-item">
-                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
-                                    <h3 class="book-title">Livre 4</h3>
-                                    <h4 class="author">Auteur 4</h4>
-                                </div>
-                                <div class="book-item">
-                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
-                                    <h3 class="book-title">Livre 5</h3>
-                                    <h4 class="author">Auteur 5</h4>
-                                </div>
-                                <div class="book-item">
-                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
-                                    <h3 class="book-title">Livre 6</h3>
-                                    <h4 class="author">Auteur 6</h4>
-                                </div>
-                        </div>
-                    </details>
-                </div>
-                <div class="container">
-                    <details>
-                        <summary class="read-want">
-                            <h2>À lire</h2>
-                        </summary>
-                        <div class="details-container">
-                        <div class="book-item">
-                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
-                                    <h3 class="book-title"></h3>
-                                </div>
-                        </div>
-                    </details>
-                </div>
-                <div class="container">
-                    <details>
-                        <summary class="read-done">
-                            <h2>Terminé</h2>
-                        </summary>
-                        <div class="book-item">
-                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
-                                    <h3 class="book-title"></h3>
-                                    <h4 class="author"></h4>
-                                </div>
-                            </details>
-                        </div>
-                        <div class="container">
-                            <details>
-                                <summary class="read-dropped">
-                                    <h2>Abandonné</h2>
-                                </summary>
-                                <div class="book-item">
-                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
-                                    <h3 class="book-title"></h3>
-                                    <h4 class="author"></h4>
-                                </div>
-                            </details>
-                        </div>
+                            </div>
+                        </details>
                     </div>
-                </section>
-            <?php else: ?>
-                <h1>Il semblerait que tu ne sois pas connecté :/</h1>
-            <?php endif; ?>
-        </div>
+                    <div class="container">
+                        <details>
+                            <summary class="read-want">
+                                <h2>À lire</h2>
+                            </summary>
+                            <div class="details-container">
+                                <div class="book-item">
+                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
+                                    <h3 class="book-title">Livre à lire</h3>
+                                    <h4 class="author">Auteur inconnu</h4>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="container">
+                        <details>
+                            <summary class="read-done">
+                                <h2>Terminé</h2>
+                            </summary>
+                            <div class="book-item">
+                                <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
+                                <h3 class="book-title">Livre terminé</h3>
+                                <h4 class="author">Auteur terminé</h4>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="container">
+                        <details>
+                            <summary class="read-dropped">
+                                <h2>Abandonné</h2>
+                            </summary>
+                            <div class="book-item">
+                                <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
+                                <h3 class="book-title">Livre abandonné</h3>
+                                <h4 class="author">Auteur abandonné</h4>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+        <?php else: ?>
+            <h1>Il semblerait que tu ne sois pas connecté :/</h1>
+        <?php endif; ?>
     </main>
     <footer>
         <div>
             <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
         </div>
     </footer>
-    <script src=""></script>
 </body>
 
 </html>
