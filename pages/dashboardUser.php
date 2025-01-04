@@ -12,9 +12,8 @@ require_once __DIR__ . '/../config/session.php';
     <title>Page d'accueil</title>
     <!--Liens vers icon oeil-->
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="../assets/css/account.css">
     <script src="../assets/js/showInput.js" defer></script>
     <script src="../assets/js/checkpassword.js" defer></script>
@@ -26,8 +25,14 @@ require_once __DIR__ . '/../config/session.php';
             <li><a href="index.php">Babel</a></li>
             <li><a href="about.php">A propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
-                <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
-                <li> <a href="dashboardUser.php">Mon compte</a></li>
+                <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
+                    <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
+                    <li> <a href="dashboardAdmin.php">Compte admin</a></li>
+                <?php else: ?>
+                    <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
+                    <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
+                    <li> <a href="dashboardUser.php">Mon compte</a></li>
+                <?php endif; ?>
                 <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
                 <li id="connexion"><a href="connexion.html">Se connecter</a></li>
@@ -57,32 +62,29 @@ require_once __DIR__ . '/../config/session.php';
                     <form id="formChangerMotDePasse" method="POST" action="../pages/verification/updateAccount.php" style="display: none;">
                         <h2>Changer le mot de passe</h2>
                         <input type="hidden" name="action" value="changerMotDePasse">
-                        
+
                         <label>Ancien mot de passe :</label>
                         <div class="password-wrapper">
-                        <input type="password" id="ancienMotDePasse" name="ancienMotDePasse" required/><br>
-                        <i
-                            class="fa-solid fa-eye icon-toggle-password"
-                            id="icon-toggle-password-old"
-                        ></i>
+                            <input type="password" id="ancienMotDePasse" name="ancienMotDePasse" required /><br>
+                            <i
+                                class="fa-solid fa-eye icon-toggle-password"
+                                id="icon-toggle-password-old"></i>
                         </div>
 
                         <label>Nouveau mot de passe :</label>
                         <div class="password-wrapper">
-                        <input type="password" id="nouveauMotDePasse" name="nouveauMotDePasse" required/><br>
-                        <i
-                            class="fa-solid fa-eye icon-toggle-password"
-                            id="icon-toggle-password-new"
-                        ></i>
+                            <input type="password" id="nouveauMotDePasse" name="nouveauMotDePasse" required /><br>
+                            <i
+                                class="fa-solid fa-eye icon-toggle-password"
+                                id="icon-toggle-password-new"></i>
                         </div>
 
                         <label>Confirmer le nouveau mot de passe :</label>
                         <div class="password-wrapper">
-                        <input type="password" id="confirmerMotDePasse" name="confirmerMotDePasse" required/><br>
-                        <i
-                            class="fa-solid fa-eye icon-toggle-password"
-                            id="icon-toggle-password-confirm"
-                        ></i>
+                            <input type="password" id="confirmerMotDePasse" name="confirmerMotDePasse" required /><br>
+                            <i
+                                class="fa-solid fa-eye icon-toggle-password"
+                                id="icon-toggle-password-confirm"></i>
                         </div>
                         <p id="erreurMotDePasse" style="color: red; display: none;"></p>
                         <button type="submit" name="submit" class="button-soumission">Changer le mot de passe</button>
