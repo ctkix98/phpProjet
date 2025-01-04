@@ -13,7 +13,7 @@ class Database
         $dsn = $config['dsn'];
         $username = $config['username'];
         $password = $config['password'];
-         //initialisation à la DB
+        //initialisation à la DB
         try {
             $this->db = new \PDO($dsn, $username, $password);
         } catch (PDOException $e) {
@@ -338,17 +338,17 @@ class Database
         return $bookList;
     }
 
-    public function addBooksToDatabase(array $book): bool
+    public function addBooksToDatabase(Book $book): bool
     {
         $ok = true;
         $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN)
              VALUES (:title, :author, :editor, :parution_date, :isbn)";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':title', $book['title']);
-        $stmt->bindParam(':author', $book['author']);
-        $stmt->bindParam(':editor', $book['editor']);
-        $stmt->bindParam(':parution_date', $book['parution_date']);
-        $stmt->bindParam(':isbn', $book['isbn']);
+        $stmt->bindParam(':title', $book->title);
+        $stmt->bindParam(':author', $book->author);
+        $stmt->bindParam(':editor', $book->editor);
+        $stmt->bindParam(':parution_date', $book->parution_date);
+        $stmt->bindParam(':isbn', $book->isbn);
         $ok = $ok && $stmt->execute();
 
         echo "book successfully added";
