@@ -18,8 +18,14 @@ session_start();
             <li><a href="index.php">Babel</a></li>
             <li><a href="about.php">A propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
-                <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
-                <li> <a href="dashboardUser.php">Mon compte</a></li>
+                <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
+                    <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
+                    <li> <a href="dashboardAdmin.php">Compte admin</a></li>
+                <?php else: ?>
+                    <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
+                    <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
+                    <li> <a href="dashboardUser.php">Mon compte</a></li>
+                <?php endif; ?>
                 <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
                 <li id="connexion"><a href="connexion.html">Se connecter</a></li>
@@ -41,7 +47,7 @@ session_start();
                 <p class="editor"><strong>Editeur :</strong> Robert Laffont </p>
                 <p class="parution-date"><strong>Parution :</strong>19 novembre 2024</p>
                 <h4 class="isbn"><strong>ISBN :</strong>9782221243619</h4>
-                
+
                 <!-- book state -->
                 <div>
                     <h2>Statut du livre</h2>
@@ -52,10 +58,10 @@ session_start();
                         <option value="read-dropped">Abandonné</option>
                     </select>
                 </div>
-                
+
             </div>
         </section>
-            <!-- comment and rating -->
+        <!-- comment and rating -->
         <section class="comment-section">
             <h3>Donne ton avis sur ce livre</h3>
             <form action="" method="post">
@@ -82,7 +88,7 @@ session_start();
         </section>
 
     </main>
-    
+
 </body>
 
 </html>

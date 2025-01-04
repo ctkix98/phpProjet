@@ -10,6 +10,7 @@ session_start();
     <title>Page d'accueil</title>
     <link rel="stylesheet" href="../assets/css/index.css">
     <link rel="stylesheet" href="../assets/css/form-add-book.css">
+    <script src="../assets/js/checkisbn.js" defer></script>
 </head>
 
 <body>
@@ -18,8 +19,14 @@ session_start();
             <li><a href="index.php">Babel</a></li>
             <li><a href="about.php">A propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
-                <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
-                <li> <a href="dashboardUser.php">Mon compte</a></li>
+                <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
+                    <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
+                    <li> <a href="dashboardAdmin.php">Compte admin</a></li>
+                <?php else: ?>
+                    <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
+                    <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
+                    <li> <a href="dashboardUser.php">Mon compte</a></li>
+                <?php endif; ?>
                 <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
                 <li id="connexion"><a href="connexion.html">Se connecter</a></li>
@@ -56,9 +63,11 @@ session_start();
                         </div>
 
                         <div class="form-group">
-                            <label for="isbn">ISBN </label>
+                            <label for="isbn">ISBN</label>
                             <input type="text" id="isbn" name="isbn" placeholder="978-3-16-148410-0" required>
+                            <div id="isbn-error" style="color: red; font-size: 12px; display: none;"></div> <!-- Message d'erreur -->
                         </div>
+
 
                         <button type="submit" name="submit" class="button-soumission">Soumettre l'ouvrage</button>
                     </form>
