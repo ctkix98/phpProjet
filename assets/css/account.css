@@ -79,6 +79,7 @@ header ul li a {
 #deconnexion a {
     background-color: var(--beige);
     margin-left: 15px;
+    color: #183D2C;
 }
 
 #connexion a:hover, 
