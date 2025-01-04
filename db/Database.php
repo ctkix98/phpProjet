@@ -346,7 +346,7 @@ class Database
                     $book['authors'][0]['name'] ?? 'Unknown',
                     $book['subject'][0] ?? 'Unknown',
                     $book['first_publish_year'] ?? 'Unknown',
-                    $book['avilability']['isbn'] ?? 'NULL'
+                    $book['availability']['isbn'] ?? 'NULL'
                 );
                 $this->addBook($bookObject);
             }
@@ -355,46 +355,7 @@ class Database
         }
     }
 
-
-    // public function fetchTopBooksFromOpenLibrary(): void
-    // {
-    //     $url = 'https://openlibrary.org/subjects/love.json?limit=5';
-
-    //     $ch = curl_init();
-    //     curl_setopt($ch, CURLOPT_URL, $url);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt($ch, CURLOPT_USERAGENT, 'PHP cURL Test'); // Ajout d'un User-Agent
-    //     curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Timeout après 10 secondes
-
-    //     $response = curl_exec($ch);
-
-    //     if (curl_errno($ch)) {
-    //         error_log("cURL error: " . curl_error($ch));
-    //         curl_close($ch);
-    //         return;
-    //     }
-
-    //     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    //     if ($httpCode !== 200) {
-    //         error_log("Failed to fetch data. HTTP status: $httpCode");
-    //         curl_close($ch);
-    //         return;
-    //     }
-
-    //     curl_close($ch);
-
-    //     $books = json_decode($response, true);
-
-    //     if (json_last_error() !== JSON_ERROR_NONE) {
-    //         error_log("Failed to decode JSON response: " . json_last_error_msg());
-    //         return;
-    //     }
-
-    //     var_dump($books);
-    // }
-
     public function addBook(Book $book): bool
-
     {
         try {
             $ok = true;
@@ -408,15 +369,17 @@ class Database
 
             // Vérifier si l'ISBN est fourni
             if ($book->isbn === 'NULL' || empty($book->isbn)) {
+                echo "on est ici";
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':isbn', $book->isbn);
             }
 
             $ok = $ok && $stmt->execute();
-            echo $book->title . " added" ;
+            echo $book->title . " added";
+            echo "<br>";
         } catch (\PDOException $e) {
-            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage() . "<br>";
+            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
         }
         return $ok;
     }
