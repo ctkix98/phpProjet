@@ -14,4 +14,4 @@ $book = new Book(
 );
 
 // $db->addBooksToDatabase($book);
-$db->fetchTopBooksFromOpenLibrary();
+//$db->fetchTopBooksFromOpenLibrary();

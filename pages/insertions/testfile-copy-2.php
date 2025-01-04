@@ -1,5 +1,4 @@
 <?php
-ini_set('curl.cainfo', '../../config/cacert.pem');
 require_once('../../db/Database.php');
 require_once('../../class/Book.php');
 
@@ -14,4 +13,4 @@ $book = new Book(
 );
 
 // $db->addBooksToDatabase($book);
-$db->fetchTopBooksFromOpenLibrary();
+$db->fetchTopBooksFromOpenLibrary('../../db/fantasy.json');
