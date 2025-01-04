@@ -43,26 +43,32 @@ require_once __DIR__ . '/../config/session.php';
                                 <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre 1</h3>
+                                    <h4 class="author">Auteur 1</h4>
                                 </div>
                                 <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre 2</h3>
+                                    <h4 class="author">Auteur 2</h4>
                                 </div>
                                 <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre 3</h3>
+                                    <h4 class="author">Auteur 3</h4>
                                 </div>
                                 <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre 4</h3>
+                                    <h4 class="author">Auteur 4</h4>
                                 </div>
                                 <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre 5</h3>
+                                    <h4 class="author">Auteur 5</h4>
                                 </div>
                                 <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre 6</h3>
+                                    <h4 class="author">Auteur 6</h4>
                                 </div>
                         </div>
                     </details>
@@ -76,6 +82,7 @@ require_once __DIR__ . '/../config/session.php';
                         <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title"></h3>
+                                    <h4 class="author"></h4>
                                 </div>
                         </div>
                     </details>
@@ -88,6 +95,7 @@ require_once __DIR__ . '/../config/session.php';
                         <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title"></h3>
+                                    <h4 class="author"></h4>
                                 </div>
                     </details>
                 </div>
@@ -99,6 +107,7 @@ require_once __DIR__ . '/../config/session.php';
                         <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title"></h3>
+                                    <h4 class="author"></h4>
                                 </div>
                     </details>
                 </div>
