@@ -65,7 +65,7 @@ $id = $db->ajouterPersonne($personne);
 if ($id > 0) {
 
     // Envoi du mail de confirmation
-    $confirmationLink = "http://localhost/phpProjet/pages/verification/confirmationEmail.php?token=" . urlencode($token);
+    $confirmationLink = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/../verification/confirmationEmail.php?token=" . urlencode($token);
 
     try {
         // Configuration de l'envoi du mail via Symfony Mailer

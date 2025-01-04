@@ -1,0 +1,74 @@
+/* Style général du header */
+header {
+    position: fixed; /* Fixe le header en haut de la page */
+    top: 0; /* Position verticale */
+    left: 0; /* Aligner sur le bord gauche */
+    width: 100%; /* Prend toute la largeur de la page */
+    background-color: var(--dark-green);
+    z-index: 1000; /* Assure que le header reste au-dessus des autres éléments */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre */
+}
+
+/* Conteneur interne pour centrer le contenu */
+header nav {
+    max-width: 1200px; /* Largeur maximale pour le contenu */
+    margin: 0 auto; /* Centre le contenu horizontalement */
+    display: flex; /* Utilise flexbox pour l'agencement */
+    justify-content: space-between; /* Espace entre les éléments */
+    align-items: center; /* Centrer verticalement les éléments */
+    padding: 20px; /* Espace interne */
+}
+
+/* Enlève les puces et aligne les éléments du menu horizontalement */
+header ul {
+    list-style: none; /* Supprime les puces */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Aligne les items horizontalement */
+    align-items: center;
+}
+
+/* Liens du menu */
+header ul li {
+    margin-left: 15px;
+}
+
+header ul li a {
+    color: var(--beige);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+header ul li a:hover {
+    color: var(--light-brown); /* Changement de couleur au survol */
+}
+
+/* Ajuste le style du contenu principal pour éviter le chevauchement */
+body {
+    margin: 0; /* Supprime les marges globales */
+    padding-top: 80px; /* Espace en haut égal à la hauteur du header */
+}
+
+/* Styles spécifiques à un utilisateur connecté */
+#deconnexion a {
+    background-color: var(--dark-green);
+    color: var(--beige);
+}
+
+#connexion a,
+#nouveauCompte a {
+    display: none; /* Cacher ces liens lorsqu'un utilisateur est connecté */
+}
+
+/* Styles spécifiques à un utilisateur non connecté */
+#connexion a,
+#nouveauCompte a {
+    display: block;
+    color: var(--warm-brown);
+    text-transform: uppercase;
+}
+
+#deconnexion a {
+    display: none; /* Cacher le lien de déconnexion lorsqu'un utilisateur n'est pas connecté */
+}
