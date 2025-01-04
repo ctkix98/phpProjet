@@ -7,8 +7,6 @@ class Book
     public $editor;
     public $parution_date;
     public $isbn;
-
-
     public function __construct($title, $author, $editor, $parution_date, $isbn)
     {
         $this->title = $title;
@@ -16,7 +14,5 @@ class Book
         $this->editor = $editor;
         $this->parution_date = $parution_date;
         $this->isbn = $isbn;
-
-        echo "Le livre a bien été créé";
     }
 }
