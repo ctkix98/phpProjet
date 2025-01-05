@@ -41,21 +41,34 @@ footer {
     color: var(--light-brown);
     text-align: center;
     padding: 50px 0;
-    padding-right: 20px;
-    padding-left: 20px;
+    margin-top: 20px;
+
 }
 
-.content {
+/*.content {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
+}*/
+
+.content  {
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: flex-start; /* Aligne en haut */
+    height: 10vh; /* Hauteur de la section du titre */
+    text-align: center;
+    margin-bottom: 20px; /* Espace sous le titre */
+    margin-top: 20px;
 }
 
 h1 {
     font-size: 2.5rem;
     text-align: center;
+    padding-top: 80px;
 }
+
+
 /* Header
 =======================================================================================================================
 */
@@ -299,3 +312,57 @@ button:hover {
     align-items: center; /* Centre les éléments horizontalement */
     text-align: center; /* Centre le texte dans les paragraphes et titres */
 }
+
+/* 
+=======================================================================================================================
+*/
+
+.container{
+    position : absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin-top: 30px;
+}
+
+/* Section des livres les plus lus */
+.most-read-books {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    width: 100%;
+    padding: 50px 50px;
+   
+}
+
+/* Titre de la section */
+.most-read-books h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+/* Grille des livres */
+.most-read-books ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Trois colonnes */
+    gap: 10px; /* Espace entre les éléments */
+    list-style: none; /* Supprime les puces */
+    padding: 0;
+    margin: 0 auto;
+}
+
+/* Style des images */
+
+.most-read-books img {
+    
+    width: 120px; /* Taille des images */
+    height: 180px; /* Garde une hauteur uniforme */
+    object-fit: cover; /* Ajuste l'image au conteneur */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Permet de scroller horizontalement si nécessaire */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   /*transition: transform 0.3s ease;*/
+}
+
+

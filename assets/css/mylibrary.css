@@ -5,7 +5,11 @@
 body {
     background-color: #ffffff; /* Couleur de fond de la page */
     margin: 30px; /* Supprime les marges par défaut du body */
-    font-family: Arial, sans-serif; /* Police optionnelle pour un style moderne */
+    font-family: 'Merriweather', serif;  /* Police principale */
+    color: var(--dark-green); /* Couleur du texte principale */
+    background-color: var(--beige); /* Couleur de fond claire */
+    line-height: 1.6; /* Espacement des lignes */
+
 }
 
 @supports not (-ms-ime-align: auto) {

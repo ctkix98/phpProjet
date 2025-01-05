@@ -15,7 +15,7 @@ session_start();
     <header>
         <ul>
             <li><a href="index.php">Babel</a></li>
-            <li><a href="about.php">A propos</a></li>
+            <li><a href="about.php">À propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
                 <li> <a href="dashboardUser.php">Mon compte</a></li>
@@ -29,11 +29,22 @@ session_start();
     <main>
     <div class="container">
             <!-- Section des livres les plus lus -->
-            <aside class="most-read-books">
+            <div class="most-read-books">
                 <h2>Les livres les plus lus</h2>
                 <ul>
                     <li>
-                    <img src="../assets/images/book-cover-reading/le-petit-prince-antoine-de-saint-exupery.jpeg" alt="Cover of the book Le Petit Prince">
+                        <img src="../assets/images/book-cover-most" alt="Cover of the book Le Petit Prince">
+                    </li>
+                    <li>
+                        <img src="../assets/images/book-cover-reading/Les-Misérables–Victor-Hugo.jpeg" alt="Cover of the book Les-Misérables">
+                    </li>
+                    <li>
+                        <img src="../assets/images/book-cover-reading/Dune – Frank Herbert.jpeg" alt="Cover of the book Dune">
+                    </li>
+                    <li>
+                    <img src="../assets/images/book-cover-reading/La Passe-Miroir (Tome 1 - Les Fiancés de l'Hiver) .jpeg" alt="Cover of the book La passe miroir">
+                    <li>
+                    <img src="../assets/images/book-cover-reading/Le Clan des Otori (Tome 1 - Le Silence du Rossignol) – Lian Hearn.jpeg" alt="Cover of the book Clan des Otori - Le silence du rossignol">
                     </li>
                     <li>
                     <img src="../assets/images/book-cover-reading/Les-Misérables–Victor-Hugo.jpeg" alt="Cover of the book Les-Misérables">
@@ -41,8 +52,16 @@ session_start();
                     <li>
                     <img src="../assets/images/book-cover-reading/Dune – Frank Herbert.jpeg" alt="Cover of the book Dune">
                     </li>
-                </ul>
-            </aside>
+                    <li>
+                    <img src="../assets/images/book-cover-reading/L'Alchimiste – Paulo Coelho.jpeg" alt="Cover of the book L'Alchimiste">
+                    <li>
+                    <img src="../assets/images/book-cover-reading/Mille Soleils Splendides – Khaled Hosseini.jpeg" alt="Cover of the book Mille Soleils Splendides">
+                    </li>
+                    <li>
+                    <img src="../assets/images/book-cover-reading/Mille Soleils Splendides – Khaled Hosseini.jpeg" alt="Cover of the book Mille Soleils Splendides">
+                    </li>
+                        </ul>
+                    </div>
     </div>
         <!-- Contenu principal --> 
         <div class="content">
