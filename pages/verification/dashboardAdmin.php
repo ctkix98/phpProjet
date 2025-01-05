@@ -1,4 +1,5 @@
 <?php
+require_once('/MAMP/htdocs/phpProjet/db/Database.php');
 session_start();
 
 // Vérifiez si l'utilisateur est un administrateur
@@ -7,34 +8,45 @@ if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur']['pseudo'] !== '
     exit();
 }
 
-// Charger les livres en attente
-$booksPendingFile = '../books/books_pending.json';
-$booksPendingData = file_exists($booksPendingFile) ? json_decode(file_get_contents($booksPendingFile), true) : [];
+$db = new Database();
+if (!$db->initialistion()) {
+    $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
+    header('Location: ../messages/message.php', true, 303);
+    exit();
+}
 
-// Charger les livres validés
-$booksApprovedFile = '../books/books_approved.json';
-$booksApprovedData = file_exists($booksApprovedFile) ? json_decode(file_get_contents($booksApprovedFile), true) : [];
+// Récupérer les livres en attente
+$sqlPending = "SELECT * FROM book_validation WHERE validation_status = 'pending'";
+$stmtPending = $db->getDb()->prepare($sqlPending);
+$stmtPending->execute();
+$booksPending = $stmtPending->fetchAll(PDO::FETCH_ASSOC);
 
-// Charger les livres rejetés
-$booksRejectedFile = '../books/books_rejected.json';
-$booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_contents($booksRejectedFile), true) : [];
+// Récupérer les livres validés
+$sqlApproved = "SELECT * FROM book_validation WHERE validation_status = 'approved'";
+$stmtApproved = $db->getDb()->prepare($sqlApproved);
+$stmtApproved->execute();
+$booksApproved = $stmtApproved->fetchAll(PDO::FETCH_ASSOC);
+
+// Récupérer les livres rejetés
+$sqlRejected = "SELECT * FROM book_validation WHERE validation_status = 'rejected'";
+$stmtRejected = $db->getDb()->prepare($sqlRejected);
+$stmtRejected->execute();
+$booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de bord administrateur</title>
-    <link rel="stylesheet" href="../assets/css/dashboard-admin.css">
-    <script src="../assets/js/checkisbn.js" defer></script>
+    <link rel="stylesheet" href="../../assets/css/dashboard-admin.css">
     <script>
+        // Fonction pour basculer l'affichage d'une section
         function toggleSection(sectionId) {
             var section = document.getElementById(sectionId);
-            if (section.style.display === "none" || section.style.display === "") {
-                section.style.display = "block"; // Affiche la section
-            } else {
-                section.style.display = "none"; // Cache la section
-            }
+            section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
         }
     </script>
 </head>
@@ -42,16 +54,16 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
 <body>
     <header>
         <ul>
-            <li><a href="index.php">Babel</a></li>
-            <li><a href="about.php">A propos</a></li>
+            <li><a href="../index.php">Babel</a></li>
+            <li><a href="../about.php">À propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
                     <li><a href="dashboardAdmin.php">Compte admin</a></li>
                 <?php else: ?>
-                    <li><a href="libraryUser.php">Ma bibliothèque</a></li>
-                    <li><a href="dashboardUser.php">Mon compte</a></li>
+                    <li><a href="../libraryUser.php">Ma bibliothèque</a></li>
+                    <li><a href="../dashboardUser.php">Mon compte</a></li>
                 <?php endif; ?>
-                <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
+                <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
                 <li id="connexion"><a href="connexion.html">Se connecter</a></li>
                 <li id="nouveauCompte"><a href="inscription.html">Créer un compte</a></li>
@@ -60,37 +72,40 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
     </header>
 
     <main>
-        <h1>Tableau de bord</h1>
+        <h1>Tableau de bord Administrateur</h1>
 
-        <!-- Section des livres en attente de validation (toujours visible) -->
+        <!-- Section des livres en attente -->
         <div id="pendingBooks">
             <h2>Livres en attente de validation</h2>
-            <?php if (empty($booksPendingData)): ?>
+            <?php if (empty($booksPending)): ?>
                 <p>Aucun livre en attente de validation.</p>
             <?php else: ?>
                 <table>
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Titre</th>
                             <th>Auteur</th>
-                            <th>Maison d'édition</th>
+                            <th>Thème</th>
                             <th>Année de publication</th>
                             <th>ISBN</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($booksPendingData as $book): ?>
+                        <?php foreach ($booksPending as $book): ?>
                             <tr>
-                                <td><?= htmlspecialchars($book['title']); ?></td>
-                                <td><?= htmlspecialchars($book['writer']); ?></td>
-                                <td><?= htmlspecialchars($book['editor']); ?></td>
-                                <td><?= htmlspecialchars($book['year']); ?></td>
-                                <td><?= htmlspecialchars($book['isbn']); ?></td>
+                                <td><?= htmlspecialchars($book['id']); ?></td>
+                                <td><?= htmlspecialchars($book['Title']); ?></td>
+                                <td><?= htmlspecialchars($book['Author']); ?></td>
+                                <td><?= htmlspecialchars($book['Theme']); ?></td>
+                                <td><?= htmlspecialchars($book['Parution_date']); ?></td>
+                                <td><?= htmlspecialchars($book['ISBN']); ?></td>
                                 <td>
                                     <form action="validateBook.php" method="POST">
-                                        <input type="hidden" name="isbn" value="<?= htmlspecialchars($book['isbn']); ?>">
+                                        <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']); ?>">
                                         <button type="submit" name="action" value="approve">Approuver</button>
+                                        <button type="submit" name="action" value="update">Modifier</button>
                                         <button type="submit" name="action" value="reject">Rejeter</button>
                                     </form>
                                 </td>
@@ -101,14 +116,14 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
             <?php endif; ?>
         </div>
 
-        <!-- Boutons pour afficher ou cacher les livres validés et rejetés -->
+        <!-- Boutons pour afficher les sections validées et rejetées -->
         <button onclick="toggleSection('approvedBooks')">Livres validés</button>
         <button onclick="toggleSection('rejectedBooks')">Livres rejetés</button>
 
-        <!-- Section des livres validés (cachée par défaut) -->
+        <!-- Section des livres validés -->
         <div id="approvedBooks" style="display:none;">
             <h2>Livres validés</h2>
-            <?php if (empty($booksApprovedData)): ?>
+            <?php if (empty($booksApproved)): ?>
                 <p>Aucun livre validé à afficher.</p>
             <?php else: ?>
                 <table>
@@ -116,19 +131,19 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
                         <tr>
                             <th>Titre</th>
                             <th>Auteur</th>
-                            <th>Maison d'édition</th>
+                            <th>Thème</th>
                             <th>Année de publication</th>
                             <th>ISBN</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($booksApprovedData as $book): ?>
+                        <?php foreach ($booksApproved as $book): ?>
                             <tr>
-                                <td><?= htmlspecialchars($book['title']); ?></td>
-                                <td><?= htmlspecialchars($book['writer']); ?></td>
-                                <td><?= htmlspecialchars($book['editor']); ?></td>
-                                <td><?= htmlspecialchars($book['year']); ?></td>
-                                <td><?= htmlspecialchars($book['isbn']); ?></td>
+                                <td><?= htmlspecialchars($book['Title']); ?></td>
+                                <td><?= htmlspecialchars($book['Author']); ?></td>
+                                <td><?= htmlspecialchars($book['Theme']); ?></td>
+                                <td><?= htmlspecialchars($book['Parution_date']); ?></td>
+                                <td><?= htmlspecialchars($book['ISBN']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -136,10 +151,10 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
             <?php endif; ?>
         </div>
 
-        <!-- Section des livres rejetés (cachée par défaut) -->
+        <!-- Section des livres rejetés -->
         <div id="rejectedBooks" style="display:none;">
             <h2>Livres rejetés</h2>
-            <?php if (empty($booksRejectedData)): ?>
+            <?php if (empty($booksRejected)): ?>
                 <p>Aucun livre rejeté à afficher.</p>
             <?php else: ?>
                 <table>
@@ -147,19 +162,19 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
                         <tr>
                             <th>Titre</th>
                             <th>Auteur</th>
-                            <th>Maison d'édition</th>
+                            <th>Thème</th>
                             <th>Année de publication</th>
                             <th>ISBN</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($booksRejectedData as $book): ?>
+                        <?php foreach ($booksRejected as $book): ?>
                             <tr>
-                                <td><?= htmlspecialchars($book['title']); ?></td>
-                                <td><?= htmlspecialchars($book['writer']); ?></td>
-                                <td><?= htmlspecialchars($book['editor']); ?></td>
-                                <td><?= htmlspecialchars($book['year']); ?></td>
-                                <td><?= htmlspecialchars($book['isbn']); ?></td>
+                                <td><?= htmlspecialchars($book['Title']); ?></td>
+                                <td><?= htmlspecialchars($book['Author']); ?></td>
+                                <td><?= htmlspecialchars($book['Theme']); ?></td>
+                                <td><?= htmlspecialchars($book['Parution_date']); ?></td>
+                                <td><?= htmlspecialchars($book['ISBN']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -171,6 +186,6 @@ $booksRejectedData = file_exists($booksRejectedFile) ? json_decode(file_get_cont
     <footer>
         <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
     </footer>
-
 </body>
+
 </html>

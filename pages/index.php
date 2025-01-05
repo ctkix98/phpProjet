@@ -21,7 +21,7 @@ session_start();
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
                     <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
-                    <li> <a href="dashboardAdmin.php">Compte admin</a></li>
+                    <li> <a href="../pages/verification/dashboardAdmin.php">Compte admin</a></li>
                 <?php else: ?>
                     <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
                     <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
@@ -53,8 +53,8 @@ session_start();
                         </div>
 
                         <div class="form-group">
-                            <label for="editor">Maison d'édition </label>
-                            <input type="text" id="editor" name="editor" placeholder="Gallimard" required>
+                            <label for="theme">Thème </label>
+                            <input type="text" id="theme" name="theme" placeholder="Romance" required>
                         </div>
 
                         <div class="form-group">
@@ -67,6 +67,8 @@ session_start();
                             <input type="text" id="isbn" name="isbn" placeholder="978-3-16-148410-0" required>
                             <div id="isbn-error" style="color: red; font-size: 12px; display: none;"></div> <!-- Message d'erreur -->
                         </div>
+
+                        <input type="hidden" name="action" value="submit">
 
 
                         <button type="submit" name="submit" class="button-soumission">Soumettre l'ouvrage</button>
