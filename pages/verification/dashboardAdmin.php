@@ -83,6 +83,7 @@ $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
                 <table>
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Titre</th>
                             <th>Auteur</th>
                             <th>Thème</th>
@@ -94,6 +95,7 @@ $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
                     <tbody>
                         <?php foreach ($booksPending as $book): ?>
                             <tr>
+                                <td><?= htmlspecialchars($book['id']); ?></td>
                                 <td><?= htmlspecialchars($book['Title']); ?></td>
                                 <td><?= htmlspecialchars($book['Author']); ?></td>
                                 <td><?= htmlspecialchars($book['Theme']); ?></td>
