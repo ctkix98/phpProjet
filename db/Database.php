@@ -58,7 +58,9 @@ class Database
                 Author TEXT,
                 Theme TEXT,
                 Parution_date TEXT, -- SQLite stores dates as text (ISO8601)
-                ISBN TEXT UNIQUE
+                ISBN TEXT UNIQUE,
+                cover_image_path TEXT,
+                olid TEXT
             );
         COMMANDE_SQL;
 
@@ -379,7 +381,9 @@ class Database
                     $book['authors'][0]['name'] ?? 'Unknown',
                     $book['subject'][0] ?? 'Unknown',
                     $book['first_publish_year'] ?? 'Unknown',
-                    $book['availability']['isbn'] ?? 'NULL'
+                    $book['availability']['isbn'] ?? 'NULL',
+                    $book['availability']['openlibrary_work'] ?? 'NULL',
+                    "NULL",
                 );
                 $this->addBook($bookObject);
             }
@@ -392,13 +396,16 @@ class Database
     {
         try {
             $ok = true;
-            $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN)
-                VALUES (:title, :author, :theme, :parution_date, :isbn)";
+            $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN, cover_image_path, olid)
+                VALUES (:title, :author, :theme, :parution_date, :isbn, :cover_image_path, :olid)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':title', $book->title);
             $stmt->bindParam(':author', $book->author);
             $stmt->bindParam(':theme', $book->theme);
             $stmt->bindParam(':parution_date', $book->parution_date);
+            $stmt->bindParam(':isbn', $book->isbn);
+            $stmt->bindParam(':cover_image_path', $book->cover_image_path);
+            $stmt->bindParam(':olid', $book->olid);
 
             // Vérifier si l'ISBN est fourni
             if ($book->isbn === 'NULL' || empty($book->isbn)) {
@@ -501,6 +508,50 @@ class Database
         }
     }
     
+    //stocker les informations sur les couvertures
+    public function addCoverMetadataToBookTable(): bool
+    {
+        $sql = <<<COMMANDE_SQL
+            ALTER TABLE book
+            ADD COLUMN cover_image_url TEXT,
+            ADD COLUMN cover_format TEXT,
+            ADD COLUMN cover_resolution TEXT;
+        COMMANDE_SQL;
+    
+        try {
+            $this->db->exec($sql);
+            return true;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+    
+    public function getBooks(): array
+{
+    $sql = "SELECT * FROM book";
+    
+    try {
+        $stmt = $this->db->query($sql);
+        $books = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $books[] = new Book(
+                $row['id'],
+                $row['Title'],
+                $row['Author'],
+                $row['Theme'],
+                $row['Parution_date'],
+                $row['ISBN'],
+                $row['cover_image_url']
+            );
+        }
+        return $books;
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        return [];
+    }
+}
+
 
     public function getBooksByValidationStatus($status): array
     {
@@ -543,4 +594,22 @@ class Database
             return [];
         }
     }
+
+    public function query() {
+        try {
+            $query = "SELECT id, ISBN, OLID, Title, Author FROM book WHERE cover_image_path IS NULL";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+
+            // Récupérer les IDs dans un tableau
+            $bookIds = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo("hello");
+            return $bookIds;
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des IDs des livres : " . $e->getMessage();
+            return [];
+        }
+    }
 }
+
+

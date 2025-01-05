@@ -44,7 +44,7 @@ session_start();
                 <h1 class="title"><strong>La librairie des livres interdits</strong></h1>
                 <h2 class="author">Marc Levy</h2>
                 <p class="total-rating"><strong>Note :</strong> ★★★★☆ (avis: 174)</p>
-                <p class="editor"><strong>Thème :</strong> romance </p>
+                <p class="theme"><strong>Thème :</strong> romance </p>
                 <p class="parution-date"><strong>Parution :</strong>19 novembre 2024</p>
                 <h4 class="isbn"><strong>ISBN :</strong>9782221243619</h4>
 

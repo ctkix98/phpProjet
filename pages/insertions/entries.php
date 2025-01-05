@@ -18,7 +18,7 @@ function initializeDatabase(): void
         $db->fetchTopBooksFromOpenLibrary('../../db/science.json');
     }
 
-    //populateDB($db);
+    populateDB($db);
 
     $db->addBookState("En cours");
     $db->addBookState("Terminé");
