@@ -74,7 +74,7 @@ if (filter_has_var(INPUT_POST, 'action')) {
     } else if ($action === 'update') {
         // Si vous avez une logique de modification, vous pouvez l'ajouter ici
         // Cela dépend de ce que vous voulez permettre à l'administrateur de modifier
-        header('Location: ../changeBook.php');
+        header('Location: editBook.php?id=' . $bookId);
         exit();
     } else {
         $_SESSION['message'] = "Action non valide.";

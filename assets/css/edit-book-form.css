@@ -1,0 +1,182 @@
+:root {
+    --dark-green: #183D2C;
+    --medium-green: #5B7769;
+    --beige: #F9E6D8;
+    --warm-brown: #C66D4D;
+    --light-brown: #E2C6B0;
+    --medium-brown: #B4875D;
+}
+
+/* Reset de base pour tous les éléments */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Merriweather', serif;  /* Police principale */
+    color: var(--dark-green); /* Couleur du texte principale */
+    background-color: var(--beige); /* Couleur de fond claire */
+    line-height: 1.6; /* Espacement des lignes */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: column; /* Alignement vertical */
+    align-items: center;    /* Centrer horizontalement */
+    justify-content: flex-start; /* Commencer en haut */
+    padding: 20px;
+    gap: 20px; /* Espacement entre le titre et le formulaire */
+    min-height: calc(100vh - 100px); /* Hauteur minimale égale à la taille de la fenêtre moins l'en-tête et le pied de page */
+    box-sizing: border-box; /* Inclut le padding dans le calcul de la hauteur */
+}
+
+/* Formulaire */
+form {
+    background-color: var(--light-brown);
+    border-radius: 5%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Texte centré */
+    padding: 20px;
+    margin-bottom: 50px;
+    width: 100%;
+    max-width: 600px; /* Largeur maximale du formulaire */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--dark-green);
+}
+
+/* Champs de texte */
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--beige);
+    color: var(--dark-green);
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+    background-color: var(--light-brown);
+    outline: none;
+    transform: scale(1.02);
+}
+
+/* Gestion des mots de passe */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    flex: 1;
+    padding-right: 40px;
+    font-size: 16px;
+    height: 40px;
+}
+
+.password-requirements {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--dark-green);
+}
+
+.requirement {
+    margin: 5px 0;
+    color: red;
+}
+
+.requirement.valid {
+    color: green;
+}
+
+.icon-toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--medium-green);
+    transition: color 0.3s;
+}
+
+.icon-toggle-password:hover {
+    color: var(--warm-brown);
+}
+
+/* Bouton de soumission */
+.button-soumission {
+    background: linear-gradient(90deg, var(--warm-brown), var(--medium-brown));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    margin-top: 15px;
+}
+
+.button-soumission:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(198, 109, 77, 0.3);
+}
+
+.button-soumission:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+/* Liens */
+a {
+    text-decoration: none;
+    color: var(--warm-brown);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--dark-green);
+}
+
+/* Titre */
+h1, h2, h3 {
+    color: var(--dark-green);
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-green);
+    color: var(--light-brown);
+    text-align: center;
+    padding: 50px 0;
+    padding-right: 20px;
+    padding-left: 20px;
+}
