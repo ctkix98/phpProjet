@@ -20,7 +20,7 @@ session_start();
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
                     <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
-                    <li> <a href="dashboardAdmin.php">Compte admin</a></li>
+                    <li> <a href="../pages/verification/dashboardAdmin.php">Compte admin</a></li>
                 <?php else: ?>
                     <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
                     <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
