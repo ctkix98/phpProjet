@@ -3,15 +3,15 @@
 class Book {
     private $title;
     private $writer;
-    private $editor;
+    private $theme;
     private $year;
     private $isbn;
 
     // Constructeur
-    public function __construct($title, $writer, $editor, $year, $isbn) {
+    public function __construct($title, $writer, $theme, $year, $isbn) {
         $this->title = $title;
         $this->writer = $writer;
-        $this->editor = $editor;
+        $this->theme = $theme;
         $this->year = $year;
         $this->isbn = $isbn;
     }
@@ -38,12 +38,12 @@ class Book {
 
     // Getter pour la maison d'édition
     public function getEditor() {
-        return $this->editor;
+        return $this->theme;
     }
 
     // Setter pour la maison d'édition
     public function setEditor($editor) {
-        $this->editor = $editor;
+        $this->theme = $editor;
     }
 
     // Getter pour l'année de publication
@@ -70,7 +70,7 @@ class Book {
     public function displayBookInfo() {
         return "Titre : " . $this->title . "<br>" .
                "Auteur : " . $this->writer . "<br>" .
-               "Maison d'édition : " . $this->editor . "<br>" .
+               "Thème : " . $this->theme . "<br>" .
                "Année de publication : " . $this->year . "<br>" .
                "ISBN : " . $this->isbn;
     }
@@ -92,7 +92,7 @@ class Book {
         return [
             'title' => $this->title,
             'writer' => $this->writer,
-            'editor' => $this->editor,
+            'editor' => $this->theme,
             'year' => $this->year,
             'isbn' => $this->isbn,
         ];
@@ -100,7 +100,7 @@ class Book {
 
     // Créer un objet Book à partir d'un tableau associatif (par exemple, lors de la récupération des données)
     public static function fromArray($data) {
-        return new self($data['title'], $data['writer'], $data['editor'], $data['year'], $data['isbn']);
+        return new self($data['title'], $data['writer'], $data['theme'], $data['year'], $data['isbn']);
     }
 }
 

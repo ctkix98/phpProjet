@@ -87,7 +87,7 @@ h1 {
     font-weight: bold;
 }
 
-.total-rating, .editor, .parution-date, .isbn {
+.total-rating, .theme, .parution-date, .isbn {
     margin-bottom: 1rem;
     color: var(--dark-green);
 }
