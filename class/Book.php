@@ -1,107 +1,122 @@
 <?php
 
-class Book {
+class Book
+{
     public $title;
-    public $writer;
+    public $author;
     public $theme;
-    public $year;
+    public $parution_date;
     public $isbn;
 
     // Constructeur
-    public function __construct($title, $writer, $theme, $year, $isbn) {
+    public function __construct($title, $author, $theme, $parution_date, $isbn)
+    {
         $this->title = $title;
-        $this->writer = $writer;
+        $this->author = $author;
         $this->theme = $theme;
-        $this->year = $year;
+        $this->parution_date = $parution_date;
         $this->isbn = $isbn;
     }
 
     // Getter pour le titre
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
     // Setter pour le titre
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
     // Getter pour l'auteur
-    public function getWriter() {
-        return $this->writer;
+    public function getWriter()
+    {
+        return $this->author;
     }
 
     // Setter pour l'auteur
-    public function setWriter($writer) {
-        $this->writer = $writer;
+    public function setWriter($author)
+    {
+        $this->author = $author;
     }
 
     // Getter pour la maison d'édition
-    public function getEditor() {
+    public function getEditor()
+    {
         return $this->theme;
     }
 
     // Setter pour la maison d'édition
-    public function setEditor($editor) {
+    public function setEditor($editor)
+    {
         $this->theme = $editor;
     }
 
     // Getter pour l'année de publication
-    public function getYear() {
-        return $this->year;
+    public function getYear()
+    {
+        return $this->parution_date;
     }
 
     // Setter pour l'année de publication
-    public function setYear($year) {
-        $this->year = $year;
+    public function setYear($parution_date)
+    {
+        $this->parution_date = $parution_date;
     }
 
     // Getter pour l'ISBN
-    public function getIsbn() {
+    public function getIsbn()
+    {
         return $this->isbn;
     }
 
     // Setter pour l'ISBN
-    public function setIsbn($isbn) {
+    public function setIsbn($isbn)
+    {
         $this->isbn = $isbn;
     }
 
     // Méthode pour afficher les informations du livre
-    public function displayBookInfo() {
+    public function displayBookInfo()
+    {
         return "Titre : " . $this->title . "<br>" .
-               "Auteur : " . $this->writer . "<br>" .
-               "Thème : " . $this->theme . "<br>" .
-               "Année de publication : " . $this->year . "<br>" .
-               "ISBN : " . $this->isbn;
+            "Auteur : " . $this->author . "<br>" .
+            "Thème : " . $this->theme . "<br>" .
+            "Année de publication : " . $this->parution_date . "<br>" .
+            "ISBN : " . $this->isbn;
     }
 
     // Méthode pour valider un livre (peut-être stocker dans un fichier ou base de données)
-    public function approve() {
+    public function approve()
+    {
         // Implémentation pour approuver le livre (par exemple, l'ajouter dans un fichier "livres validés")
         return "Le livre '$this->title' a été approuvé.";
     }
 
     // Méthode pour rejeter un livre (peut-être stocker dans un fichier ou base de données)
-    public function reject() {
+    public function reject()
+    {
         // Implémentation pour rejeter le livre (par exemple, l'ajouter dans un fichier "livres rejetés")
         return "Le livre '$this->title' a été rejeté.";
     }
 
     // Convertir un objet Book en tableau associatif pour le stockage (JSON, base de données, etc.)
-    public function toArray() {
+    public function toArray()
+    {
         return [
             'title' => $this->title,
-            'writer' => $this->writer,
+            'author' => $this->author,
             'editor' => $this->theme,
-            'year' => $this->year,
+            'parution_date' => $this->parution_date,
             'isbn' => $this->isbn,
         ];
     }
 
     // Créer un objet Book à partir d'un tableau associatif (par exemple, lors de la récupération des données)
-    public static function fromArray($data) {
-        return new self($data['title'], $data['writer'], $data['theme'], $data['year'], $data['isbn']);
+    public static function fromArray($data)
+    {
+        return new self($data['title'], $data['author'], $data['theme'], $data['parution_date'], $data['isbn']);
     }
 }
-
-?>
