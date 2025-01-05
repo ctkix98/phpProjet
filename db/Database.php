@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/../class/Personne.php';
-//require_once __DIR__ . '/../config/db.ini';
-//require_once __DIR__ . '/addBooks.php';
-
+require_once __DIR__ . '/../class/Book.php';
 
 
 class Database
@@ -30,156 +28,156 @@ class Database
     {
         $sql = <<<COMMANDE_SQL
             CREATE TABLE IF NOT EXISTS book_state (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    book_state TEXT
-            )
-    COMMANDE_SQL;
-
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                book_state TEXT
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTableBook(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS book (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            Title VARCHAR(255),
-            Author VARCHAR(255),
-            Editor VARCHAR(255),
-            Parution_date DATE,
-            ISBN VARCHAR(20) UNIQUE
+            CREATE TABLE IF NOT EXISTS book (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Title TEXT,
+                Author TEXT,
+                Theme TEXT,
+                Parution_date TEXT, -- SQLite stores dates as text (ISO8601)
+                ISBN TEXT UNIQUE
             );
-    COMMANDE_SQL;
-
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
-    //Créer table users
+
     public function createTablelecture(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS lecture (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    `actual page` INTEGER,
-    `date_begin` TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    `date_end` TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    book_state_id INTEGER,
-    book_id INTEGER,
-    user_id INTEGER,
-    FOREIGN KEY (book_state_id) REFERENCES book_state(id),
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS lecture (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                actual_page INTEGER,
+                date_begin TEXT, -- SQLite stores dates as text (ISO8601)
+                date_end TEXT, -- SQLite stores dates as text (ISO8601)
+                book_state_id INTEGER,
+                book_id INTEGER,
+                user_id INTEGER,
+                FOREIGN KEY (book_state_id) REFERENCES book_state(id),
+                FOREIGN KEY (book_id) REFERENCES book(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTablecomment(): bool
     {
         $sql = <<<COMMANDE_SQL
-      CREATE TABLE IF NOT EXISTS comment (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    book_id INTEGER,
-    user_id INTEGER,
-    content TEXT,
-    date TEXT, -- SQLite stocke les dates comme du texte (ISO8601)
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS comment (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                book_id INTEGER,
+                user_id INTEGER,
+                content TEXT,
+                date TEXT, -- SQLite stores dates as text (ISO8601)
+                FOREIGN KEY (book_id) REFERENCES book(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTablegrade(): bool
     {
         $sql = <<<COMMANDE_SQL
-     CREATE TABLE IF NOT EXISTS grade (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    book_id INTEGER,
-    user_id INTEGER,
-    grade INTEGER,
-    FOREIGN KEY (book_id) REFERENCES book(id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS grade (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                book_id INTEGER,
+                user_id INTEGER,
+                grade INTEGER,
+                FOREIGN KEY (book_id) REFERENCES book(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
 
-    //TABLE USERS
     public function createTableusers(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            pseudo VARCHAR(120) NOT NULL UNIQUE,
-            email VARCHAR(120) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            token VARCHAR(255) DEFAULT NULL,
-            is_confirmed BOOLEAN DEFAULT 0
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                pseudo VARCHAR(120) NOT NULL UNIQUE,
+                email VARCHAR(120) NOT NULL UNIQUE,
+                password VARCHAR(255) NOT NULL,
+                token VARCHAR(255) DEFAULT NULL,
+                is_confirmed BOOLEAN DEFAULT 0
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
     }
+
     public function createTableSettings(): bool
     {
         $sql = <<<COMMANDE_SQL
-        CREATE TABLE IF NOT EXISTS settings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    key_name VARCHAR(255) UNIQUE NOT NULL, 
-    key_value VARCHAR(255) NOT NULL        
-
-        );
-COMMANDE_SQL;
+            CREATE TABLE IF NOT EXISTS settings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                key_name VARCHAR(255) UNIQUE NOT NULL, 
+                key_value VARCHAR(255) NOT NULL
+            );
+        COMMANDE_SQL;
 
         try {
             $this->db->exec($sql);
             $ok = true;
         } catch (PDOException $e) {
-            $e->getMessage();
+            error_log($e->getMessage());
             $ok = false;
         }
         return $ok;
@@ -320,41 +318,77 @@ COMMANDE_SQL;
     }
 
 
-    public function fetchTopBooksFromOpenLibrary(): array
+    public function fetchTopBooksFromOpenLibrary($url): void
     {
-        $url = 'https://openlibrary.org/api/books?bibkeys=ISBN:0451526538,LCCN:2005041551&format=json&jscmd=data';
-        $response = file_get_contents($url);
-        $books = json_decode($response, true);
+        echo "Loading top books from";
+        try {
+            // Récupérer les données de l'URL
+            if (!file_exists($url)) {
+                throw new Exception("File not found: $url");
+            }
+            $response = file_get_contents($url);
+            if ($response === false) {
+                throw new Exception("Failed to fetch data from URL: $url");
+            }
 
-        // Extraire les informations nécessaires des livres
-        $bookList = [];
-        foreach ($books as $book) {
-            $bookList[] = [
-                'title' => $book['title'],
-                'author' => $book['authors'][0]['name'],
-                'editor' => $book['publishers'][0]['name'],
-                'parution_date' => $book['publish_date'],
-                'isbn' => $book['identifiers']['isbn_10'][0] ?? $book['identifiers']['isbn_13'][0] ?? null,
-            ];
+            // Décoder le JSON
+            $books = json_decode($response, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception("Failed to decode JSON: " . json_last_error_msg());
+            }
+
+            // Afficher les données pour débogage
+
+            // Exemple d'extraction des livres
+            foreach ($books['works'] as $book) {
+                $bookObject = new Book(
+                    $book['title'],
+                    $book['authors'][0]['name'] ?? 'Unknown',
+                    $book['subject'][0] ?? 'Unknown',
+                    $book['first_publish_year'] ?? 'Unknown',
+                    $book['availability']['isbn'] ?? 'NULL'
+                );
+                $this->addBook($bookObject);
+            }
+        } catch (Exception $e) {
+            error_log("Error: " . $e->getMessage());
         }
-        echo "salut";
-        return $bookList;
     }
 
-    public function addBooksToDatabase(array $books): bool
+    public function addBook(Book $book): bool
     {
-        echo "coucou";
-        $ok = true;
-        foreach ($books as $book) {
-            $sql = "INSERT INTO book (Title, Author, Editor, Parution_date, ISBN) VALUES (:title, :author, :editor, :parution_date, :isbn)";
+        try {
+            $ok = true;
+            $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN)
+                VALUES (:title, :author, :theme, :parution_date, :isbn)";
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':title', $book['title']);
-            $stmt->bindParam(':author', $book['author']);
-            $stmt->bindParam(':editor', $book['editor']);
-            $stmt->bindParam(':parution_date', $book['parution_date']);
-            $stmt->bindParam(':isbn', $book['isbn']);
+            $stmt->bindParam(':title', $book->title);
+            $stmt->bindParam(':author', $book->author);
+            $stmt->bindParam(':theme', $book->theme);
+            $stmt->bindParam(':parution_date', $book->parution_date);
+
+            // Vérifier si l'ISBN est fourni
+            if ($book->isbn === 'NULL' || empty($book->isbn)) {
+                $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
+            } else {
+                $stmt->bindParam(':isbn', $book->isbn);
+            }
+
             $ok = $ok && $stmt->execute();
+            echo $book->title . " added";
+            echo "<br>";
+        } catch (\PDOException $e) {
+            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
         }
         return $ok;
+    }
+
+    public function addBookState($state){
+        // Vérifier si l'état du livre est déjà présent dans la base de données
+        echo "Ajout de l'état du livre";
+        $sql = "INSERT INTO book_state (book_state) VALUES ('$state')";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        echo "Etat du livre ajouté";
     }
 }

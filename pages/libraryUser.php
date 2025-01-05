@@ -49,8 +49,10 @@ require_once __DIR__ . '/../config/session.php';
                             <div class="details-container">
                                 <!-- Exemple de livres en cours -->
                                 <div class="book-item">
-                                    <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
-                                    <h3 class="book-title">Livre 1</h3>
+                                    <a href="bookinfo.php">
+                                        <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
+                                        <h3 class="book-title">Livre 1</h3>
+                                    </a>
                                     <h4 class="author">Auteur 1</h4>
                                 </div>
                                 <div class="book-item">
