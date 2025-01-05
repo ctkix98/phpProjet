@@ -4,7 +4,6 @@
 
 body {
     background-color: #ffffff; /* Couleur de fond de la page */
-    margin: 30px; /* Supprime les marges par défaut du body */
     font-family: 'Merriweather', serif;  /* Police principale */
     color: var(--dark-green); /* Couleur du texte principale */
     background-color: var(--beige); /* Couleur de fond claire */
@@ -40,22 +39,20 @@ details>summary::marker,
 details>summary::-webkit-details-marker {
   display: none;
 }
-
-
-/* Styles pour les états de lecture */
-.summary {
-  background-color: #022011;
-  color: #E2C6B0;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-align: center;
-
+/*titre */
+.my-library{
+  color: #000000;
+  margin: 20px 20px;
+}
+.my-library h1{
+  color: #000000;
+  margin: 20px 20px;
+  
 }
 
+/* Styles pour les états de lecture */
 summary h2 {
-  margin: 0;
+  margin: 50px;
   font-size: 1.5rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -68,7 +65,7 @@ summary h2 {
 
 /* Style spécifique pour chaque classe */
 .reading h2, .read-want h2, .read-done h2, .read-dropped h2 {
-  margin: 0;
+  margin: 10px;
 }
 
 .reading {

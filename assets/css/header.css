@@ -1,0 +1,105 @@
+/* Général */
+header {
+    background-color: #2a4d3f; /* Fond sombre */
+    padding: 10px 20px; /* Espacement interne */
+    color: #d6c1a7; /* Couleur du texte */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+}
+
+.logo  {
+    list-style: none;
+    color: var(--light-brown);
+    text-decoration: none;
+    font-weight: bold;
+
+}
+.logo a {
+    font-size: 1.5rem;
+    color: var(--light-brown);
+    text-decoration: none;
+    outline: none; /* Supprime le contour par défaut */
+
+}
+
+main {
+    min-height: 75vh;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Aligne les sections horizontalement */
+    align-items: center; /* Centre verticalement */
+    flex-wrap: wrap; /* Gère les petits écrans */
+}
+
+
+
+/* Logo */
+.logo img {
+    height: 50px; /* Taille du logo */
+}
+
+/* Barre de recherche */
+.search-bar {
+    flex: 1; /* Prend l'espace disponible */
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    margin-left: 700px;
+}
+
+.search-bar form {
+    display: flex;
+    width: 100%;
+    max-width: 400px; /* Largeur maximale */
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px 0 0 20px; /* Coins arrondis */
+    font-size: 1rem;
+}
+
+.search-bar button {
+    background-color: #d6c1a7; /* Couleur bouton */
+    color: #2a4d3f; /* Texte sombre */
+    border: none;
+    border-radius: 0 20px 20px 0; /* Coins arrondis */
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #1f3b31; /* Couleur au survol */
+    color: #fff;
+}
+
+/* Liens */
+.header-links {
+    display: flex;
+    gap: 20px; /* Espace entre les liens */
+}
+
+.library-button {
+    background-color: #F9E6D8; /* Bouton bleu */
+    color: #000000;
+    padding: 10px 15px;
+    border-radius: 20px; /* Coins arrondis */
+    text-decoration: none;
+}
+
+.library-button:hover {
+    background-color: #d6c1a7; /* Couleur au survol */
+}
+
+.account-icon {
+    font-size: 1.5rem; /* Taille icône */
+    text-decoration: none;
+    color: #fff;
+}
+
+.account-icon:hover {
+    color: #F9E6D8; /* Couleur au survol */
+}

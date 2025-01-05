@@ -1,3 +1,7 @@
+<?php
+session_start();
+include 'header.php'; // Inclusion du header
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -11,7 +15,7 @@
 <body>
     <main>
         <section class="my-library">
-            <h1>Ma bibliothèque</h1>
+             <h1>Ma bibliothèque</h1> 
             <div class="container-all">
                 <!-- Section "En cours" -->
                 <div class="container">
@@ -125,7 +129,7 @@
                         <ul>
                         <!-- Livre 1 -->
                             <li>
-                            <img src="../assets/images/book-cover-reading/L'Alchimiste – Paulo Coelho.jpeg" alt="Cover of the book L'Alchimiste">
+                            <img src="../assets/images/book-cover-done/L'Alchimiste – Paulo Coelho.jpeg" alt="Cover of the book L'Alchimiste">
                             <h3 class="book-title">L'Alchimiste'</h3>
                             <h4 class="author">Paulo Coelho</h4>
                             <div class="state"></div>
