@@ -57,7 +57,6 @@ require_once __DIR__ . '/../config/session.php';
                 <div class="content">
                     <ul class="button-form">
                         <li><a href="#" onclick="toggleForm('formChangerMotDePasse')">Changer le mot de passe</a></li>
-                        <li><a href="#" onclick="toggleForm('formSupprimerCompte')">Supprimer le compte</a></li>
                     </ul>
                     <!-- Formulaire pour changer le mot de passe -->
                     <form id="formChangerMotDePasse" method="POST" action="../pages/verification/updateAccount.php" style="display: none;">
@@ -96,13 +95,6 @@ require_once __DIR__ . '/../config/session.php';
                         </div>
                         <p id="erreurMotDePasse" style="color: red; display: none;"></p>
                         <button type="submit" name="submit" class="button-soumission">Changer le mot de passe</button>
-                    </form>
-                    <!-- Formulaire pour supprimer le compte -->
-                    <form id="formSupprimerCompte" method="POST" action="../pages/verification/updateAccount.php" style="display: none;">
-                        <h2>Supprimer le compte</h2>
-                        <input type="hidden" name="action" value="supprimerCompte">
-                        <p>Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible.</p>
-                        <button type="submit" name="submit" class="button-soumission">Oui, supprimer mon compte</button>
                     </form>
                 </div>
             <?php else: ?>

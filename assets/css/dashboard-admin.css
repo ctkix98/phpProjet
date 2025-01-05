@@ -75,6 +75,8 @@ header ul li:first-child {
     gap: 20px;
 }
 
+
+
 /* Mise en forme du tableau */
 table {
     width: 100%;
@@ -144,4 +146,14 @@ footer {
 /* Espacement entre les sections */
 table {
     margin-bottom: 30px;
+}
+
+nav {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 15px;
+}
+div[id] {
+    padding-left: 15px;
+    padding-right: 15px;
 }

@@ -67,7 +67,8 @@ $allBooks = $db->getAllBooks();
             <li><a href="../about.php">À propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
-                    <li><a href="dashboardAdmin.php">Compte admin</a></li>
+                    <li><a href="dashboardAdmin.php">Tableau de bord</a></li>
+                    <li> <a href="../adminPage.php">Compte admin</a></li>
                 <?php else: ?>
                     <li><a href="../libraryUser.php">Ma bibliothèque</a></li>
                     <li><a href="../dashboardUser.php">Mon compte</a></li>
