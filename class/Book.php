@@ -1,11 +1,11 @@
 <?php
 
 class Book {
-    private $title;
-    private $writer;
-    private $theme;
-    private $year;
-    private $isbn;
+    public $title;
+    public $writer;
+    public $theme;
+    public $year;
+    public $isbn;
 
     // Constructeur
     public function __construct($title, $writer, $theme, $year, $isbn) {

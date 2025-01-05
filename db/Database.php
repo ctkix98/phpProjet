@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../class/Personne.php';
-
+require_once __DIR__ . '/../class/Book.php';
 
 
 class Database
