@@ -396,9 +396,9 @@ class Database
                 VALUES (:title, :author, :theme, :parution_date, :isbn)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':title', $book->title);
-            $stmt->bindParam(':author', $book->writer);
+            $stmt->bindParam(':author', $book->author);
             $stmt->bindParam(':theme', $book->theme);
-            $stmt->bindParam(':parution_date', $book->year);
+            $stmt->bindParam(':parution_date', $book->parution_date);
 
             // Vérifier si l'ISBN est fourni
             if ($book->isbn === 'NULL' || empty($book->isbn)) {
@@ -440,9 +440,9 @@ class Database
             
             // Lier les paramètres de la requête avec les propriétés du livre
             $stmt->bindParam(':title', $book->title);
-            $stmt->bindParam(':author', $book->writer);
+            $stmt->bindParam(':author', $book->author);
             $stmt->bindParam(':theme', $book->theme);
-            $stmt->bindParam(':parution_date', $book->year);
+            $stmt->bindParam(':parution_date', $book->parution_date);
             
             // Définir le statut de validation à "pending"
             $validationStatus = 'pending';  // Déclaration de la variable ici
