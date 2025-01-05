@@ -309,7 +309,7 @@ class Database
     public function verifierAccesEtRecupererUtilisateur(string $pseudo): ?array
     {
         // Prépare la requête pour récupérer les données de l'utilisateur, y compris l'id
-        $sql = "SELECT id, pseudo, password, email FROM users WHERE pseudo = :pseudo";
+        $sql = "SELECT id, pseudo, password, email, is_confirmed FROM users WHERE pseudo = :pseudo";
         $stmt = $this->db->prepare($sql);
 
         // Lier l'adresse e-mail
