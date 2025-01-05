@@ -12,12 +12,6 @@ $livres = [
     ["titre" => "Les Aérostats", "image" => "../assets/images/book-cover-most-read/Les Aérostats-Amélie Nothomb.jpeg"],
     ["titre" => "un animal sauvage", "image" => "../assets/images/book-cover-most-read/un animal sauvage - joel dicker.jpeg"],
 ];
-$filePath = "../assets/images/book-cover-reading/le-petit-prince-antoine-de-saint-exupery.jpeg";
-if (file_exists($filePath)) {
-    echo "L'image existe à l'emplacement : $filePath";
-} else {
-    echo "Image introuvable à l'emplacement : $filePath";
-}
 
 ?>
 <!DOCTYPE html>
