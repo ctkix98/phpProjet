@@ -317,52 +317,75 @@ button:hover {
 =======================================================================================================================
 */
 
-.container{
-    position : absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    margin-top: 30px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Conteneur principal */
+.container {
+    position: relative;
+    margin: 20px auto;
+    max-width: 1200px;
 }
 
 /* Section des livres les plus lus */
 .most-read-books {
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     border-radius: 10px;
-    width: 100%;
-    padding: 50px 50px;
-   
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Titre de la section */
 .most-read-books h2 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: #333;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 /* Grille des livres */
 .most-read-books ul {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Trois colonnes */
-    gap: 10px; /* Espace entre les éléments */
-    list-style: none; /* Supprime les puces */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    list-style: none;
     padding: 0;
-    margin: 0 auto;
+    margin: 0;
+    justify-content: center;
 }
 
-/* Style des images */
+/* Style des éléments */
+.most-read-books li {
+    text-align: center;
+}
 
 .most-read-books img {
-    
-    width: 120px; /* Taille des images */
-    height: 180px; /* Garde une hauteur uniforme */
-    object-fit: cover; /* Ajuste l'image au conteneur */
-    border-radius: 8px; /* Coins arrondis */
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* Permet de scroller horizontalement si nécessaire */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   /*transition: transform 0.3s ease;*/
 }
+
+.most-read-books p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .most-read-books ul {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+
+    .most-read-books img {
+        width: 80px;
+    }
+}
+
 
 
