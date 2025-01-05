@@ -479,24 +479,28 @@ class Database
 
     public function updateBookValidationStatus($bookId, $status): bool
     {
+        // Liste des statuts valides
         $validStatuses = ['pending', 'approved', 'rejected'];
         if (!in_array($status, $validStatuses)) {
             throw new InvalidArgumentException("Statut invalide : $status");
         }
-
-        $sql = "UPDATE book_validation SET validation_status = :status WHERE book_id = :book_id";
+    
+        // Mettre à jour le statut en utilisant la colonne 'id'
+        $sql = "UPDATE book_validation SET validation_status = :status WHERE id = :book_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':status', $status, \PDO::PARAM_STR);
         $stmt->bindParam(':book_id', $bookId, \PDO::PARAM_INT);
-
+    
         try {
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
+            // Enregistrer l'erreur dans les logs
             error_log("Erreur lors de la mise à jour du statut de validation : " . $e->getMessage());
             return false;
         }
     }
+    
 
     public function getBooksByValidationStatus($status): array
     {

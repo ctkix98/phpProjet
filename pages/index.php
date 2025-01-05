@@ -68,6 +68,8 @@ session_start();
                             <div id="isbn-error" style="color: red; font-size: 12px; display: none;"></div> <!-- Message d'erreur -->
                         </div>
 
+                        <input type="hidden" name="action" value="submit">
+
 
                         <button type="submit" name="submit" class="button-soumission">Soumettre l'ouvrage</button>
                     </form>

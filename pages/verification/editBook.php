@@ -77,45 +77,46 @@ function formatISBN($isbn)
         </header>
 
         <main>
-            <form action="processUpdate.php" method="POST">
-                <h1>Modifier le livre</h1>
-                <div>
-                    <label for="title">Titre:</label>
-                    <input type="text" name="title" id="title" value="<?= htmlspecialchars($book['Title']) ?>" required>
-                </div>
+        <form action="checkNewBook.php" method="POST">
+            <h2>Modifier le livre</h2>
 
-                <div>
-                    <label for="author">Auteur:</label>
-                    <input type="text" name="author" id="author" value="<?= htmlspecialchars($book['Author']) ?>" required>
-                </div>
+            <div class="form-group">
+                <label for="title">Titre</label>
+                <input type="text" id="title" name="title" value="<?= htmlspecialchars($book['Title']) ?>" placeholder="Le Petit Prince" required>
+            </div>
 
-                <div>
-                    <label for="theme">Thème:</label>
-                    <input type="text" name="theme" id="theme" value="<?= htmlspecialchars($book['Theme']) ?>" required>
-                </div>
+            <div class="form-group">
+                <label for="writer">Auteur</label>
+                <input type="text" id="writer" name="writer" value="<?= htmlspecialchars($book['Author']) ?>" placeholder="Antoine de Saint-Exupéry" required>
+            </div>
 
-                <div>
-                    <label for="publication_year">Année de publication:</label>
-                    <input type="number" name="publication_year" id="publication_year" value="<?= htmlspecialchars($book['Parution_date']) ?>" required>
-                </div>
+            <div class="form-group">
+                <label for="theme">Thème</label>
+                <input type="text" id="theme" name="theme" value="<?= htmlspecialchars($book['Theme']) ?>" placeholder="Romance" required>
+            </div>
 
-                <div>
-                    <label for="isbn">ISBN:</label>
-                    <input type="text" name="isbn" id="isbn" value="<?= formatISBN($book['ISBN']) ?>" required>
-                </div>
+            <div class="form-group">
+                <label for="year">Année de publication</label>
+                <input type="number" id="year" name="year" value="<?= htmlspecialchars($book['Parution_date']) ?>" min="1000" max="9999" placeholder="1943" required>
+            </div>
 
-                <!-- Champ caché pour passer l'ID du livre -->
-                <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']) ?>">
+            <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input type="text" id="isbn" name="isbn" value="<?= formatISBN($book['ISBN']) ?>" placeholder="978-3-16-148410-0" required>
+                <div id="isbn-error" style="color: red; font-size: 12px; display: none;"></div>
+            </div>
 
-                <div>
-                    <button type="submit" class="button-soumission">Mettre à jour le livre</button>
-                </div>
-            </form>
-        </main>
+            <!-- Champ caché pour passer l'ID du livre -->
+            <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']) ?>">
+            <input type="hidden" name="action" value="update">
 
-        <footer>
-            <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
-        </footer>
-    </body>
+            <button type="submit" name="submit" class="button-soumission">Mettre à jour le livre</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
+    </footer>
+</body>
 
 </html>
