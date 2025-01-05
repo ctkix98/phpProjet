@@ -33,32 +33,32 @@ session_start();
                 <h2>Les livres les plus lus</h2>
                 <ul>
                     <li>
-                        <img src="../assets/images/book-cover-most" alt="Cover of the book Le Petit Prince">
+                        <img src="../assets/images/book-cover-most-read/Changer l'eau des fleurs -Valérie Perrin.jpeg" alt="cover of the book Changer l'eau des fleurs">
                     </li>
                     <li>
-                        <img src="../assets/images/book-cover-reading/Les-Misérables–Victor-Hugo.jpeg" alt="Cover of the book Les-Misérables">
+                        <img src="../assets/images/book-cover-most-read/Chien blanc - Romain Gary.jpeg" alt="Cover of the book Chien blanc">
                     </li>
                     <li>
-                        <img src="../assets/images/book-cover-reading/Dune – Frank Herbert.jpeg" alt="Cover of the book Dune">
+                        <img src="../assets/images/book-cover-most-read/L'affaire Alaska Sanders -Joël Dicker.jpeg" alt="Cover of the book L'affaire Alaska Sanders">
                     </li>
                     <li>
-                    <img src="../assets/images/book-cover-reading/La Passe-Miroir (Tome 1 - Les Fiancés de l'Hiver) .jpeg" alt="Cover of the book La passe miroir">
+                    <img src="../assets/images/book-cover-most-read/La panthère des neiges - Sylvain Tesson.jpeg" alt="Cover of the book La panthère des neiges">
                     <li>
-                    <img src="../assets/images/book-cover-reading/Le Clan des Otori (Tome 1 - Le Silence du Rossignol) – Lian Hearn.jpeg" alt="Cover of the book Clan des Otori - Le silence du rossignol">
+                    <img src="../assets/images/book-cover-most-read/La vie secrète des écrivains - Guillaume Musso.jpeg" alt="Cover of the book La vie secrète des écrivains">
                     </li>
                     <li>
-                    <img src="../assets/images/book-cover-reading/Les-Misérables–Victor-Hugo.jpeg" alt="Cover of the book Les-Misérables">
+                    <img src="../assets/images/book-cover-most-read/Le bal des folles-Victoria Mas.jpeg" alt="Cover of the book Le bal des folles">
                     </li>
                     <li>
-                    <img src="../assets/images/book-cover-reading/Dune – Frank Herbert.jpeg" alt="Cover of the book Dune">
+                    <img src="../assets/images/book-cover-most-read/Le consentement - Vanessa Springora.jpeg" alt="Cover of the book Le consentement">
                     </li>
                     <li>
-                    <img src="../assets/images/book-cover-reading/L'Alchimiste – Paulo Coelho.jpeg" alt="Cover of the book L'Alchimiste">
+                    <img src="../assets/images/book-cover-most-read/Le Mage du Kremlin - Giuliano da Empoli.jpeg" alt="Cover of the book Le mage du Kremlin">
                     <li>
-                    <img src="../assets/images/book-cover-reading/Mille Soleils Splendides – Khaled Hosseini.jpeg" alt="Cover of the book Mille Soleils Splendides">
+                    <img src="../assets/images/book-cover-most-read/Les Aérostats-Amélie Nothomb.jpeg" alt="Cover of the book Les Aérostats">
                     </li>
                     <li>
-                    <img src="../assets/images/book-cover-reading/Mille Soleils Splendides – Khaled Hosseini.jpeg" alt="Cover of the book Mille Soleils Splendides">
+                    <img src="../assets/images/book-cover-most-read/un animal sauvage - joel dicker.jpeg" alt="Cover of the book Un animal sauvage">
                     </li>
                         </ul>
                     </div>

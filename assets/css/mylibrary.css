@@ -184,7 +184,6 @@ details[open] summary::after {
   list-style: none; /* Supprime les puces de la liste */
   padding: 16px; /* Ajoute de l'espace interne autour des éléments */
   margin: 0 auto; /* Centre horizontalement */
-  justify-content: center; /* Centre les éléments horizontalement */
   align-items: flex-start; /* Aligne les livres en haut si leur contenu varie */
 }
 
