@@ -4,6 +4,7 @@ main {
 
 form {
   border-radius: 0;
+  width: 100%;
 }
 
 input[type = text] {
