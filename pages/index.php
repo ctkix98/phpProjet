@@ -18,6 +18,7 @@ session_start();
         <ul>
             <li><a href="index.php">Babel</a></li>
             <li><a href="about.php">A propos</a></li>
+            <li><a href="library.php">Bibliothèque</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
                     <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
