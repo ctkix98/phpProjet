@@ -391,6 +391,26 @@ class Database
             error_log("Error: " . $e->getMessage());
         }
     }
+    public function getAllBooks()
+    {
+        try {
+            // Préparation de la requête pour récupérer tous les livres de la table "book"
+            $sql = "SELECT * FROM book";
+            $stmt = $this->getDb()->prepare($sql);
+
+            // Exécution de la requête
+            $stmt->execute();
+
+            // Récupération des résultats sous forme de tableau associatif
+            $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $books;
+        } catch (PDOException $e) {
+            // Gestion des erreurs : enregistrez l'erreur dans un journal ou affichez un message
+            error_log("Erreur lors de la récupération des livres : " . $e->getMessage());
+            return [];
+        }
+    }
 
     public function addBook(Book $book): bool
     {

@@ -32,6 +32,9 @@ $sqlRejected = "SELECT * FROM book_validation WHERE validation_status = 'rejecte
 $stmtRejected = $db->getDb()->prepare($sqlRejected);
 $stmtRejected->execute();
 $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
+
+//Get all books registered in database
+$allBooks = $db->getAllBooks();
 ?>
 
 <!DOCTYPE html>
@@ -43,11 +46,17 @@ $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
     <title>Tableau de bord administrateur</title>
     <link rel="stylesheet" href="../../assets/css/dashboard-admin.css">
     <script>
-        // Fonction pour basculer l'affichage d'une section
-        function toggleSection(sectionId) {
-            var section = document.getElementById(sectionId);
-            section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        // Fonction pour afficher une section spécifique
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('main > div');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
         }
+
+        // Initialiser avec les livres en attente affichés
+        window.onload = function() {
+            showSection('pendingBooks');
+        };
     </script>
 </head>
 
@@ -58,7 +67,8 @@ $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="../about.php">À propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
-                    <li><a href="dashboardAdmin.php">Compte admin</a></li>
+                    <li><a href="dashboardAdmin.php">Tableau de bord</a></li>
+                    <li> <a href="../adminPage.php">Compte admin</a></li>
                 <?php else: ?>
                     <li><a href="../libraryUser.php">Ma bibliothèque</a></li>
                     <li><a href="../dashboardUser.php">Mon compte</a></li>
@@ -72,7 +82,15 @@ $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
     </header>
 
     <main>
-        <h1>Tableau de bord Administrateur</h1>
+        <h1>Tableau de bord</h1>
+
+        <!-- Boutons de navigation -->
+        <nav>
+            <button onclick="showSection('pendingBooks')">Livres en attente</button>
+            <button onclick="showSection('approvedBooks')">Livres validés</button>
+            <button onclick="showSection('rejectedBooks')">Livres rejetés</button>
+            <button onclick="showSection('allBooks')">Tous les livres enregistrés</button>
+        </nav>
 
         <!-- Section des livres en attente -->
         <div id="pendingBooks">
@@ -115,10 +133,6 @@ $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
                 </table>
             <?php endif; ?>
         </div>
-
-        <!-- Boutons pour afficher les sections validées et rejetées -->
-        <button onclick="toggleSection('approvedBooks')">Livres validés</button>
-        <button onclick="toggleSection('rejectedBooks')">Livres rejetés</button>
 
         <!-- Section des livres validés -->
         <div id="approvedBooks" style="display:none;">
@@ -175,6 +189,42 @@ $booksRejected = $stmtRejected->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= htmlspecialchars($book['Theme']); ?></td>
                                 <td><?= htmlspecialchars($book['Parution_date']); ?></td>
                                 <td><?= htmlspecialchars($book['ISBN']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+        <!-- Section de tous les livres de la base de données -->
+        <div id="allBooks" style="display:none;">
+            <h2>Tous les livres de la base de données</h2>
+            <?php if (empty($allBooks)): ?>
+                <p>Aucun livre à afficher.</p>
+            <?php else: ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Auteur</th>
+                            <th>Thème</th>
+                            <th>Année de publication</th>
+                            <th>ISBN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($allBooks as $book): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($book['Title']); ?></td>
+                                <td><?= htmlspecialchars($book['Author']); ?></td>
+                                <td><?= htmlspecialchars($book['Theme']); ?></td>
+                                <td><?= htmlspecialchars($book['Parution_date']); ?></td>
+                                <td><?= htmlspecialchars($book['ISBN']); ?></td>
+                                <td>
+                                    <form action="deleteBook.php" method="POST">
+                                        <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']); ?>">
+                                        <button type="submit" name="action" value="delete">Supprimer</button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
