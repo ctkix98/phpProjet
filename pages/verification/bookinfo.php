@@ -141,7 +141,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "Il faut être connecté pour accéder à cette page.<br>" . "<a href='../connexion.html'>Se connecter</a>";
             $_SESSION['message'] = $message;
             header('Location: ../messages/message.php', true, 303);
-            exit();
             ?>
         <?php endif; ?>
     </main>
