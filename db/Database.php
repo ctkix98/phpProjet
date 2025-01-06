@@ -18,7 +18,8 @@ class Database
             $this->db = new \PDO($dsn, $username, $password);
         } catch (PDOException $e) {
             error_log("Erreur de connexion : " . $e->getMessage());
-            die("Erreur de connexion. Veuillez réessayer plus tard.");
+            // die("Erreur de connexion. Veuillez réessayer plus tard.");
+            die("Erreur de connexion : " . $e->getMessage());
         }
         $this->initialistion();
     }
@@ -112,7 +113,8 @@ class Database
                 user_id INTEGER,
                 FOREIGN KEY (book_state_id) REFERENCES book_state(id),
                 FOREIGN KEY (book_id) REFERENCES book(id),
-                FOREIGN KEY (user_id) REFERENCES users(id)
+                FOREIGN KEY (user_id) REFERENCES users(id),
+                UNIQUE(book_id, user_id)
             );
         COMMANDE_SQL;
 
@@ -593,6 +595,17 @@ class Database
             echo "Erreur lors de la récupération des IDs des livres : " . $e->getMessage();
             return [];
         }
+    }
+
+    function getBooksByState($userId, $state) {
+        $sql = "SELECT b.* FROM book b
+                JOIN lecture l ON b.id = l.book_id
+                WHERE l.user_id = :user_id AND l.book_state_id = :book_state_id";
+        $stmt = $this->getDb()->prepare($sql);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':book_state_id', $state, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function query() {
