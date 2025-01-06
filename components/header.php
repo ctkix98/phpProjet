@@ -20,6 +20,7 @@
                 <li id="deconnexion"><a href="/pages/deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
                 <li id="connexion"><a href="/pages/connexion.html">Se connecter</a></li>
+                <p></p>
                 <li id="nouveauCompte"><a href="/pages/inscription.html">Créer un compte</a></li>
             <?php endif; ?>
             </ul>
