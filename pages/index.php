@@ -10,6 +10,8 @@ session_start();
     <title>Page d'accueil</title>
     <link rel="stylesheet" href="../assets/css/index.css">
     <link rel="stylesheet" href="../assets/css/form-add-book.css">
+    <link rel="stylesheet" href="../assets/css/library.css">
+    <link rel="stylesheet" href="../assets/css/normalize.css">
     <script src="../assets/js/checkisbn.js" defer></script>
 </head>
 
@@ -39,6 +41,19 @@ session_start();
         <div class="content">
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>
+                <div class="books-container">
+        <!-- Exemple de livres en cours -->
+        <div class="book-item">
+          <a href="bookinfo.php">
+            <img
+              src="../assets/images/placeholder-mylibrary.png"
+              alt="book-cover"
+            />
+            <h3 class="book-title">Livre 1</h3>
+          </a>
+          <h4 class="author">Auteur 1</h4>
+        </div>
+      </div>
                 <div>
                     <form action="../pages/verification/checkNewBook.php" method="POST">
                         <h2>Ajouter un livre</h2>
