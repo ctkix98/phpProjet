@@ -87,7 +87,7 @@ class Database
             validation_status TEXT DEFAULT 'pending' -- Status: 'pending', 'approved', 'rejected'
         );
         COMMANDE_SQL;
-    
+
         try {
             $this->db->exec($sql);
             $ok = true;
@@ -97,7 +97,7 @@ class Database
         }
         return $ok;
     }
-    
+
 
     public function createTablelecture(): bool
     {
@@ -458,51 +458,50 @@ class Database
         try {
             // Initialisation de la variable $ok pour vérifier le succès de l'exécution
             $ok = true;
-        
+
             // Préparer la requête d'insertion dans la table book_validation
             $sql = "INSERT INTO book_validation (Title, Author, Theme, Parution_date, ISBN, validation_status)
                     VALUES (:title, :author, :theme, :parution_date, :isbn, :validation_status)";
-            
+
             $stmt = $this->db->prepare($sql);
-            
+
             // Lier les paramètres de la requête avec les propriétés du livre
             $stmt->bindParam(':title', $book->title);
             $stmt->bindParam(':author', $book->author);
             $stmt->bindParam(':theme', $book->theme);
             $stmt->bindParam(':parution_date', $book->parution_date);
-            
+
             // Définir le statut de validation à "pending"
             $validationStatus = 'pending';  // Déclaration de la variable ici
             $stmt->bindParam(':validation_status', $validationStatus);  // Puis lier la variable
-        
+
             // Vérifier si l'ISBN est fourni
             if ($book->isbn === 'NULL' || empty($book->isbn)) {
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':isbn', $book->isbn);
             }
-        
+
             // Exécuter la requête pour insérer le livre avec son statut de validation
             $ok = $ok && $stmt->execute();
-        
+
             // Vérifier si l'exécution a réussi
             if ($ok) {
                 echo $book->title . " ajouté et soumis à validation.";
                 echo "<br>";
             }
-        
         } catch (\PDOException $e) {
             // En cas d'erreur, afficher le message d'erreur
             echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
             $ok = false;
         }
-        
+
         // Retourner le statut d'exécution
         return $ok;
     }
-    
-    
-    
+
+
+
 
     public function updateBookValidationStatus($bookId, $status): bool
     {
@@ -511,13 +510,13 @@ class Database
         if (!in_array($status, $validStatuses)) {
             throw new InvalidArgumentException("Statut invalide : $status");
         }
-    
+
         // Mettre à jour le statut en utilisant la colonne 'id'
         $sql = "UPDATE book_validation SET validation_status = :status WHERE id = :book_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':status', $status, \PDO::PARAM_STR);
         $stmt->bindParam(':book_id', $bookId, \PDO::PARAM_INT);
-    
+
         try {
             $stmt->execute();
             return true;
@@ -527,7 +526,7 @@ class Database
             return false;
         }
     }
-    
+
     //stocker les informations sur les couvertures
     public function addCoverMetadataToBookTable(): bool
     {
@@ -537,7 +536,7 @@ class Database
             ADD COLUMN cover_format TEXT,
             ADD COLUMN cover_resolution TEXT;
         COMMANDE_SQL;
-    
+
         try {
             $this->db->exec($sql);
             return true;
@@ -546,31 +545,31 @@ class Database
             return false;
         }
     }
-    
+
     public function getBooks(): array
-{
-    $sql = "SELECT * FROM book";
-    
-    try {
-        $stmt = $this->db->query($sql);
-        $books = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $books[] = new Book(
-                $row['id'],
-                $row['Title'],
-                $row['Author'],
-                $row['Theme'],
-                $row['Parution_date'],
-                $row['ISBN'],
-                $row['cover_image_url']
-            );
+    {
+        $sql = "SELECT * FROM book";
+
+        try {
+            $stmt = $this->db->query($sql);
+            $books = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $books[] = new Book(
+                    $row['id'],
+                    $row['Title'],
+                    $row['Author'],
+                    $row['Theme'],
+                    $row['Parution_date'],
+                    $row['ISBN'],
+                    $row['cover_image_url']
+                );
+            }
+            return $books;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return [];
         }
-        return $books;
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        return [];
     }
-}
 
 
     public function getBooksByValidationStatus($status): array
@@ -615,7 +614,8 @@ class Database
         }
     }
 
-    public function query() {
+    public function query()
+    {
         try {
             $query = "SELECT id, ISBN, OLID, Title, Author FROM book WHERE cover_image_path IS NULL";
             $stmt = $this->db->prepare($query);
@@ -623,7 +623,7 @@ class Database
 
             // Récupérer les IDs dans un tableau
             $bookIds = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            echo("hello");
+            echo ("hello");
             return $bookIds;
         } catch (PDOException $e) {
             echo "Erreur lors de la récupération des IDs des livres : " . $e->getMessage();
@@ -631,5 +631,3 @@ class Database
         }
     }
 }
-
-
