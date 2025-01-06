@@ -61,11 +61,6 @@ if ($action == 'submit') {
         $_SESSION['message'] = "Le livre n'a pas été soumis à l'administrateur pour validation.";
     }
 } elseif ($action === 'update') {
-    if (isset($_FILES['cover_image'])) {
-        var_dump($_FILES['cover_image']);
-    } else {
-        echo "Aucun fichier téléversé.";
-    }
     
     if (isset($_POST['book_id'])) {
         $bookId = $_POST['book_id'];
@@ -74,10 +69,12 @@ if ($action == 'submit') {
         // Vérifier si un fichier a été téléversé
         if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
             $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            //Permet de convertir le nom du fichier téléchargé et minuscules
             $fileExtension = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
 
             if (in_array($fileExtension, $allowedExtensions)) {
                 $uploadsDir = '../../assets/images/covers/';
+                //uniqid() permet de générer un nom de fichier unique (qui sera des chiffres et des lettres)
                 $newFileName = uniqid() . '.' . $fileExtension;
                 $destination = $uploadsDir . $newFileName;
 
