@@ -25,7 +25,7 @@ require_once __DIR__ . '/../../config/session.php';
                 <?php else: ?>
                     <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
                     <li> <a href="libraryUser.php">Mes lectures</a></li>
-                    <li> <a href="dashboardUser.php">Mon compte</a></li>
+                    <li> <a href="../dashboardUser.php">Mon compte</a></li>
                 <?php endif; ?>
                 <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
