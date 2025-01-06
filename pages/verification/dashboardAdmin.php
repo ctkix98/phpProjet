@@ -124,7 +124,6 @@ $allBooks = $db->getAllBooks();
                                 <td>
                                     <form action="validateBook.php" method="POST">
                                         <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']); ?>">
-                                        <button type="submit" name="action" value="approve">Approuver</button>
                                         <button type="submit" name="action" value="update">Modifier</button>
                                         <button type="submit" name="action" value="reject">Rejeter</button>
                                     </form>
