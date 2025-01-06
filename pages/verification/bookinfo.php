@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </option>
                             </select>
                             <input type="hidden" name="book_id" value="<?php echo $bookId; ?>">
-                            <button type="submit">Mettre à jour</button>
+                            <input type="submit" value="Valider">
                         </form>
                     </div>
                 </div>
