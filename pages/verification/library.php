@@ -28,7 +28,7 @@ $allBooks = $db->getAllBooks();
         <ul>
             <li><a href="../index.php">Babel</a></li>
             <li><a href="../about.php">A propos</a></li>
-            <li><a href="library.php">Bibliothèque</a></li>
+            <li> <a href="../verification/library.php">Bibliothèque</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
                     <li><a href="dashboardAdmin.php">Tableau de bord</a></li>
