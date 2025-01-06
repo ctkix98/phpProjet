@@ -15,7 +15,7 @@ $utilisateurId = $_SESSION['utilisateur']['id'];
 
 // Instancier la base de données
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
     $message = "Erreur lors de l'accès à la base de données.";
     $_SESSION['message'] = $message;
     header('Location: ../messages/message.php');

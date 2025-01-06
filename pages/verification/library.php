@@ -3,7 +3,7 @@ require_once('../../db/Database.php');
 session_start();
 
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
   echo "Problème d'initialisation <br>";
 }
 

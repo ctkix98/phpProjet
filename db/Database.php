@@ -21,7 +21,7 @@ class Database
             // die("Erreur de connexion. Veuillez réessayer plus tard.");
             die("Erreur de connexion : " . $e->getMessage());
         }
-        $this->initialistion();
+        $this->initialisation();
     }
 
     // Getter pour accéder à $db
@@ -216,7 +216,7 @@ class Database
         }
         return $ok;
     }
-    public function initialistion(): bool
+    public function initialisation(): bool
     {
         $ok = true;
         $ok = $ok && $this->createTableBookState();

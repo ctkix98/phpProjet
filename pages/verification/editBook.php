@@ -4,7 +4,7 @@ session_start();
 
 // Instancier la base de données
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
     echo "Erreur lors de l'accès à la base de données.";
     exit();
 }

@@ -9,7 +9,7 @@ if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur']['pseudo'] !== '
 }
 
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
     $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
     header('Location: ../messages/message.php', true, 303);
     exit();
