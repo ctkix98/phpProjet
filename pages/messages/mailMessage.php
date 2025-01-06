@@ -19,7 +19,6 @@ require_once __DIR__ . '/../../config/session.php';
             <div class="confirmation">
                 <h1>Ton inscription a été confirmée avec succès !</h1>
                 <div>
-                    <a href='http://localhost:8025'>voir le mail</a>
                     <a href="../../pages/connexion.html" id="idConnexion">Retour à la page de connexion</a>
                 </div>
             </div>
