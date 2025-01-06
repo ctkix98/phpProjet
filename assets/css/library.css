@@ -1,0 +1,48 @@
+main {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+input[type = text] {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-family: arial;
+}
+
+input[type = submit] {
+    height: fit-content;
+    width: fit-content;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.7rem 2rem;
+    background-color: var(--dark-green);
+    cursor: pointer;
+    color: var(--beige);
+    font-family: arial;
+}
+
+.books-container {
+    position: static;
+    inset: 0;
+    width: 100vw;
+    height: auto;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    place-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-block: 3rem; 
+  }
+  
+  .book-item {
+    background-color: #FAF0E6;
+    padding: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem 0.5rem 0rem 0rem;
+  }
+  
+  .book-item h3,
+  .book-item h4 {
+    padding-left: 0.5rem;
+  }
