@@ -8,9 +8,9 @@ $livres = [
     ["titre" => "La vie secrète des écrivains", "image" => "../assets/images/book-cover-most-read/La vie secrète des écrivains - Guillaume Musso.jpeg"],
     ["titre" => "Le bal des folles", "image" => "../assets/images/book-cover-most-read/Le bal des folles-Victoria Mas.jpeg"],
     ["titre" => "Le consentement", "image" => "../assets/images/book-cover-most-read/Le consentement - Vanessa Springora.jpeg"],
-    ["titre" => "Le Mage du Kremlin", "image" => "../assets/images/book-cover-most-read/Le Mage du Kremlin - Giuliano da Empoli"],
     ["titre" => "Les Aérostats", "image" => "../assets/images/book-cover-most-read/Les Aérostats-Amélie Nothomb.jpeg"],
     ["titre" => "un animal sauvage", "image" => "../assets/images/book-cover-most-read/un animal sauvage - joel dicker.jpeg"],
+    ["titre" => "L'alchimiste", "image" => "../assets/images/book-cover-done/L'Alchimiste – Paulo Coelho.jpeg"],
 ];
 
 ?>
@@ -40,30 +40,34 @@ $livres = [
         </ul>
     </header>
     <main>
-        <div class="content">
-            <?php if (isset($_SESSION['utilisateur'])): ?>
+    <main>
+    <div class="content">
+        <?php if (isset($_SESSION['utilisateur'])): ?>
+            <!-- Message de bienvenue -->
+            <div class="welcome-section">
                 <h1>Bienvenue <?php echo htmlspecialchars($_SESSION['utilisateur']['pseudo']); ?> !</h1>
-                <div class="container">
-                    <!-- Section des livres les plus lus -->
-                    <div class="most-read-books">
-                        <h2>Les 10 livres les plus lus</h2>
-                        <ul>
-                            <?php foreach ($livres as $livre): ?>
-                                <li>
-                                    <img src="<?php echo htmlspecialchars($livre['image']); ?>" alt="Couverture du livre <?php echo htmlspecialchars($livre['titre']); ?>">
-                                    <p><?php echo htmlspecialchars($livre['titre']); ?></p>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
+            </div>
+            
+            <!-- Section des livres les plus lus -->
+            <div class="container">
+                <div class="most-read-books">
+                    <h2>Les 10 livres les plus lus</h2>
+                    <ul>
+                        <?php foreach ($livres as $livre): ?>
+                            <li>
+                                <img src="<?php echo htmlspecialchars($livre['image']); ?>" alt="Couverture du livre <?php echo htmlspecialchars($livre['titre']); ?>">
+                                <p><?php echo htmlspecialchars($livre['titre']); ?></p>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
+            </div>
+        <?php else: ?>
+            <h1>Bienvenue !</h1>
+        <?php endif; ?>
+    </div>
+</main>
 
-                
-            <?php else: ?>
-                <h1>Bienvenue !</h1>
-            <?php endif; ?>
-        </div>
-    </main>
     <footer>
         <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
     </footer>
