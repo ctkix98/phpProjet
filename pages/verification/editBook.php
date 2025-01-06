@@ -107,6 +107,11 @@ function formatISBN($isbn)
                     <div id="isbn-error" style="color: red; font-size: 12px; display: none;"></div>
                 </div>
 
+                <div class="form-group">
+                    <label for="cover_image">Image de couverture (jpg ou png)</label>
+                    <input type="file" id="cover_image" name="cover_image" accept="image/png, image/jpeg">
+                </div>
+
                 <!-- Champ caché pour passer l'ID du livre -->
                 <input type="hidden" name="book_id" value="<?= htmlspecialchars($book['id']) ?>">
                 <input type="hidden" name="action" value="update">
