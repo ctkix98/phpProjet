@@ -10,3 +10,12 @@ if (!$db->initialisation()) {
     echo "Erreur lors de l'accès à la base de données.";
     exit();
 }
+
+// var_dump($_SESSION['search']);
+
+// foreach ($_SESSION['search'] as $id) {
+//     $books[] = $book;
+// }
+$books = $db->getBooksById($_SESSION['search']);
+
+var_dump($books);

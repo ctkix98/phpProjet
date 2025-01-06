@@ -633,6 +633,14 @@ class Database
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function getBooksById($bookId) {
+        $sql = "SELECT * FROM book WHERE id = :book_id";
+        $stmt = $this->getDb()->prepare($sql);
+        $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function query()
     {
         try {
@@ -651,10 +659,12 @@ class Database
     }
 
     public function searchBooks($researchedWord)
-    { echo "Searching books";
+    {
+        echo "Searching books";
         $query = "SELECT id FROM book WHERE Title LIKE :researchedWord OR Author LIKE :researchedWord";
-        $researchedWord = '%' . $researchedWord . ' %';
+        $researchedWord = '%' . $researchedWord . '%';
         $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':researchedWord', $researchedWord);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

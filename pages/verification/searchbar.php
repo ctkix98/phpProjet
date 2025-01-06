@@ -11,17 +11,15 @@ if (!$db->initialisation()) {
 
 if (filter_has_var(INPUT_POST, 'submit')) {
     $search = filter_input(INPUT_POST, 'search', FILTER_SANITIZE_STRING);
-    echo $search."<br>";
+    echo $search . "<br>";
     $results = $db->searchBooks($search);
-    var_dump($results);
     if (empty($results)) {
         $_SESSION['message'] = "Aucun résultat trouvé.";
         header('Location: ../messages/message.php', true, 303);
         exit();
     }
-    echo "on est ici ";
+    $_SESSION['search'] = $results;
     header('Location: showresults.php', true, 303);
-    echo "on est là";
+    // echo "on est là";
     exit();
 }
-
