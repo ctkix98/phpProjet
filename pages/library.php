@@ -32,9 +32,9 @@
     </header>
     <main>
       <div class="form-container">
-        <form>
-          <input type="text" id="search" />
-          <input type="submit" value="Recherche" />
+        <form class="search">
+          <input type="text" id="search" placeholder="Entrez un nom de livre ou d'auteur..." />
+          <input type="submit" value="Rechercher" />
         </form>
       </div>
       <div class="books-container">
@@ -51,5 +51,10 @@
         </div>
       </div>
     </main>
+    <footer>
+        <div>
+            <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
+        </div>
+    </footer>
   </body>
 </html>
