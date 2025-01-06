@@ -66,7 +66,7 @@ function formatISBN($isbn)
                     <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
                         <li><a href="dashboardAdmin.php">Compte admin</a></li>
                     <?php else: ?>
-                        <li><a href="../libraryUser.php">Mes lectures</a></li>
+                        <li><a href="/libraryUser.php">Mes lectures</a></li>
                         <li><a href="../dashboardUser.php">Mon compte</a></li>
                     <?php endif; ?>
                     <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>

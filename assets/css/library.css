@@ -46,3 +46,9 @@ input[type = submit] {
   .book-item h4 {
     padding-left: 0.5rem;
   }
+
+  .img {
+    object-fit: contain;
+    width: 200px;
+    height: 300px;
+  }

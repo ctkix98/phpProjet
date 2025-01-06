@@ -73,7 +73,7 @@ $allBooks = $db->getAllBooks();
                     <li> <a href="../adminPage.php">Compte admin</a></li>
                 <?php else: ?>
                     <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
-                    <li> <a href="../libraryUser.php">Mes lectures</a></li>
+                    <li> <a href="/libraryUser.php">Mes lectures</a></li>
                     <li> <a href="../dashboardUser.php">Mon compte</a></li>
                 <?php endif; ?>
                 <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>
