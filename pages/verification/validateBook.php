@@ -59,7 +59,6 @@ if (filter_has_var(INPUT_POST, 'action')) {
             header('Location: ../messages/message.php');
             exit();
         }
-
     } else if ($action === 'reject') {
         // Mettre à jour le statut du livre en 'rejected'
         $sqlUpdateStatus = "UPDATE book_validation SET validation_status = 'rejected' WHERE id = :bookId";
@@ -70,7 +69,6 @@ if (filter_has_var(INPUT_POST, 'action')) {
         $_SESSION['message'] = "Le livre a été rejeté.";
         header('Location: dashboardAdmin.php');
         exit();
-
     } else if ($action === 'update') {
         // Si vous avez une logique de modification, vous pouvez l'ajouter ici
         // Cela dépend de ce que vous voulez permettre à l'administrateur de modifier
@@ -86,4 +84,3 @@ if (filter_has_var(INPUT_POST, 'action')) {
     header('Location: ../messages/message.php');
     exit();
 }
-?>
