@@ -61,6 +61,12 @@ if ($action == 'submit') {
         $_SESSION['message'] = "Le livre n'a pas été soumis à l'administrateur pour validation.";
     }
 } elseif ($action === 'update') {
+    if (isset($_FILES['cover_image'])) {
+        var_dump($_FILES['cover_image']);
+    } else {
+        echo "Aucun fichier téléversé.";
+    }
+    
     if (isset($_POST['book_id'])) {
         $bookId = $_POST['book_id'];
         $coverImagePath = null;

@@ -78,7 +78,7 @@ function formatISBN($isbn)
         </header>
 
         <main>
-            <form action="checkNewBook.php" method="POST">
+            <form action="checkNewBook.php" method="POST" enctype="multipart/form-data">
                 <h2>Modifier le livre</h2>
 
                 <div class="form-group">

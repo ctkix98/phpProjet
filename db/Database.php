@@ -382,7 +382,6 @@ class Database
                     $book['first_publish_year'] ?? 'Unknown',
                     $book['availability']['isbn'] ?? 'NULL',
                     $book['availability']['openlibrary_work'] ?? 'NULL',
-                    "NULL",
                 );
                 $this->addBook($bookObject);
             }
@@ -416,30 +415,39 @@ class Database
         try {
             $ok = true;
             $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN, cover_image_path)
-                VALUES (:title, :author, :theme, :parution_date, :isbn, :cover_image_path)";
+                    VALUES (:title, :author, :theme, :parution_date, :isbn, :cover_image_path)";
             $stmt = $this->db->prepare($sql);
+
+            // Lier les paramètres
             $stmt->bindParam(':title', $book->title);
             $stmt->bindParam(':author', $book->author);
             $stmt->bindParam(':theme', $book->theme);
             $stmt->bindParam(':parution_date', $book->parution_date);
-            $stmt->bindParam(':isbn', $book->isbn);
-            $stmt->bindParam(':cover_image_path', $book->cover_image_path);
 
-            // Vérifier si l'ISBN est fourni
+            // Gestion de l'ISBN
             if ($book->isbn === 'NULL' || empty($book->isbn)) {
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':isbn', $book->isbn);
             }
 
+            // Gestion du chemin de l'image de couverture
+            if (empty($book->cover_image_path)) {
+                $stmt->bindValue(':cover_image_path', null, PDO::PARAM_NULL);
+            } else {
+                $stmt->bindParam(':cover_image_path', $book->cover_image_path);
+            }
+
+            // Exécuter la requête
             $ok = $ok && $stmt->execute();
-            echo $book->title . " added";
+            echo $book->title . " ajouté avec succès.";
             echo "<br>";
         } catch (\PDOException $e) {
             echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
         }
         return $ok;
     }
+
 
     public function addBookState($state)
     {
