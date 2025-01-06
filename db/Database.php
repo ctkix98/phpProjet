@@ -563,7 +563,6 @@ class Database
             $books = [];
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $books[] = new Book(
-                    $row['id'],
                     $row['Title'],
                     $row['Author'],
                     $row['Theme'],
@@ -622,7 +621,8 @@ class Database
         }
     }
 
-    function getBooksByState($userId, $state) {
+    function getBooksByState($userId, $state)
+    {
         $sql = "SELECT b.* FROM book b
                 JOIN lecture l ON b.id = l.book_id
                 WHERE l.user_id = :user_id AND l.book_state_id = :book_state_id";
@@ -633,7 +633,8 @@ class Database
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function query() {
+    public function query()
+    {
         try {
             $query = "SELECT id, ISBN, Title, Author FROM book WHERE cover_image_path IS NULL";
             $stmt = $this->db->prepare($query);
