@@ -82,13 +82,14 @@ if ($id > 0) {
                 <p><a href='$confirmationLink'>Confirmer mon inscription</a></p>
             ");
 
-        $mailer->send($message);        
+        $mailer->send($message);
         // Si l'e-mail a été envoyé, redirection vers une page de succès
-        $message = "Bravo, tu as réussi ton inscription ! Un mail de confirmation a été envoyé à ton adresse";
+        $message = "Bravo, tu as réussi ton inscription ! Un mail de confirmation a été envoyé à ton adresse. <br>
+<a href='http://localhost:8025'>Voir le mail</a>";
+
         $_SESSION['message'] = $message;
         header('Location: ../messages/message.php', true, 303);
         exit();
-
     } catch (Exception $e) {
         $message = "Une erreur est survenue lors de l'envoi du mail de confirmation.";
         $_SESSION['message'] = $message;
@@ -101,4 +102,3 @@ if ($id > 0) {
     header('Location: ../messages/message.php', true, 303);
     exit();
 }
-?>
