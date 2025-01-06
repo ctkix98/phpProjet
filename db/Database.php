@@ -649,4 +649,13 @@ class Database
             return [];
         }
     }
+
+    public function searchBooks($researchedWord)
+    { echo "Searching books";
+        $query = "SELECT id FROM book WHERE Title LIKE :researchedWord OR Author LIKE :researchedWord";
+        $researchedWord = '%' . $researchedWord . ' %';
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
