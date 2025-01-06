@@ -37,6 +37,8 @@ if (filter_has_var(INPUT_POST, 'action')) {
         header('Location: dashboardAdmin.php');
         exit();
     } else if ($action === 'update') {
+        // Si vous avez une logique de modification, vous pouvez l'ajouter ici
+        // Cela dépend de ce que vous voulez permettre à l'administrateur de modifier
         header('Location: editBook.php?id=' . $bookId);
         exit();
     } else {

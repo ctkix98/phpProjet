@@ -34,7 +34,7 @@ $allBooks = $db->getAllBooks();
           <li><a href="dashboardAdmin.php">Tableau de bord</a></li>
           <li><a href="../adminPage.php">Compte admin</a></li>
         <?php else: ?>
-          <li><a href="../libraryUser.php">Mes lectures</a></li>
+          <li><a href="libraryUser.php">Mes lectures</a></li>
           <li><a href="../dashboardUser.php">Mon compte</a></li>
         <?php endif; ?>
         <li id="deconnexion"><a href="../deconnexion.php">Se déconnecter</a></li>

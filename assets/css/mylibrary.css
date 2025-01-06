@@ -15,7 +15,10 @@
 summary {
   background-color: var(--medium-green);
   padding: 0.8rem;
-  border-top: solid 0.1rem var(--dark-green)
+  border-top: solid 0.1rem var(--dark-green);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 summary::before {
@@ -63,7 +66,7 @@ h2 {
   padding-block: 3rem; 
 }
 
-.book-item {
+/* .book-item {
   background-color: #FAF0E6;
   padding: 1.5rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
@@ -73,5 +76,20 @@ h2 {
 .book-item h3,
 .book-item h4 {
   padding-left: 0.5rem;
+} */
+
+.book-title {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
+.author {
+  font-size: 1rem;
+  color: var(--medium-green);
+}
+
+.img {
+  object-fit: contain;
+  width: 200px;
+  height: 300px;
+}
