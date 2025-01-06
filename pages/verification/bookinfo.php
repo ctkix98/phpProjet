@@ -1,5 +1,36 @@
 <?php
 session_start();
+require_once __DIR__ . '/../../db/Database.php';
+require_once __DIR__ . '/updateBookState.php';
+
+$userId = $_SESSION['utilisateur']['id'];
+$bookId = $_GET['id'] ?? null;
+
+// Récupérer l'état actuel du livre
+$db = new Database();
+$currentState = isset($_SESSION['book_states'][$bookId]) 
+    ? $_SESSION['book_states'][$bookId] 
+    : getCurrentBookState($bookId, $userId, $db);
+
+    // Vérifiez si le formulaire a été soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Sauvegardez l'état sélectionné dans une variable de session
+    if (isset($_POST['book_state'])) {
+        $_SESSION['book_states'][$bookId] = $_POST['book_state'];
+
+        // Mettez à jour l'état du livre dans la base de données
+        $bookState = $_POST['book_state'];
+        $sql = "UPDATE lecture SET book_state_id = :book_state_id WHERE user_id = :user_id AND book_id = :book_id";
+        $stmt = $db->getDb()->prepare($sql);
+        $stmt->bindParam(':book_state_id', $bookState, PDO::PARAM_STR);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Mettre à jour l'état actuel
+        $currentState = $bookState;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,8 +39,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book informations</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/bookinfo.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/bookinfo.css">
 </head>
 
 <body>
@@ -54,12 +85,27 @@ session_start();
                 <!-- book state -->
                 <div>
                     <h2>Statut du livre</h2>
-                    <select id="state-list">
-                        <option value="read-want">À lire</option>
-                        <option value="reading">En cours</option>
-                        <option value="read-done">Terminé</option>
-                        <option value="read-dropped">Abandonné</option>
-                    </select>
+                    <form action="updateBookState.php" method="POST">
+                        <select id="state-list" name="book_state">
+                            <option value="not-in-library" <?php echo $currentState === 'not-in-library' ? 'selected' : ''; ?>>
+                                Pas encore dans votre librairie
+                            </option>
+                            <option value="read-want" <?php echo $currentState === 'read-want' ? 'selected' : ''; ?>>
+                                À lire
+                            </option>
+                            <option value="reading" <?php echo $currentState === 'reading' ? 'selected' : ''; ?>>
+                                En cours
+                            </option>
+                            <option value="read-done" <?php echo $currentState === 'read-done' ? 'selected' : ''; ?>>
+                                Terminé
+                            </option>
+                            <option value="read-dropped" <?php echo $currentState === 'read-dropped' ? 'selected' : ''; ?>>
+                                Abandonné
+                            </option>
+                        </select>
+                        <input type="hidden" name="book_id" value="<?php echo $bookId; ?>">
+                        <button type="submit">Mettre à jour</button>
+                    </form>
                 </div>
 
             </div>
