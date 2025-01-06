@@ -26,6 +26,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .content {
     display: flex;
     flex-direction: column; /* Aligne verticalement les éléments */
@@ -34,11 +35,13 @@ body {
     padding: 20px; /* Ajoute un espace autour */
     gap: 20px; /* Espace entre les éléments enfants */
 }
+
 form {
+    width: 100vw;
     background-color: var(--light-brown);
     border-radius: 5%;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Texte centré */
+    text-align: center; 
     padding: 20px;
     margin-bottom: 50px;
 }
@@ -147,19 +150,13 @@ a {
     color: var(--warm-brown);
     font-weight: bold;
     transition: color 0.3s;
-}.content {
-    display: flex;
-    flex-direction: column; /* Aligne verticalement les éléments */
-    align-items: center;    /* Centre horizontalement */
-    justify-content: flex-start; /* Aligne les éléments en haut */
-    padding: 20px; /* Ajoute un espace autour */
-    gap: 20px; /* Espace entre les éléments enfants */
 }
-form {
+
+/* form {
     background-color: var(--light-brown);
     border-radius: 5%;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Texte centré */
+    text-align: center; 
     padding: 20px;
     margin-bottom: 50px;
 }
@@ -167,7 +164,7 @@ form {
 .form-group {
     margin-bottom: 20px;
     text-align: left;
-}
+} */
 
 label {
     text-align: left;
@@ -276,19 +273,14 @@ h1, h2, h3 {
   }
 
 footer {
+    bottom: 0;
+    width: 100%;
     background-color: var(--dark-green);
     color: var(--light-brown);
     text-align: center;
     padding: 50px 0;
     padding-right: 20px;
     padding-left: 20px;
-}
-
-.content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
 }
 
 h1 {
@@ -358,28 +350,6 @@ header ul li:first-child {
 /* Formulaire
 =======================================================================================================================
 */ 
-
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-    margin: auto; 
- 
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
-}
-
-form div {
-    padding-bottom: 20px;
-}
 
 input[type='text'],
 input[type='email'],

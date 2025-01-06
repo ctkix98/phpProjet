@@ -11,33 +11,19 @@ main {
     flex-direction: column;
 }
 
-.content {
-    display: flex;
-    flex-direction: column; /* Alignement vertical */
-    align-items: center; /* Centrer horizontalement */
-    justify-content: flex-start; /* Commencer en haut */
-    padding: 20px;
-    gap: 20px; /* Espacement entre le titre et le formulaire */
-    min-height: calc(100vh - 100px); /* Hauteur minimale égale à la taille de la fenêtre moins l'en-tête et le pied de page */
-    box-sizing: border-box; /* Inclut le padding dans le calcul de la hauteur */
-}
-
-
-
-form {
+/* form {
     background-color: var(--light-brown);
     border-radius: 5%;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Texte centré */
+    text-align: center; 
     padding: 20px;
     margin-bottom: 50px;
-    /*max-width: 150%;*/
 }
 
 .form-group {
     margin-bottom: 20px;
     text-align: left;
-}
+} */
 
 label {
     text-align: left;
@@ -48,7 +34,8 @@ label {
 }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
-    width: 100%;
+    width: 50%;
+    margin: -25px 0 0 -25px;
     padding: 12px;
     font-size: 16px;
     border: none;

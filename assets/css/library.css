@@ -1,6 +1,9 @@
 main {
-    padding-top: 3rem;
     padding-bottom: 3rem;
+}
+
+form {
+  border-radius: 0;
 }
 
 input[type = text] {
