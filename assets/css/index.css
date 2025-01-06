@@ -26,248 +26,9 @@ body {
     margin: 0;
     padding: 0;
 }
-.content {
-    display: flex;
-    flex-direction: column; /* Aligne verticalement les éléments */
-    align-items: center;    /* Centre horizontalement */
-    justify-content: flex-start; /* Aligne les éléments en haut */
-    padding: 20px; /* Ajoute un espace autour */
-    gap: 20px; /* Espace entre les éléments enfants */
-}
-form {
-    background-color: var(--light-brown);
-    border-radius: 5%;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Texte centré */
-    padding: 20px;
-    margin-bottom: 50px;
-}
 
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-label {
-    text-align: left;
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: var(--dark-green);
-}
-
-input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    background-color: var(--beige);
-    color: var(--dark-green);
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
-    background-color: var(--light-brown);
-    outline: none;
-    transform: scale(1.02);
-}
-
-.password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.password-wrapper input {
-    flex: 1;
-    padding-right: 40px;
-    font-size: 16px;
-    height: 40px;
-}
-
-.password-requirements {
-    text-align: left;
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--dark-green);
-}
-
-.requirement {
-    margin: 5px 0;
-    color: red;
-}
-
-.requirement.valid {
-    color: green;
-}
-
-.icon-toggle-password {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    color: var(--medium-green);
-    transition: color 0.3s;
-}
-
-.icon-toggle-password:hover {
-    color: var(--warm-brown);
-}
-
-/* Bouton de soumission */
-  /* Bouton de soumission */
-  .button-soumission {
-    background: linear-gradient(90deg, var(--warm-brown), var(--medium-brown));
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.3s;
-    margin-top: 15px;
-  }
-  
-  .button-soumission:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(198, 109, 77, 0.3);
-  }
-  
-  .button-soumission:active {
-    transform: translateY(1px);
-    box-shadow: none;
-  }
-
-/* Liens */
-a {
-    text-decoration: none;
-    color: var(--warm-brown);
-    font-weight: bold;
-    transition: color 0.3s;
-}.content {
-    display: flex;
-    flex-direction: column; /* Aligne verticalement les éléments */
-    align-items: center;    /* Centre horizontalement */
-    justify-content: flex-start; /* Aligne les éléments en haut */
-    padding: 20px; /* Ajoute un espace autour */
-    gap: 20px; /* Espace entre les éléments enfants */
-}
-form {
-    background-color: var(--light-brown);
-    border-radius: 5%;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Texte centré */
-    padding: 20px;
-    margin-bottom: 50px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-label {
-    text-align: left;
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: var(--dark-green);
-}
-
-input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    background-color: var(--beige);
-    color: var(--dark-green);
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
-    background-color: var(--light-brown);
-    outline: none;
-    transform: scale(1.02);
-}
-
-.password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.password-wrapper input {
-    flex: 1;
-    padding-right: 40px;
-    font-size: 16px;
-    height: 40px;
-}
-
-.password-requirements {
-    text-align: left;
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--dark-green);
-}
-
-.requirement {
-    margin: 5px 0;
-    color: red;
-}
-
-.requirement.valid {
-    color: green;
-}
-
-.icon-toggle-password {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    color: var(--medium-green);
-    transition: color 0.3s;
-}
-
-.icon-toggle-password:hover {
-    color: var(--warm-brown);
-}
-
-/* Bouton de soumission */
-  /* Bouton de soumission */
-  .button-soumission {
-    background: linear-gradient(90deg, var(--warm-brown), var(--medium-brown));
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.3s;
-    margin-top: 15px;
-  }
-  
-  .button-soumission:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(198, 109, 77, 0.3);
-  }
-  
-  .button-soumission:active {
-    transform: translateY(1px);
-    box-shadow: none;
-  }
-
-/* Liens */
-a {
-    text-decoration: none;
-    color: var(--warm-brown);
-    font-weight: bold;
-    transition: color 0.3s;
+main {
+    min-height: 75vh;
 }
 
 h1, h2, h3 {
@@ -280,21 +41,34 @@ footer {
     color: var(--light-brown);
     text-align: center;
     padding: 50px 0;
-    padding-right: 20px;
-    padding-left: 20px;
+    margin-top: 20px;
+
 }
 
-.content {
+/*.content {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
+}*/
+
+.content  {
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: flex-start; /* Aligne en haut */
+    height: 10vh; /* Hauteur de la section du titre */
+    text-align: center;
+    margin-bottom: 20px; /* Espace sous le titre */
+    margin-top: 20px;
 }
 
 h1 {
     font-size: 2.5rem;
     text-align: center;
+    padding-top: 80px;
 }
+
+
 /* Header
 =======================================================================================================================
 */
@@ -340,7 +114,6 @@ header ul li a {
 #deconnexion a {
     background-color: var(--beige);
     margin-left: 15px;
-    color: #183D2C;
     
 }
 #connexion a:hover, 
@@ -538,4 +311,87 @@ button:hover {
     flex-direction: column; /* Aligne les éléments verticalement */
     align-items: center; /* Centre les éléments horizontalement */
     text-align: center; /* Centre le texte dans les paragraphes et titres */
+}
+
+/* 
+=======================================================================================================================
+*/
+
+/* Conteneur principal */
+.container {
+    position : absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+/* Section des livres les plus lus */
+.most-read-books {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 150px;
+}
+
+/* Titre de la section */
+.most-read-books h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Grille des livres */
+.most-read-books ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    list-style: none;
+}
+
+/* Style des éléments */
+.most-read-books li {
+    text-align: center;
+}
+
+
+.most-read-books img {
+    width: 120px; 
+    height: 180px; 
+    border-radius: 8px; 
+    object-fit: cover; /* Ajuste l'image pour remplir le conteneur tout en respectant ses proportions */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre pour un effet visuel agréable */
+}
+
+
+.most-read-books p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #555;
+}
+
+
+/* Section Bienvenue */
+.welcome-section {
+    text-align: center;
+    margin-bottom: 30px; /
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    color: #2a4d3f; 
+    margin: 0;
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .most-read-books ul {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+
+    .most-read-books img {
+        width: 80px;
+    }
+}
 }

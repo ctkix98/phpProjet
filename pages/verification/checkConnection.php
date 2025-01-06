@@ -10,7 +10,7 @@ $donneeConnexion = [];
 if (filter_has_var(INPUT_POST, 'submit')) {
     $donneeConnexion['pseudo'] = filter_input(INPUT_POST, 'pseudo', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{4,100}$/"]]);
     $donneeConnexion['password'] = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^.{8,100}$/"]]);
-} else {
+}else {
     $_SESSION['message'] = "Les informations entrées ne sont pas conformes à la demande";
     header('Location: ../messages/message.php', true, 303);
     exit();
@@ -32,25 +32,15 @@ $db = new Database();
 $donnesCompletesUtilisateur = $db->verifierAccesEtRecupererUtilisateur($donneeConnexion['pseudo']);
 
 if ($donnesCompletesUtilisateur !== null) {
-    // Récupérer l'id 
+    //Récupérer l'id 
     $utilisateurId = $donnesCompletesUtilisateur['id'];
-
     // Vérifiez le mot de passe
     if (password_verify($donneeConnexion['password'], $donnesCompletesUtilisateur['password'])) {
-
-        // Vérifier si l'utilisateur a confirmé son adresse e-mail
-        if ($donnesCompletesUtilisateur['is_confirmed'] == 1) {
-            // Mot de passe correct et adresse e-mail confirmée, établir la session
-            $_SESSION['utilisateur'] = $donnesCompletesUtilisateur;
-            $_SESSION['message'] = "Tu es connecté !";
-            header('Location: ../messages/message.php', true, 303);
-            exit();
-        } else {
-            // Si l'adresse e-mail n'est pas confirmée
-            $_SESSION['message'] = "Tu n'as pas encore confirmé ton adresse e-mail.";
-            header('Location: ../messages/message.php', true, 303);
-            exit();
-        }
+        // Mot de passe correct, établir la session
+        $_SESSION['utilisateur'] = $donnesCompletesUtilisateur;
+        $_SESSION['message'] = "Tu es connecté !";
+        header('Location: ../messages/message.php', true, 303);
+        exit();
     } else {
         // Mot de passe incorrect
         $_SESSION['message'] = "Le mot de passe est incorrect";

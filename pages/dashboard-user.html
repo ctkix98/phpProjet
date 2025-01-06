@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon compte</title>
+    <link rel="stylesheet" href="../assets/css/dashboard-user.css">
+</head>
+
+<body>
+    <main>
+        <h1>Bonjour, </h1>
+        <div class="container">
+            <div class="tabs-container">
+                <button class="modify-account">
+                    <h2>Modifier le compte</h2>
+                </button>
+                <button class="delete-account">
+                    <h2>Supprimer mon compte</h2>
+                </button>
+            </div>
+            <div class="modify-account"><label for="modify-pswd">Nouveau mot de passe</label>
+                <input type="text" name="modify-pswd" id="modify-pswd">
+                <input type="submit" value="Changer mon mot de passe">
+            </div>
+            <!-- delete dialog triggers a pop-up, needs showModal() in JS  -->
+            <div class="delete-account">
+                <p class="disclaimer-delete">Pour supprimer votre compte lorem ipsum bla bla</p>
+                <dialog>
+                    <p class="delete-dialog">Voulez-vous supprimer votre compte ?</p>
+                    <button class="confirm" autofocus>Oui</button><button class="cancel" autofocus>Non</button>
+                </dialog>
+                <button class="delete-my-account">Je veux supprimer mon compte</button>
+            </div>
+    </main>
+    <script src=""></script>
+</body>
+
+</html>

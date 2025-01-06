@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/bookinfo.css">
+</head>
+
+<body>
+    <main>
+        <section>
+            <div class="book-container">
+                <!-- book related -->
+                <img src="" alt="book-cover">
+                <h1 class="title"></h1>
+                <h2 class="author"></h2>
+                <h3 class="summary"></h3>
+                <p class="summary-text"></p>
+                <p class="summary-text"></p>
+                <p class="summary-text"></p>
+                <h4 class="publisher"></h4>
+                <h4 class="parution-date"></h4>
+                <h4 class="ibsn"></h4>
+                <h4 class="total-rating"></h4>
+                <!-- book state -->
+                <select id="state-list">
+                    <option value="read-want">À lire</option>
+                    <option value="reading">En cours</option>
+                    <option value="read-done">Terminé</option>
+                    <option value="read-dropped">Abandonné</option>
+                </select>
+            </div>
+            <!-- comment and rating -->
+            <article class="comment-section">
+                <form action="" method="post">
+                    <label for="form-rating">Avis</label>
+                    <input type="text" name="form-rating" id="form-rating">
+                    <label for="comment">Commentaire</label>
+                    <input type="text" name="comment" id="comment">
+                    <input type="submit" value="Envoyer">
+                </form>
+                <div class="comment-container">
+                    <h3 class="username"></h3>
+                    <div class="score">
+                        <p class="user-rating">0</p>/10
+                    </div>
+                    <p class="comment-text"></p>
+                </div>
+            </article>
+        </section>
+    </main>
+    <script src=""></script>
+</body>
+
+</html>

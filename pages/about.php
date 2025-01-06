@@ -3,7 +3,6 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,22 +10,14 @@ session_start();
     <link rel="stylesheet" href="../assets/css/index.css">
     <link rel="stylesheet" href="../assets/css/about.css">
 </head>
-
 <body>
-    <header>
+<header>
         <ul>
             <li><a href="index.php">Babel</a></li>
             <li><a href="about.php">A propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
-                <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
-                    <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
-                    <li> <a href="../pages/verification/dashboardAdmin.php">Tableau de bord</a></li>
-                    <li> <a href="adminPage.php">Compte admin</a></li>
-                <?php else: ?>
-                    <!-- Si l'utilisateur n'est pas admin, afficher son compte utilisateur -->
-                    <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
-                    <li> <a href="dashboardUser.php">Mon compte</a></li>
-                <?php endif; ?>
+                <li> <a href="libraryUser.php">Ma bibliothèque</a></li>
+                <li> <a href="dashboardUser.php">Mon compte</a></li>
                 <li id="deconnexion"><a href="deconnexion.php">Se déconnecter</a></li>
             <?php else: ?>
                 <li id="connexion"><a href="connexion.html">Se connecter</a></li>
@@ -42,20 +33,20 @@ session_start();
             </div>
             <article>
                 <p>
-                    Bienvenue sur notre plateforme dédiée aux passionnés de lecture !
-                    Ici, vous pouvez suivre l'état de vos lectures, découvrir de nouvelles œuvres,
+                    Bienvenue sur notre plateforme dédiée aux passionnés de lecture ! 
+                    Ici, vous pouvez suivre l'état de vos lectures, découvrir de nouvelles œuvres, 
                     et enrichir votre bibliothèque personnelle.
                 </p>
 
                 <h2>Notre mission</h2>
                 <p>
-                    Nous croyons que la lecture est un voyage qui doit être accessible à tous.
+                    Nous croyons que la lecture est un voyage qui doit être accessible à tous. 
                     Notre mission est de simplifier le suivi de vos lectures tout en vous inspirant à explorer de nouveaux horizons littéraires.
                 </p>
 
                 <h2>Équipe</h2>
                 <p>
-                    Notre équipe est composée de développeurs passionnés, travaillant main dans la main pour
+                    Notre équipe est composée de développeurs passionnés, travaillant main dans la main pour 
                     créer une expérience utilisateur unique et intuitive. Ensemble, nous partageons l'amour des livres et de la technologie.
                 </p>
             </article>
@@ -65,5 +56,4 @@ session_start();
         <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
     </footer>
 </body>
-
 </html>

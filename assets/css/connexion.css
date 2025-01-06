@@ -1,15 +1,19 @@
 /* Conteneur principal */
-main {
-  width: 100%;
-  max-width: 380px;
-  margin: 150px auto 20px;
-  padding: 30px;
-  background: linear-gradient(135deg, var(--beige), rgba(255, 255, 255, 0.8));
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1s ease-in-out;
+body{
+    background-color: var(--medium-green);
 }
+
+main {
+    background: linear-gradient(135deg, var(--beige), rgba(255, 255, 255, 0.8));
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+  }
   
   /* Titre */
   h1 {

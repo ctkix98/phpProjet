@@ -79,7 +79,6 @@ header ul li a {
 #deconnexion a {
     background-color: var(--beige);
     margin-left: 15px;
-    color: #183D2C;
 }
 
 #connexion a:hover, 
@@ -167,8 +166,8 @@ h2{
 .content p {
     font-size: 1.2rem;
     color: var(--dark-green);
-    /*margin-bottom: 30px;
-    /*text-align: center; /* Centrer ce texte */
+    margin-bottom: 30px;
+    text-align: center; /* Centrer ce texte */
 }
 
 /* Style pour la liste des actions avec formulaires uniquement pour .button-form */
@@ -226,7 +225,7 @@ label {
     color: var(--dark-green);
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -238,7 +237,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
     background-color: var(--light-brown);
     outline: none;
     transform: scale(1.02);
@@ -259,39 +258,31 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 
 .password-requirements {
     text-align: left;
-    margin-top: 0px;
+    margin-top: 10px;
     font-size: 14px;
-    color: var(--dark-green); /* Utilisation d'une variable de couleur pour le texte */
-  }
-  
-  .requirement {
-    margin: 2px 0;
-    color: red; /* Rouge par défaut */
-  }
-  
-  .requirement.valid {
-    color: green; /* Vert lorsque le critère est satisfait */
-  }
-  
-  .requirement.invalid {
-    color: red; /* Rouge lorsque le critère n'est pas satisfait */
-  }
+    color: var(--dark-green);
+}
 
-/* Icône d'œil */
-.icon-toggle-password,
-.icon-toggle-confirm-password {
+.requirement {
+    margin: 5px 0;
+    color: red;
+}
+
+.requirement.valid {
+    color: green;
+}
+
+.icon-toggle-password {
     position: absolute;
-    right: 10px; 
+    right: 10px;
     cursor: pointer;
-    font-size: 18px; 
-    color: var(--medium-green); 
+    font-size: 18px;
+    color: var(--medium-green);
     transition: color 0.3s;
 }
 
-/* Changer la couleur de l'icône au survol */
-.icon-toggle-password:hover,
-.icon-toggle-confirm-password:hover {
-    color: var(--warm-brown); 
+.icon-toggle-password:hover {
+    color: var(--warm-brown);
 }
 
 /* Bouton de soumission */
