@@ -7,19 +7,17 @@ class Book
     public $theme;
     public $parution_date;
     public $isbn;
-    public ?string $cover_image_path;
-    public ?string $olid;
+    public $cover_image_path;
+    
 
     // Constructeur
-    public function __construct($title, $author, $theme, $parution_date, $isbn, ?string $cover_image_path = null, ?string $olid = null)
-    {
+    public function __construct($title, $author, $theme, $parution_date, $isbn, $cover_image_path = null) {
         $this->title = $title;
         $this->author = $author;
         $this->theme = $theme;
         $this->parution_date = $parution_date;
         $this->isbn = $isbn;
         $this->cover_image_path = $cover_image_path;
-        $this->olid = $olid;
         
     }
 
@@ -95,17 +93,6 @@ class Book
         $this->cover_image_path = $cover_image_path;
     }
 
-    // Getter pour l'OLID
-    public function getOlid()
-    {
-        return $this->olid;
-    }
-
-    // Setter pour l'OLID
-    public function setOlid($olid)
-    {
-        $this->olid = $olid;
-    }
 
     // Méthode pour afficher les informations du livre
     public function displayBookInfo()
@@ -115,8 +102,7 @@ class Book
             "Thème : " . $this->theme . "<br>" .
             "Année de publication : " . $this->parution_date . "<br>" .
             "ISBN : " . $this->isbn . "<br>" .
-            "Chemin de l'image de couverture : " . $this->cover_image_path . "<br>" .
-            "OLID : " . $this->olid;
+            "Chemin de l'image de couverture : " . $this->cover_image_path;
     }
 
     // Méthode pour valider un livre (peut-être stocker dans un fichier ou base de données)
@@ -143,7 +129,6 @@ class Book
             'parution_date' => $this->parution_date,
             'isbn' => $this->isbn,
             'cover_image_path' => $this->cover_image_path,
-            'olid' => $this->olid,
         ];
     }
 
@@ -157,7 +142,6 @@ class Book
             $data['parution_date'], 
             $data['isbn'],
             isset($data['cover_image_path']) ? $data['cover_image_path'] : null, 
-            isset($data['olid']) ? $data['olid'] : null
         );
     }
 }

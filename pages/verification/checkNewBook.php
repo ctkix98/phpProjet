@@ -61,25 +61,57 @@ if ($action == 'submit') {
         $_SESSION['message'] = "Le livre n'a pas été soumis à l'administrateur pour validation.";
     }
 } elseif ($action === 'update') {
+    
     if (isset($_POST['book_id'])) {
         $bookId = $_POST['book_id'];
-        // Créer un objet livre
+        $coverImagePath = null;
+
+        // Vérifier si un fichier a été téléversé
+        if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            //Permet de convertir le nom du fichier téléchargé et minuscules
+            $fileExtension = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
+
+            if (in_array($fileExtension, $allowedExtensions)) {
+                $uploadsDir = '../../assets/images/covers/';
+                //uniqid() permet de générer un nom de fichier unique (qui sera des chiffres et des lettres)
+                $newFileName = uniqid() . '.' . $fileExtension;
+                $destination = $uploadsDir . $newFileName;
+
+                // Déplacer le fichier téléversé
+                if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $destination)) {
+                    $coverImagePath = str_replace('../../', '', $destination); // Chemin relatif pour la base
+                } else {
+                    $_SESSION['message'] = "Erreur lors du téléversement de l'image.";
+                    header('Location: ../messages/message.php', true, 303);
+                    exit();
+                }
+            } else {
+                $_SESSION['message'] = "Extension de fichier non autorisée. Seuls JPG et PNG sont acceptés.";
+                header('Location: ../messages/message.php', true, 303);
+                exit();
+            }
+        }
+
+        // Ajouter le chemin de l'image dans l'objet livre
         $book = new Book(
             $booksData['title'],
             $booksData['writer'],
             $booksData['theme'],
             $booksData['year'],
-            $booksData['isbn']
+            $booksData['isbn'],
+            $coverImagePath // Ajouter le chemin de l'image ici
         );
+
         if ($db->addBook($book)) {
-            // Mettre à jour le statut du livre dans la table 'book_validation'
             $db->updateBookValidationStatus($bookId, "approved");
-            $_SESSION['message'] = "Le livre a été ajouté dans la base de données !";
-        }else{
-            $_SESSION['message'] = "Le livre n'a pas pu être ajouté dans la base de donnée";
+            $_SESSION['message'] = "Le livre a été mis à jour avec succès !";
+        } else {
+            $_SESSION['message'] = "Erreur lors de la mise à jour du livre.";
         }
     }
 }
+
 
 header('Location: ../messages/message.php', true, 303);
 exit();

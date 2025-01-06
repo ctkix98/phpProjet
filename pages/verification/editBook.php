@@ -78,7 +78,7 @@ function formatISBN($isbn)
         </header>
 
         <main>
-            <form action="checkNewBook.php" method="POST">
+            <form action="checkNewBook.php" method="POST" enctype="multipart/form-data">
                 <h2>Modifier le livre</h2>
 
                 <div class="form-group">
@@ -105,6 +105,11 @@ function formatISBN($isbn)
                     <label for="isbn">ISBN</label>
                     <input type="text" id="isbn" name="isbn" value="<?= formatISBN($book['ISBN']) ?>" placeholder="978-3-16-148410-0" required>
                     <div id="isbn-error" style="color: red; font-size: 12px; display: none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cover_image">Image de couverture (jpg ou png)</label>
+                    <input type="file" id="cover_image" name="cover_image" accept="image/png, image/jpeg">
                 </div>
 
                 <!-- Champ caché pour passer l'ID du livre -->

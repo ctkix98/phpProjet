@@ -167,8 +167,8 @@ h2{
 .content p {
     font-size: 1.2rem;
     color: var(--dark-green);
-    margin-bottom: 30px;
-    text-align: center; /* Centrer ce texte */
+    /*margin-bottom: 30px;
+    /*text-align: center; /* Centrer ce texte */
 }
 
 /* Style pour la liste des actions avec formulaires uniquement pour .button-form */
@@ -259,19 +259,23 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 
 .password-requirements {
     text-align: left;
-    margin-top: 10px;
+    margin-top: 0px;
     font-size: 14px;
-    color: var(--dark-green);
-}
-
-.requirement {
-    margin: 5px 0;
-    color: red;
-}
-
-.requirement.valid {
-    color: green;
-}
+    color: var(--dark-green); /* Utilisation d'une variable de couleur pour le texte */
+  }
+  
+  .requirement {
+    margin: 2px 0;
+    color: red; /* Rouge par défaut */
+  }
+  
+  .requirement.valid {
+    color: green; /* Vert lorsque le critère est satisfait */
+  }
+  
+  .requirement.invalid {
+    color: red; /* Rouge lorsque le critère n'est pas satisfait */
+  }
 
 /* Icône d'œil */
 .icon-toggle-password,
