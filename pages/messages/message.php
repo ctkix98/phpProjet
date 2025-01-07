@@ -14,7 +14,7 @@ require_once __DIR__ . '/../../config/session.php';
 <body>
 <header>
         <ul>
-            <li><a href="../homepage.php">Babel</a></li>
+            <li><a href="../verification/homepage.php">Babel</a></li>
             <li><a href="../about.php">A propos</a></li>
             <li> <a href="../../pages/verification/library.php">Bibliothèque</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
@@ -38,10 +38,10 @@ require_once __DIR__ . '/../../config/session.php';
         <div class="confirmation">
             <?php if (isset($_SESSION['message'])): ?>
                 <h1><?php echo $_SESSION['message']; ?></h1>
-                <a href="../homepage.php">Retour à la page d'accueil</a>
+                <a href="../verification/homepage.php">Retour à la page d'accueil</a>
             <?php else: ?>
                 <h1>Il y a un problème ! </h1>
-                <a href="../homepage.php">Retour à la page d'accueil</a>
+                <a href="../verification/homepage.php">Retour à la page d'accueil</a>
             <?php endif; ?>
         </div>
 

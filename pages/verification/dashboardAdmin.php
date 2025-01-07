@@ -4,7 +4,7 @@ session_start();
 
 // Vérifiez si l'utilisateur est un administrateur
 if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur']['pseudo'] !== 'admin') {
-    header('Location: homepage.php');
+    header('Location: ../pages/verification/homepage.php');
     exit();
 }
 
@@ -63,7 +63,7 @@ $allBooks = $db->getAllBooks();
 <body>
     <header>
         <ul>
-            <li><a href="../homepage.php">Babel</a></li>
+            <li><a href="homepage.php">Babel</a></li>
             <li><a href="../about.php">A propos</a></li>
             <li> <a href="library.php">Bibliothèque</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>

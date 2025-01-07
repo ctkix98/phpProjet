@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <header>
         <ul>
-            <li><a href="../homepage.php">Babel</a></li>
+            <li><a href="../verification/homepage.php">Babel</a></li>
             <li><a href="../about.php">A propos</a></li>
             <li> <a href="library.php">Bibliothèque</a></li>
 
