@@ -652,7 +652,6 @@ class Database
             $books = [];
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $books[] = new Book(
-                    $row['id'],
                     $row['Title'],
                     $row['Author'],
                     $row['Theme'],
