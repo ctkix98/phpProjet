@@ -50,9 +50,9 @@ $allBooks = $db->getAllBooks();
   </header>
   <main>
     <div class="form-container">
-      <form>
-        <input type="text" id="search" placeholder="Recherche par titre ou auteur" />
-        <input type="submit" value="Recherche" />
+      <form action="searchbar.php" method="POST">
+        <input type="text" id="search" name="search" placeholder="Recherche par titre ou auteur" />
+        <input type="submit" name="submit" value="Recherche" />
       </form>
     </div>
     <div class="books-container">

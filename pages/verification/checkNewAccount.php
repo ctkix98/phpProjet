@@ -48,7 +48,7 @@ $donneeUtilisateur['password'] = password_hash($donneeUtilisateur['password'], P
 
 // Appel de la DB
 $db = new Database();
-if ($db->initialistion()) {
+if ($db->initialisation()) {
     echo "Initialisation réussie :-) <br>";
 }
 
