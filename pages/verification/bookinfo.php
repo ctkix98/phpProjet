@@ -131,7 +131,7 @@ if ($bookId) {
                                 </option>
                             </select>
                             <input type="hidden" name="book_id" value="<?php echo $bookId; ?>">
-                            <input type="submit" value="Valider">
+                            <input type="submit" name="submit" value="Valider">
                         </form>
                     </div>
                 </div>
