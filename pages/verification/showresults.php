@@ -13,12 +13,9 @@ if (!$db->initialisation()) {
 
 $ids = array_column($_SESSION['search'], 'id');
 var_dump($ids);
-$booksData = [];
+$books = [];
 foreach ($ids as $id) {
-    var_dump($id);
-    $booksData = $db->getBooksById($id);
-    echo "<br>";
-    var_dump($booksData);
+    $book = $db->getBooksById($id);
     $tempo = new Book(
         $book['Title'],
         $book['Author'],
@@ -28,10 +25,8 @@ foreach ($ids as $id) {
         $book['cover_image_path'],
         $book['id']
     );
-    array_push($booksData, $tempo);
+    array_push($books, $tempo);
 }
-
-//var_dump($books);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,8 +69,8 @@ foreach ($ids as $id) {
             </form>
         </div>
         <div class="books-container">
-            <?php if (!empty($booksData)): ?>
-                <?php foreach ($booksData as $book): ?>
+            <?php if (!empty($books)): ?>
+                <?php foreach ($books as $book): ?>
                     <div class="book-item">
                         <a href="bookinfo.php?id=<?= htmlspecialchars($book->getId()) ?>">
                             <?php
