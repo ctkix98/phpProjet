@@ -1,15 +1,14 @@
 <?php
 require_once __DIR__ . '/../../config/session.php';
 require_once __DIR__ . '/../../db/Database.php';
-
+session_start();
 $db = new Database();
 $userId = $_SESSION['utilisateur']['id'];
 
-
-$booksReading = $db->getBooksByState($userId, 'reading');
-$booksReadWant = $db->getBooksByState($userId, 'read-want');
-$booksReadDone = $db->getBooksByState($userId, 'read-done');
-$booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
+$booksReading = $db->getBooksByState($userId, 1);
+$booksReadWant = $db->getBooksByState($userId, 3);
+$booksReadDone = $db->getBooksByState($userId, 4);
+$booksReadDropped = $db->getBooksByState($userId, 4);
 ?>
 
 
@@ -59,16 +58,14 @@ $booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
                             </summary>
                             <div class="details-container">
                                 <!-- Les livres avec l'état en cours seront affichés ici -->
-                                <ul>
                                     <?php foreach ($booksReading as $book): ?>
-                                        <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                        <div class="book-item">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
-                                        </li>
+                                    </div>
                                     <?php endforeach; ?>
-                                </ul>
                                 <!-- <div class="book-item">
                                     <a href="bookinfo.php">
                                         <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
@@ -96,16 +93,14 @@ $booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
                             </summary>
                             <div class="details-container">
                                 <!-- Les livres avec l'état à lire seront affichés ici -->
-                            <ul>
                                     <?php foreach ($booksReadWant as $book): ?>
-                                        <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                        <div class="book-item">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
-                                        </li>
+                                    </div>
                                     <?php endforeach; ?>
-                                </ul>
                                 <!-- <div class="book-item">
                                     <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                     <h3 class="book-title">Livre à lire</h3>
@@ -121,16 +116,14 @@ $booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
                             </summary>
                             <div class="details-container">
                                 <!-- Les livres avec l'état terminé seront affichés ici -->
-                                <ul>
                                     <?php foreach ($booksReadDone as $book): ?>
-                                        <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                        <div class="book-item">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
-                                        </li>
+                                    </div>
                                     <?php endforeach; ?>
-                                </ul>
                                 <!-- <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                 <h3 class="book-title">Livre terminé</h3>
                                 <h4 class="author">Auteur terminé</h4> -->
@@ -144,16 +137,13 @@ $booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
                             </summary>
                             <div class="details-container">
                                 <!-- Les livres avec l'état abandonné seront affichés ici -->
-                                <ul>
                                     <?php foreach ($booksReadDropped as $book): ?>
-                                        <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                        <div class="book-item">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
-                                        </li>
                                     <?php endforeach; ?>
-                                </ul>
                                 <!-- <img src="../assets/images/placeholder-mylibrary.png" alt="book-cover">
                                 <h3 class="book-title">Livre abandonné</h3>
                                 <h4 class="author">Auteur abandonné</h4> -->

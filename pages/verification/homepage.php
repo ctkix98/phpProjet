@@ -3,7 +3,7 @@ require_once('../../db/Database.php');
 session_start();
 
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
     echo "Erreur lors de l'accès à la base de données.";
     exit();
 }
@@ -122,6 +122,9 @@ function displayBooks($books)
             <?php endif; ?>
         </div>
     </main>
+    <footer>
+    <p>© 2024 Babel. Projet scolaire Bachelor Ingenierie des médias.</p>
+  </footer>
 </body>
 
 </html>
