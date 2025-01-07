@@ -9,7 +9,7 @@ if (filter_has_var(INPUT_POST, 'submit')) {
     $db = new Database();
     $db->createLecture($bookId, $book_state, $userId);
 
-    // header('Location: bookinfo.php?id=' . $bookId);
+     header('Location: bookinfo.php?id=' . $bookId);
     exit();
 }
 
