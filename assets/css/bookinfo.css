@@ -50,6 +50,10 @@ h1 {
     animation: fadeIn 1s ease-in-out;
 }
 
+.book-container input[type="submit"] {
+    margin-top: 10px;
+}
+
 .book-image-container {
     height: 100%;
 }
@@ -193,7 +197,8 @@ h1 {
     margin: 0.5rem 0;
 }
 
-.comment-section input[type="submit"] {
+.comment-section input[type="submit"],
+.book-container input[type="submit"] {
     background: linear-gradient(90deg, var(--warm-brown), var(--medium-brown));
     color: white;
     border: none;
@@ -206,12 +211,14 @@ h1 {
     align-self: flex-start;
 }
 
-.comment-section input[type="submit"]:hover {
+.comment-section input[type="submit"]:hover,
+.book-container input[type="submit"]:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(198, 109, 77, 0.3);
 }
 
-.comment-section input[type="submit"]:active {
+.comment-section input[type="submit"]:active
+.book-container input[type="submit"]:active {
     transform: translateY(1px);
     box-shadow: none;
 }
