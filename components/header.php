@@ -12,7 +12,7 @@
         <nav>
             <div><a href="/pages/homepage.php">Babel</a></div>
             <ul class="menu">
-                <li><a href="/pages/homepage.php">Accueil</a></li>
+                <li><a href="/pages/verfication/homepage.php">Accueil</a></li>
                 <li><a href="/pages/about.php">A propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <li><a href="/pages/libraryUser.php">Ma bibliothèque</a></li>
