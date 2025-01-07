@@ -18,7 +18,7 @@ foreach ($ids as $id) {
     $tempo = new Book(
         $book['Title'],
         $book['Author'],
-        $book['theme'],
+        $book['Theme'],
         $book['Parution_date'],
         $book['ISBN'],
         $book['cover_image_path'],
@@ -74,7 +74,7 @@ foreach ($ids as $id) {
                         <a href="bookinfo.php?id=<?= htmlspecialchars($book->getId()) ?>">
                             <?php
                             // Vérifier si le champ cover_image_path est vide ou null
-                            $coverPath = !empty($book->getCoverImagePath()) ? '../../assets/images/' . $book->getCoverImagePath() : '../../assets/images/covers/placeholder-mylibrary.jpg';
+                            $coverPath = !empty($book->getCoverImagePath()) ? '../..' . $book->getCoverImagePath() : '../../assets/images/covers/placeholder-mylibrary.jpg';
                             ?>
                             <img src="<?= htmlspecialchars($coverPath) ?>" alt="book-cover" />
                             <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
