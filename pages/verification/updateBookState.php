@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../db/Database.php';
-session_start();
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bookId = $_POST['book_id'];

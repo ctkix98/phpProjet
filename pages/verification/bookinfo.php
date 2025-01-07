@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../../db/Database.php';
 require_once __DIR__ . '/updateBookState.php';
 
-
+$username = htmlspecialchars($_SESSION['utilisateur']['pseudo']);
 $userId = $_SESSION['utilisateur']['id'];
 $bookId = $_GET['id'] ?? null;
 
@@ -32,6 +32,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $currentState = $bookState;
     }
 }
+
+// Traitement de l'avis et de la note
+var_dump($_POST);
+
+if (filter_has_var(INPUT_POST, 'submit')) {
+    $comment = filter_input(INPUT_POST, 'comment', FILTER_DEFAULT);
+    $grade = filter_input(INPUT_POST, 'rating', FILTER_DEFAULT);
+    echo ("coucou");
+
+    // Insertion du commentaire dans la base de données
+    $sqlComment = "INSERT INTO comment (user_id, book_id, content, date) VALUES (:user_id, :book_id, :content, DATE('now'))";
+    $stmtComment = $db->getDb()->prepare($sqlComment);
+    $stmtComment->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    $stmtComment->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+    $stmtComment->bindParam(':content', $comment, PDO::PARAM_STR);
+    $stmtComment->execute();
+
+    // Insertion de la note dans la base de données
+    $sqlGrade = "INSERT INTO grade (user_id, book_id, grade) VALUES (:user_id, :book_id, :grade)";
+    $stmtGrade = $db->getDb()->prepare($sqlGrade);
+    $stmtGrade->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    $stmtGrade->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+    $stmtGrade->bindParam(':grade', $rating, PDO::PARAM_INT);
+    $stmtGrade->execute();
+
+    // Redirection pour éviter la resoumission du formulaire
+    header("Location: " . $_SERVER['PHP_SELF'] . "?id=$bookId");
+    exit;
+}
+
+
+$sql = "SELECT 
+            u.pseudo AS username, 
+            g.grade AS rating, 
+            c.content AS comment, 
+            c.date AS created_at
+        FROM comment c
+        JOIN grade g ON c.user_id = g.user_id AND c.book_id = g.book_id
+        JOIN users u ON c.user_id = u.id
+        WHERE c.book_id = :book_id
+        ORDER BY c.date DESC";
+$stmt = $db->getDb()->prepare($sql);
+$stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+$stmt->execute();
+$reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -42,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Book informations</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/bookinfo.css">
+
 </head>
 
 <body>
@@ -114,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- comment and rating -->
             <section class="comment-section">
                 <h3>Donne ton avis sur ce livre</h3>
-                <form action="" method="post">
+                <form action="" method="post" id="review-form">
                     <label for="form-rating">Avis</label>
                     <div class="rating">
                         <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
@@ -125,15 +173,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <label for="comment">Commentaire</label>
                     <textarea name="comment" rows="5" placeholder="Laisse un commentaire ici..."></textarea>
-                    <input type="submit" value="Envoyer">
+                    <input type="submit" name="submit" value="Envoyer">
                 </form>
                 <h3>Avis des autres lecteurs</h3>
-                <div class="comment-container">
-                    <h3 class="username">Leila01</h3>
-                    <div class="score">
-                        <p class="user-rating">★★★★☆</p>
-                    </div>
-                    <p class="comment-text">Ce livre est vraiment agréable à lire. Marc Levy reste pour moi une valeur sure.</p>
+                <div id="reviews-list">
+                    <?php foreach ($reviews as $review): ?>
+                        <div class="comment-container">
+                            <h3 class="username"><?php echo htmlspecialchars($review['username']); ?></h3>
+                            <div class="score">
+                                <p class="user-rating"><?php echo str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']); ?></p>
+                            </div>
+                            <p class="comment-text"><?php echo htmlspecialchars($review['comment']); ?></p>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </section>
         <?php else: ?>
@@ -144,8 +196,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ?>
         <?php endif; ?>
     </main>
+    <script>
+        document.getElementById('review-form').addEventListener('submit', function(event) {
+            // Récupérer les données du formulaire
+            const rating = document.querySelector('input[name="rating"]:checked');
+            const comment = document.querySelector('textarea[name="comment"]').value.trim();
 
+            // Vérifier que la note et le commentaire sont remplis
+            if (!rating || !comment) {
+                alert("Veuillez remplir tous les champs.");
+                event.preventDefault(); // Empêcher la soumission si les champs sont vides
+                return;
+            }
 
+            // => Si tout est valide, le formulaire sera soumis normalement ici
+
+        });
+    </script>
 </body>
 
 </html>
+
