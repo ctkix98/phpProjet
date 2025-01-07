@@ -13,7 +13,7 @@ class Book
 
 
     // Constructeur
-    public function __construct($title, $author, $theme, $parution_date, $isbn, $cover_image_path = null, $id)
+    public function __construct($title, $author, $theme, $parution_date, $isbn, $cover_image_path = null, $id =null)
     {
         $this->title = $title;
         $this->author = $author;
