@@ -5,7 +5,6 @@ session_start();
 $db = new Database();
 $userId = $_SESSION['utilisateur']['id'];
 
-
 $booksReading = $db->getBooksByState($userId, 1);
 $booksReadWant = $db->getBooksByState($userId, 3);
 $booksReadDone = $db->getBooksByState($userId, 4);
@@ -62,8 +61,8 @@ $booksReadDropped = $db->getBooksByState($userId, 4);
                                 <ul>
                                     <?php foreach ($booksReading as $book): ?>
                                         <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
                                         </li>
@@ -99,8 +98,8 @@ $booksReadDropped = $db->getBooksByState($userId, 4);
                                 <ul>
                                     <?php foreach ($booksReadWant as $book): ?>
                                         <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
                                         </li>
@@ -124,8 +123,8 @@ $booksReadDropped = $db->getBooksByState($userId, 4);
                                 <ul>
                                     <?php foreach ($booksReadDone as $book): ?>
                                         <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
                                         </li>
@@ -147,8 +146,8 @@ $booksReadDropped = $db->getBooksByState($userId, 4);
                                 <ul>
                                     <?php foreach ($booksReadDropped as $book): ?>
                                         <li>
-                                            <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
-                                                <img src="<?= $book['cover_image_path']; ?>" alt="book-cover">
+                                            <a href="./../verification/bookinfo.php?id=<?= $book['id']; ?>">
+                                                <img src="<?= '../..' . $book['cover_image_path']; ?>" alt="book-cover">
                                                 <h3 class="book-title"><?= htmlspecialchars($book['Title']); ?></h3>
                                             </a>
                                         </li>
