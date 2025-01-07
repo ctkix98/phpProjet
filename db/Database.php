@@ -311,18 +311,6 @@ class Database
     }
 
 
-    public function verifierConnection(string $pseudo, string $password): bool
-    {
-        $retour = false;
-        if (empty($pseudo) or empty($password)) {
-            echo ("Il faut un mot de passe ET un pseudo");
-        }
-        if (!$this->recupererContact($pseudo, $password)) {
-            $retour = true;
-        }
-        return $retour;
-    }
-
     public function recupererContact(string $pseudo, string $email): bool
     {
         $sql = "SELECT * FROM users WHERE pseudo = :pseudo OR email = :email";
@@ -382,90 +370,6 @@ class Database
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
     }
-
-
-    //Méthodes pour les livres
-    public function fetchTopBooksFromOpenLibrary($url): void
-    {
-        echo "Loading top books from";
-        try {
-            // Récupérer les données de l'URL
-            if (!file_exists($url)) {
-                throw new Exception("File not found: $url");
-            }
-            $response = file_get_contents($url);
-            if ($response === false) {
-                throw new Exception("Failed to fetch data from URL: $url");
-            }
-
-            // Décoder le JSON
-            $books = json_decode($response, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new Exception("Failed to decode JSON: " . json_last_error_msg());
-            }
-
-            // Afficher les données pour débogage
-
-            // Exemple d'extraction des livres
-            foreach ($books['works'] as $book) {
-                $bookObject = new Book(
-                    $book['title'],
-                    $book['authors'][0]['name'] ?? 'Unknown',
-                    $book['subject'][0] ?? 'Unknown',
-                    $book['first_publish_year'] ?? 'Unknown',
-                    $book['availability']['isbn'] ?? 'NULL',
-                    $book['availability']['openlibrary_work'] ?? 'NULL',
-                    $book['id'] ?? 'NULL'
-                );
-                $this->addBook($bookObject);
-            }
-        } catch (Exception $e) {
-            error_log("Error: " . $e->getMessage());
-        }
-    }
-    // Dans Database.ph
-    public function insertOrUpdateBook(Book $book): bool
-    {
-        // Récupérer les valeurs des getters et les stocker dans des variables
-        $title = $book->getTitle();
-        $author = $book->getAuthor();  // Utilise la méthode getWriter() pour l'auteur
-        $genre = $book->getTheme();   // Utilise la méthode getEditor() pour le genre (ou sinon un champ plus adapté comme getTheme())
-        $year = $book->getYear();
-        $isbn = $book->getIsbn();
-        $coverImage = $book->getCoverImagePath(); // Récupérer le chemin de l'image de couverture
-
-        // Requête SQL avec ON CONFLICT pour SQLite (utilisation de ISBN comme clé unique)
-        $query = "INSERT INTO book (Title, Author, Theme, Parution_date, ISBN, cover_image_path) 
-                  VALUES (:title, :author, :genre, :year, :isbn, :cover_image)
-                  ON CONFLICT(ISBN) DO UPDATE
-                  SET Title = :title, Author = :author, Theme = :genre, Parution_date = :year, cover_image_path = :cover_image";
-
-        // Préparer la requête
-        $stmt = $this->db->prepare($query);
-
-        // Vérification des valeurs avant de lier les paramètres
-        if (!$stmt) {
-            echo "Erreur de préparation de la requête SQL : " . implode(", ", $this->db->errorInfo());
-            return false;
-        }
-
-        // Lier les paramètres de manière sécurisée
-        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-        $stmt->bindParam(':author', $author, PDO::PARAM_STR);
-        $stmt->bindParam(':genre', $genre, PDO::PARAM_STR);
-        $stmt->bindParam(':year', $year, PDO::PARAM_STR);  // Parution_date est en texte, donc on passe une chaîne
-        $stmt->bindParam(':isbn', $isbn, PDO::PARAM_STR);
-        $stmt->bindParam(':cover_image', $coverImage, PDO::PARAM_STR);
-
-        // Essayer d'exécuter la requête
-        try {
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
-            return false;
-        }
-    }
-
 
 
 
@@ -746,91 +650,7 @@ class Database
     }
 
     //stocker les informations sur les couvertures
-    public function addCoverMetadataToBookTable(): bool
-    {
-        $sql = <<<COMMANDE_SQL
-            ALTER TABLE book
-            ADD COLUMN cover_image_url TEXT,
-            ADD COLUMN cover_format TEXT,
-            ADD COLUMN cover_resolution TEXT;
-        COMMANDE_SQL;
-
-        try {
-            $this->db->exec($sql);
-            return true;
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            return false;
-        }
-    }
-
-    public function getBooks(): array
-    {
-        $sql = "SELECT * FROM book";
-
-        try {
-            $stmt = $this->db->query($sql);
-            $books = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $books[] = new Book(
-                    $row['Title'],
-                    $row['Author'],
-                    $row['Theme'],
-                    $row['Parution_date'],
-                    $row['ISBN'],
-                    $row['cover_image_url'],
-                    $row['id'],
-                );
-            }
-            return $books;
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            return [];
-        }
-    }
-
-
-    public function getBooksByValidationStatus($status): array
-    {
-        $validStatuses = ['pending', 'approved', 'rejected'];
-        if (!in_array($status, $validStatuses)) {
-            throw new InvalidArgumentException("Statut invalide : $status");
-        }
-
-        $sql = <<<SQL
-        SELECT b.id, b.Title, b.Author, b.Theme, b.Parution_date, b.ISBN, bv.validation_status
-        FROM book_validation bv
-        INNER JOIN book b ON bv.book_id = b.id
-        WHERE bv.validation_status = :status
-    SQL;
-
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':status', $status, \PDO::PARAM_STR);
-
-        try {
-            $stmt->execute();
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Erreur lors de la récupération des livres : " . $e->getMessage());
-            return [];
-        }
-    }
-    public function getBookIds()
-    {
-        try {
-            $query = "SELECT id FROM book";
-            $stmt = $this->db->prepare($query);
-            $stmt->execute();
-
-            // Récupérer les IDs dans un tableau
-            $bookIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-            return $bookIds;
-        } catch (PDOException $e) {
-            echo "Erreur lors de la récupération des IDs des livres : " . $e->getMessage();
-            return [];
-        }
-    }
+  
 
 
     function getBooksByState($userId, $state)
