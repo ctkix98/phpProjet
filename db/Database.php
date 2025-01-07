@@ -464,7 +464,7 @@ class Database
             ];
 
             foreach ($books as $book) {
-                $this->insertOrUpdateBook($book);
+                $this->addBook($book);
             }
 
             // Si tout est ok, valide la transaction
@@ -527,6 +527,21 @@ class Database
     {
         try {
             $ok = true;
+
+            // Vérifier si le livre existe déjà dans la base de données
+            $checkSql = "SELECT COUNT(*) FROM Book WHERE ISBN = :isbn";
+            $checkStmt = $this->db->prepare($checkSql);
+            $checkStmt->bindParam(':isbn', $book->isbn);
+            $checkStmt->execute();
+
+            // Si le livre existe déjà, on arrête ici
+            if ($checkStmt->fetchColumn() > 0) {
+                echo "Le livre '{$book->title}' existe déjà dans la base de données.";
+                echo "<br>";
+                return false;
+            }
+
+            // Requête d'insertion
             $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN, cover_image_path)
                     VALUES (:title, :author, :theme, :parution_date, :isbn, :cover_image_path)";
             $stmt = $this->db->prepare($sql);
@@ -560,6 +575,7 @@ class Database
         }
         return $ok;
     }
+
 
     public function deleteBook($bookId)
     {
