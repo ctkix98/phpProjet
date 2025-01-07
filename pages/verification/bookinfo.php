@@ -2,23 +2,23 @@
 session_start();
 require_once __DIR__ . '/../../db/Database.php';
 require_once __DIR__ . '/updateBookState.php';
-
-$username = htmlspecialchars($_SESSION['utilisateur']['pseudo']);
+ 
+ 
 $userId = $_SESSION['utilisateur']['id'];
 $bookId = $_GET['id'] ?? null;
-
+ 
 // Récupérer l'état actuel du livre
 $db = new Database();
 $currentState = isset($_SESSION['book_states'][$bookId])
     ? $_SESSION['book_states'][$bookId]
     : getCurrentBookState($bookId, $userId, $db);
-
+ 
 // Vérifiez si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sauvegardez l'état sélectionné dans une variable de session
     if (isset($_POST['book_state'])) {
         $_SESSION['book_states'][$bookId] = $_POST['book_state'];
-
+ 
         // Mettez à jour l'état du livre dans la base de données
         $bookState = $_POST['book_state'];
         $sql = "UPDATE lecture SET book_state_id = :book_state_id WHERE user_id = :user_id AND book_id = :book_id";
@@ -27,24 +27,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
         $stmt->execute();
-
+ 
         // Mettre à jour l'état actuel
         $currentState = $bookState;
     }
 }
-
+ 
 // Récupérer les informations du livre
-
+ 
 var_dump($_GET);
 $book = $db->getBooksById($bookId);
-
+ 
 $bookId = $_GET['id'] ?? null;
-
+ 
 if ($bookId) {
     $db = new Database();
     $book = $db->getBooksById($bookId);
     var_dump($book);
-
+ 
     if ($book) {
         $coverPath = !empty($book['cover_image_path'])
             ? '../../' . htmlspecialchars($book['cover_image_path'])
@@ -57,26 +57,62 @@ if ($bookId) {
     echo "ID du livre manquant.";
     exit();
 }
+ 
+// Traitement des commentaires et avis
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+    $comment = trim($_POST['comment']); // Nettoyer le commentaire
+    $rating = (int)($_POST['rating'] ?? 0); // Convertir la note en entier
+ 
+    // Vérifications des données
+    if (empty($comment)) {
+        echo "<p style='color: red;'>Le commentaire ne peut pas être vide.</p>";
+    } else {
+        try {
+            // Insertion du commentaire dans la table `comment`
+            $sqlComment = "INSERT INTO comment (user_id, book_id, content, date) VALUES (:user_id, :book_id, :content, NOW())";
+            $stmtComment = $db->getDb()->prepare($sqlComment);
+            $stmtComment->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmtComment->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+            $stmtComment->bindParam(':content', $comment, PDO::PARAM_STR);
+            $stmtComment->execute();
+ 
+            // Insertion de la note dans la table `grade`
+            $sqlRating = "INSERT INTO grade (user_id, book_id, grade) VALUES (:user_id, :book_id, :grade)";
+            $stmtRating = $db->getDb()->prepare($sqlRating);
+            $stmtRating->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmtRating->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+            $stmtRating->bindParam(':grade', $rating, PDO::PARAM_INT);
+            $stmtRating->execute();
+ 
+            // Redirection pour éviter la resoumission du formulaire
+            header("Location: bookinfo.php?id=$bookId");
+            exit;
+        } catch (PDOException $e) {
+            echo "<p style='color: red;'>Une erreur s'est produite lors de l'enregistrement de votre avis : " . htmlspecialchars($e->getMessage()) . "</p>";
+        }
+    }
+}
+ 
+ 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book informations</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/bookinfo.css">
-
 </head>
-
+ 
 <body>
     <header>
         <ul>
             <li><a href="../verification/homepage.php">Babel</a></li>
             <li><a href="../about.php">A propos</a></li>
             <li> <a href="library.php">Bibliothèque</a></li>
-
+ 
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <?php if ($_SESSION['utilisateur']['pseudo'] === "admin"): ?>
                     <!-- Si l'utilisateur est admin, afficher le lien vers le tableau de bord admin -->
@@ -99,7 +135,7 @@ if ($bookId) {
             <section class="book-container">
                 <!-- Colonne gauche : Image -->
                 <div class="book-image-container">
-                    <img src="<?php echo $coverPath; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
+                    <img src="<?php echo $coverPath; ?>" alt="Couverture du livre">
                 </div>
                 <div class="book-container">
                     <!-- book related -->
@@ -109,7 +145,7 @@ if ($bookId) {
                     <p class="theme"><strong>Thème :</strong> <?php echo htmlspecialchars($book['Theme']); ?></p>
                     <p class="parution-date"><strong>Parution :</strong> <?php echo htmlspecialchars($book['Parution_date']); ?></p>
                     <h4 class="isbn"><strong>ISBN :</strong> <?php echo htmlspecialchars($book['ISBN']); ?></h4>
-
+ 
                     <!-- book state -->
                     <div>
                         <h2>Statut du livre</h2>
@@ -140,7 +176,7 @@ if ($bookId) {
             <!-- comment and rating -->
             <section class="comment-section">
                 <h3>Donne ton avis sur ce livre</h3>
-                <form action="" method="post" id="review-form">
+                <form action="bookinfo.php?id=<?php echo $bookId; ?>" method="post">
                     <label for="form-rating">Avis</label>
                     <div class="rating">
                         <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
@@ -151,7 +187,7 @@ if ($bookId) {
                     </div>
                     <label for="comment">Commentaire</label>
                     <textarea name="comment" rows="5" placeholder="Laisse un commentaire ici..."></textarea>
-                    <input type="submit" name="submit" value="Envoyer">
+                    <input type="submit" name="submit_review" value="Envoyer">
                 </form>
                 <h3>Avis des autres lecteurs</h3>
                 <div class="comment-container">
@@ -170,24 +206,8 @@ if ($bookId) {
             ?>
         <?php endif; ?>
     </main>
-    <script>
-        document.getElementById('review-form').addEventListener('submit', function(event) {
-            // Récupérer les données du formulaire
-            const rating = document.querySelector('input[name="rating"]:checked');
-            const comment = document.querySelector('textarea[name="comment"]').value.trim();
-
-            // Vérifier que la note et le commentaire sont remplis
-            if (!rating || !comment) {
-                alert("Veuillez remplir tous les champs.");
-                event.preventDefault(); // Empêcher la soumission si les champs sont vides
-                return;
-            }
-
-            // => Si tout est valide, le formulaire sera soumis normalement ici
-
-        });
-    </script>
+ 
+ 
 </body>
-
+ 
 </html>
-
