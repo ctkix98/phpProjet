@@ -13,17 +13,50 @@ class Database
         $dsn = $config['dsn'];
         $username = $config['username'];
         $password = $config['password'];
-        //initialisation à la DB
+ 
         try {
             $this->db = new \PDO($dsn, $username, $password);
-        } catch (PDOException $e) {
-            error_log("Erreur de connexion : " . $e->getMessage());
-            // die("Erreur de connexion. Veuillez réessayer plus tard.");
-            die("Erreur de connexion : " . $e->getMessage());
+            $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+ 
+            // Vérifie et initialise la base de données si nécessaire
+            if (!$this->initializeIfNeeded()) {
+                throw new Exception("Impossible d'initialiser la base de données.");
+            }
+        } catch (\PDOException $e) {
+            error_log("Erreur de connexion à la base de données : " . $e->getMessage());
+            die("Erreur lors de la connexion à la base de données.");
         }
-        $this->initialisation();
     }
 
+    public function initializeIfNeeded(): bool
+    {
+        // Vérifie si une table clé, comme "book", existe
+        $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='book';";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+ 
+        if ($stmt->fetchColumn() === false) { // Si la table "book" n'existe pas
+            return $this->initialistion();
+        }
+ 
+        return true; // La base est déjà initialisée
+    }
+ 
+    public function initialistion(): bool
+    {
+        $ok = true;
+        $ok = $ok && $this->createTableBookState();
+        $ok = $ok && $this->createTableBook();
+        $ok = $ok && $this->createTableusers();
+        $ok = $ok && $this->createTablelecture();
+        $ok = $ok && $this->createTablecomment();
+        $ok = $ok && $this->createTablegrade();
+        $ok = $ok && $this->createTableSettings();
+        $ok = $ok && $this->createTableBookValidation();
+        $ok = $ok && $this->insertBooks();
+ 
+        return $ok;
+    }
     // Getter pour accéder à $db
     public function getDb()
     {
@@ -439,39 +472,53 @@ class Database
     public function insertBooks(): bool
     {
         try {
-            // Commence une transaction
-            $this->db->beginTransaction();
-
-            // Créer une instance de la classe Book
-            $books = [
-                new Book("Daphné et le duc", "Anthony Julia Quinn", "Romance", "2021", "9782290254738", "/assets/images/covers/daphne_et_duc.jpeg", 1),
-                new Book("Le cycle de Dune, Tome 1", "Frank Herbert", "Fantasy", "2021", "9782266320542", "/assets/images/covers/cycle_de_dune_tome1.jpeg", 2),
-                new Book("Fascination", "Stephenie Meyer", "Romance", "2011", "9782013212113", "/assets/images/covers/fascination.jpeg", 3),
-                new Book("L'Alchimiste", "Paulo Coelho", "Romance", "2021", "9782290258064", "/assets/images/covers/alchimiste.jpeg", 4),
-                new Book("La panthère des neiges", "Sylvain Tesson", "Fantasy", "2021", "9782072936494", "/assets/images/covers/panthere_des_neiges.jpeg", 5),
-                new Book("Les fiancés de l'hiver", "Christelle Dabos", "Fantasy", "2024", "9782075215466", "/assets/images/covers/fiances_de_lhiver.jpeg", 6),
-                new Book("La vie secrète des écrivains", "Guillaume Musso", "Film", "2020", "9782253237631", "/assets/images/covers/vie_secrete_ecrivains.jpeg", 7),
-                new Book("Les secrets de la femme de ménage", "Freida McFadden", "Film", "2024", "9782290391198", "/assets/images/covers/secret_femme_menage.jpeg", 8),
-                new Book("Le bal des folles", "Victoria Mas", "Film", "2021", "9782253103622", "/assets/images/covers/bal_des_folles.jpeg", 9),
-                new Book("Le silence du rossignol", "Lian Hearn", "Fantasy", "2021", "9782072934902", "/assets/images/covers/silence_rossignol.jpeg", 10),
-                new Book("Le consentement", "Vanessa Springorg", "Science", "2021", "9782253101567", "/assets/images/covers/consentement.jpeg", 11),
-                new Book("Le mage du Kremlin", "Guiliano da Empoli", "Horror", "2024", "9782073003911", "/assets/images/covers/mage_du_kremlin.jpeg", 12),
-                new Book("Le Petit Prince", "Antoine de Saint-Exupéry", "Fantasy", "1999", "9782070408504", "/assets/images/covers/petit_prince.jpeg", 13),
-                new Book("Le messie de Dune", "Frank Herbert", "Fantasy", "2021", "9782221255728", "/assets/images/covers/messie_dune.jpeg", 14),
-                new Book("Les figurants", "Delphine de Vigan", "Science", "2024", "9782073083999", "/assets/images/covers/figurants.jpeg", 15),
-            ];
-
-            foreach ($books as $book) {
-                $this->insertOrUpdateBook($book);
+            // Vérifie si la table 'book' contient déjà des enregistrements
+            $query = "SELECT COUNT(*) FROM book;";
+            $stmt = $this->db->query($query);
+            $count = $stmt->fetchColumn();
+ 
+            // Si la table n'a pas encore de livres, insère les livres par défaut
+            if ($count == 0) {
+                // Commence une transaction
+                $this->db->beginTransaction();
+ 
+                // Liste des livres à insérer
+                $books = [
+                    new Book("Daphné et le duc", "Anthony Julia Quinn", "Romance", "2021", "9782290254738", "/assets/images/covers/daphne_et_duc.jpeg"),
+                    new Book("Le cycle de Dune, Tome 1", "Frank Herbert", "Fantasy", "2021", "9782266320542", "/assets/images/covers/cycle_de_dune_tome1.jpeg"),
+                    new Book("Fascination", "Stephenie Meyer", "Romance", "2011", "9782013212113", "/assets/images/covers/fascination.jpeg"),
+                    new Book("L'Alchimiste", "Paulo Coelho", "Romance", "2021", "9782290258064", "/assets/images/covers/alchimiste.jpeg"),
+                    new Book("La panthère des neiges", "Sylvain Tesson", "Fantasy", "2021", "9782072936494", "/assets/images/covers/panthere_des_neiges.jpeg"),
+                    new Book("Les fiancés de l'hiver", "Christelle Dabos", "Fantasy", "2024", "9782075215466", "/assets/images/covers/fiances_de_lhiver.jpeg"),
+                    new Book("La vie secrète des écrivains", "Guillaume Musso", "Film", "2020", "9782253237631", "/assets/images/covers/vie_secrete_ecrivains.jpeg"),
+                    new Book("Les secrets de la femme de ménage", "Freida McFadden", "Film", "2024", "9782290391198", "/assets/images/covers/secret_femme_menage.jpeg"),
+                    new Book("Le bal des folles", "Victoria Mas", "Film", "2021", "9782253103622", "/assets/images/covers/bal_des_folles.jpeg"),
+                    new Book("Le silence du rossignol", "Lian Hearn", "Fantasy", "2021", "9782072934902", "/assets/images/covers/silence_rossignol.jpeg"),
+                    new Book("Le consentement", "Vanessa Springorg", "Science", "2021", "9782253101567", "/assets/images/covers/consentement.jpeg"),
+                    new Book("Le mage du Kremlin", "Guiliano da Empoli", "Horror", "2024", "9782073003911", "/assets/images/covers/mage_du_kremlin.jpeg"),
+                    new Book("Le Petit Prince", "Antoine de Saint-Exupéry", "Fantasy", "1999", "9782070408504", "/assets/images/covers/petit_prince.jpeg"),
+                    new Book("Le messie de Dune", "Frank Herbert", "Fantasy", "2021", "9782221255728", "/assets/images/covers/messie_dune.jpeg"),
+                    new Book("Les figurants", "Delphine de Vigan", "Science", "2024", "9782073083999", "/assets/images/covers/figurants.jpeg"),
+                ];
+ 
+                // Insère chaque livre
+                foreach ($books as $book) {
+                    $this->addBook($book);
+                }
+ 
+                // Valide la transaction si tout est correct
+                $this->db->commit();
+                //echo "Livres insérés avec succès.";
+            } else {
+                //echo "La table 'book' contient déjà des livres. Aucun ajout nécessaire.";
             }
-
-            // Si tout est ok, valide la transaction
-            $this->db->commit();
+ 
             return true;
         } catch (PDOException $e) {
-            // Si une erreur se produit, annule la transaction
+            // Annule la transaction en cas d'erreur
             $this->db->rollBack();
-            // Ajout d'un message d'erreur plus détaillé
+            // Log l'erreur avec un message plus détaillé
+            error_log("Erreur lors de l'insertion des livres : " . $e->getMessage());
             echo "Erreur lors de l'insertion des livres : " . $e->getMessage();
             return false;
         }
@@ -523,8 +570,24 @@ class Database
 
     public function addBook(Book $book): bool
     {
+        $tempIsbn = $book->getIsbn();
         try {
             $ok = true;
+ 
+            // Vérifier si le livre existe déjà dans la base de données
+            $checkSql = "SELECT COUNT(*) FROM Book WHERE ISBN = :isbn";
+            $checkStmt = $this->db->prepare($checkSql);
+            $checkStmt->bindParam(':isbn', $tempIsbn);
+            $checkStmt->execute();
+ 
+            // Si le livre existe déjà, on arrête ici
+            if ($checkStmt->fetchColumn() > 0) {
+                echo "Le livre '{$book->getTitle()}' existe déjà dans la base de données.";
+                echo "<br>";
+                return false;
+            }
+ 
+            // Requête d'insertion
             $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN, cover_image_path)
                     VALUES (:title, :author, :theme, :parution_date, :isbn, :cover_image_path)";
             $stmt = $this->db->prepare($sql);
@@ -534,33 +597,33 @@ class Database
             $bookParution_date = $book->getyear();
             $bookISBN = $book->getISBN();
             $bookCover_image_path = $book->getCoverImagePath();
-
+ 
             // Lier les paramètres
             $stmt->bindParam(':title', $bookTitle, PDO::PARAM_STR);
             $stmt->bindParam(':author', $bookAuthor);
             $stmt->bindParam(':theme', $bookTheme);
             $stmt->bindParam(':parution_date', $bookParution_date);
-
+ 
             // Gestion de l'ISBN
             if ($book->getIsbn() === 'NULL' || empty($book->getISBN())) {
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':isbn', $bookISBN, PDO::PARAM_STR);
             }
-
+ 
             // Gestion du chemin de l'image de couverture
             if (empty($book->getCoverImagePath())) {
                 $stmt->bindValue(':cover_image_path', null, PDO::PARAM_NULL);
             } else {
                 $stmt->bindParam(':cover_image_path', $bookCover_image_path);
             }
-
+ 
             // Exécuter la requête
             $ok = $ok && $stmt->execute();
-            echo $book->getTitle() . " ajouté avec succès.";
-            echo "<br>";
+            //echo $book->title . " ajouté avec succès.";
+           // echo "<br>";
         } catch (\PDOException $e) {
-            echo "Erreur lors de l'ajout du livre '{$book->getTitle()}': " . $e->getMessage();
+            //echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
         }
         return $ok;
     }
