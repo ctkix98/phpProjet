@@ -1,15 +1,15 @@
 <?php
 require_once __DIR__ . '/../../config/session.php';
 require_once __DIR__ . '/../../db/Database.php';
-
+session_start();
 $db = new Database();
 $userId = $_SESSION['utilisateur']['id'];
 
 
-$booksReading = $db->getBooksByState($userId, 'reading');
-$booksReadWant = $db->getBooksByState($userId, 'read-want');
-$booksReadDone = $db->getBooksByState($userId, 'read-done');
-$booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
+$booksReading = $db->getBooksByState($userId, 1);
+$booksReadWant = $db->getBooksByState($userId, 3);
+$booksReadDone = $db->getBooksByState($userId, 4);
+$booksReadDropped = $db->getBooksByState($userId, 4);
 ?>
 
 
@@ -96,7 +96,7 @@ $booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
                             </summary>
                             <div class="details-container">
                                 <!-- Les livres avec l'état à lire seront affichés ici -->
-                            <ul>
+                                <ul>
                                     <?php foreach ($booksReadWant as $book): ?>
                                         <li>
                                             <a href="./../bookinfo.php?id=<?= $book['id']; ?>">
