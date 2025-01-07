@@ -104,9 +104,6 @@ class Database
         $sql = <<<COMMANDE_SQL
             CREATE TABLE IF NOT EXISTS lecture (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                actual_page INTEGER,
-                date_begin TEXT, -- SQLite stores dates as text (ISO8601)
-                date_end TEXT, -- SQLite stores dates as text (ISO8601)
                 book_state_id INTEGER,
                 book_id INTEGER,
                 user_id INTEGER,
@@ -824,12 +821,25 @@ class Database
 
     public function createLecture($bookId, $bookState, $userId)
     {
+        $bookStateid = 0;;
+        if ($bookState == 'reading') {
+            $bookStateid = 1;
+        } elseif ($bookState == 'read-done') {
+            $bookStateid = 2;
+        } elseif ($bookState == 'read-want') {
+            $bookStateid = 3;
+        } elseif ($bookState == 'read-dropped') {
+            $bookStateid = 4;
+        } else {
+            $bookStateid = 5;
+        }
+
         $sql = "INSERT INTO lecture (book_id, user_id, book_state_id) VALUES (:book_id, :user_id, :book_state_id)
             ON CONFLICT(book_id, user_id) DO UPDATE SET book_state_id = :book_state_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':book_state_id', $bookState, PDO::PARAM_STR);
+        $stmt->bindParam(':book_state_id', $bookStateid, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $_SESSION['message'] = "L'état du livre a été mis à jour.";
