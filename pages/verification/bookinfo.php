@@ -32,6 +32,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $currentState = $bookState;
     }
 }
+
+// Récupérer les informations du livre
+
+var_dump($_GET);
+$book = $db->getBooksById($bookId);
+
+$bookId = $_GET['id'] ?? null;
+
+if ($bookId) {
+    $db = new Database();
+    $book = $db->getBooksById($bookId);
+    var_dump($book);
+
+    if ($book) {
+        $coverPath = !empty($book['cover_image_path'])
+            ? '../../' . htmlspecialchars($book['cover_image_path'])
+            : '../../assets/images/covers/placeholder-mylibrary.jpg';
+    } else {
+        echo "Livre non trouvé.";
+        exit();
+    }
+} else {
+    echo "ID du livre manquant.";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -73,16 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <section class="book-container">
                 <!-- Colonne gauche : Image -->
                 <div class="book-image-container">
-                    <img src="../assets/images/ldli_cromalin2-scaled.jpg" alt="La librairie des livres interdits">
+                    <img src="<?php echo $coverPath; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
                 </div>
                 <div class="book-container">
                     <!-- book related -->
-                    <h1 class="title"><strong>La librairie des livres interdits</strong></h1>
-                    <h2 class="author">Marc Levy</h2>
+                    <h1 class="title"><strong><?php echo htmlspecialchars($book['Title']); ?></strong></h1>
+                    <h2 class="author"><?php echo htmlspecialchars($book['Author']); ?></h2>
                     <p class="total-rating"><strong>Note :</strong> ★★★★☆ (avis: 174)</p>
-                    <p class="theme"><strong>Thème :</strong> romance </p>
-                    <p class="parution-date"><strong>Parution :</strong>19 novembre 2024</p>
-                    <h4 class="isbn"><strong>ISBN :</strong>9782221243619</h4>
+                    <p class="theme"><strong>Thème :</strong> <?php echo htmlspecialchars($book['Theme']); ?></p>
+                    <p class="parution-date"><strong>Parution :</strong> <?php echo htmlspecialchars($book['Parution_date']); ?></p>
+                    <h4 class="isbn"><strong>ISBN :</strong> <?php echo htmlspecialchars($book['ISBN']); ?></h4>
 
                     <!-- book state -->
                     <div>
@@ -133,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="score">
                         <p class="user-rating">★★★★☆</p>
                     </div>
-                    <p class="comment-text">Ce livre est vraiment agréable à lire. Marc Levy reste pour moi une valeur sure.</p>
+                    <p class="comment-text">Marc Levy, c'est vraiment top</p>
                 </div>
             </section>
         <?php else: ?>
