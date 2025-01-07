@@ -99,6 +99,8 @@ if ($bookId) {
                 <!-- Colonne gauche : Image -->
                 <div class="book-image-container">
                     <img src="<?php echo $coverPath; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
+                    <?php var_dump($book);?>
+                    
                 </div>
                 <div class="book-container">
                     <!-- book related -->
