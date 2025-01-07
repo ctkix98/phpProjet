@@ -821,4 +821,20 @@ class Database
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function createLecture($bookId, $bookState, $userId)
+    {
+        $sql = "INSERT INTO lecture (book_id, user_id, book_state_id) VALUES (:book_id, :user_id, :book_state_id)
+            ON CONFLICT(book_id, user_id) DO UPDATE SET book_state_id = :book_state_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':book_state_id', $bookState, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "L'état du livre a été mis à jour.";
+        } else {
+            $_SESSION['message'] = "Erreur lors de la mise à jour de l'état du livre.";
+        }
+    }
 }
