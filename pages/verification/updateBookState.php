@@ -8,6 +8,7 @@ if (filter_has_var(INPUT_POST, 'submit')) {
     $userId = $_SESSION['utilisateur']['id'];
     $db = new Database();
     $db->createLecture($bookId, $book_state, $userId);
+    $_SESSION['book_states'][$bookId] = $book_state;
 
      header('Location: bookinfo.php?id=' . $bookId);
     exit();
