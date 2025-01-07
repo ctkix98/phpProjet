@@ -102,7 +102,7 @@ if ($bookId) {
             <section class="book-container">
                 <!-- Colonne gauche : Image -->
                 <div class="book-image-container">
-                    <img src="<?php echo $coverPath; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
+                <img src="<?php echo $coverPath; ?>" alt="Couverture du livre">
                 </div>
                 <div class="book-container">
                     <!-- book related -->
