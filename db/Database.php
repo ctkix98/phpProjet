@@ -221,6 +221,8 @@ class Database
         return $ok;
     }
 
+    //Fonction qui permet d'initialiser uniquement une fois la DB, pour éviter que la DB ne se remplisse à chaque fois
+    //que l'on fait un appel à Database(), des 15 livres de insertBook()
     public function initializeIfNeeded(): bool
     {
         // Vérifie si une table clé, comme "book", existe
