@@ -227,6 +227,7 @@ class Database
         $ok = $ok && $this->createTablegrade();
         $ok = $ok && $this->createTableSettings();
         $ok = $ok && $this->createTableBookValidation();
+        $ok = $ok && $this->insertBooks();
 
         return $ok;
     }
@@ -391,6 +392,94 @@ class Database
             error_log("Error: " . $e->getMessage());
         }
     }
+    // Dans Database.ph
+    public function insertOrUpdateBook(Book $book): bool
+    {
+        // Récupérer les valeurs des getters et les stocker dans des variables
+        $title = $book->getTitle();
+        $author = $book->getWriter();  // Utilise la méthode getWriter() pour l'auteur
+        $genre = $book->getEditor();   // Utilise la méthode getEditor() pour le genre (ou sinon un champ plus adapté comme getTheme())
+        $year = $book->getYear();
+        $isbn = $book->getIsbn();
+        $coverImage = $book->getCoverImagePath(); // Récupérer le chemin de l'image de couverture
+        
+        // Requête SQL avec ON CONFLICT pour SQLite (utilisation de ISBN comme clé unique)
+        $query = "INSERT INTO book (Title, Author, Theme, Parution_date, ISBN, cover_image_path) 
+                  VALUES (:title, :author, :genre, :year, :isbn, :cover_image)
+                  ON CONFLICT(ISBN) DO UPDATE
+                  SET Title = :title, Author = :author, Theme = :genre, Parution_date = :year, cover_image_path = :cover_image";
+        
+        // Préparer la requête
+        $stmt = $this->db->prepare($query);
+    
+        // Vérification des valeurs avant de lier les paramètres
+        if (!$stmt) {
+            echo "Erreur de préparation de la requête SQL : " . implode(", ", $this->db->errorInfo());
+            return false;
+        }
+    
+        // Lier les paramètres de manière sécurisée
+        $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+        $stmt->bindParam(':author', $author, PDO::PARAM_STR);
+        $stmt->bindParam(':genre', $genre, PDO::PARAM_STR);
+        $stmt->bindParam(':year', $year, PDO::PARAM_STR);  // Parution_date est en texte, donc on passe une chaîne
+        $stmt->bindParam(':isbn', $isbn, PDO::PARAM_STR);
+        $stmt->bindParam(':cover_image', $coverImage, PDO::PARAM_STR);
+        
+        // Essayer d'exécuter la requête
+        try {
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    
+    
+
+    public function insertBooks(): bool
+    {
+        try {
+            // Commence une transaction
+            $this->db->beginTransaction();
+            
+            // Créer une instance de la classe Book
+            $books = [
+                new Book("Daphné et le duc", "Anthony Julia Quinn", "Romance", "2021", "9782290254738", "/assets/images/covers/daphne_et_duc.jpeg"),
+                new Book("Le cycle de Dune, Tome 1", "Frank Herbert", "Fantasy", "2021", "9782266320542", "/assets/images/covers/cycle_de_dune_tome1.jpeg"),
+                new Book("Fascination", "Stephenie Meyer", "Romance", "2011", "9782013212113", "/assets/images/covers/fascination.jpeg"),
+                new Book("L'Alchimiste", "Paulo Coelho", "Romance", "2021", "9782290258064", "/assets/images/covers/alchimiste.jpeg"),
+                new Book("La panthère des neiges", "Sylvain Tesson", "Fantasy", "2021", "9782072936494", "/assets/images/covers/panthere_des_neiges.jpeg"),
+                new Book("Les fiancés de l'hiver", "Christelle Dabos", "Fantasy", "2024", "9782075215466", "/assets/images/covers/fiances_de_lhiver.jpeg"),
+                new Book("La vie secrète des écrivains", "Guillaume Musso", "Film", "2020", "9782253237631", "/assets/images/covers/vie_secrete_ecrivains.jpeg"),
+                new Book("Les secrets de la femme de ménage", "Freida McFadden", "Film", "2024", "9782290391198", "/assets/images/covers/secret_femme_menage.jpeg"),
+                new Book("Le bal des folles", "Victoria Mas", "Film", "2021", "9782253103622", "/assets/images/covers/bal_des_folles.jpeg"),
+                new Book("Le silence du rossignol", "Lian Hearn", "Fantasy", "2021", "9782072934902", "/assets/images/covers/silence_rossignol.jpeg"),
+                new Book("Le consentement", "Vanessa Springorg", "Science", "2021", "9782253101567", "/assets/images/covers/consentement.jpeg"),
+                new Book("Le mage du Kremlin", "Guiliano da Empoli", "Horror", "2024", "9782073003911", "/assets/images/covers/mage_du_kremlin.jpeg"),
+                new Book("Le Petit Prince", "Antoine de Saint-Exupéry", "Fantasy", "1999", "9782070408504", "/assets/images/covers/petit_prince.jpeg"),
+                new Book("Le messie de Dune", "Frank Herbert", "Fantasy", "2021", "9782221255728", "/assets/images/covers/messie_dune.jpeg"),
+                new Book("Les figurants", "Delphine de Vigan", "Science", "2024", "9782073083999", "/assets/images/covers/figurants.jpeg"),
+            ];
+    
+            foreach ($books as $book) {
+                $this->insertOrUpdateBook($book);
+            }
+    
+            // Si tout est ok, valide la transaction
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            // Si une erreur se produit, annule la transaction
+            $this->db->rollBack();
+            // Ajout d'un message d'erreur plus détaillé
+            echo "Erreur lors de l'insertion des livres : " . $e->getMessage();
+            return false;
+        }
+    }
+    
+
     public function getAllBooks()
     {
         try {
@@ -622,7 +711,8 @@ class Database
         }
     }
 
-    function getBooksByState($userId, $state) {
+    function getBooksByState($userId, $state)
+    {
         $sql = "SELECT b.* FROM book b
                 JOIN lecture l ON b.id = l.book_id
                 WHERE l.user_id = :user_id AND l.book_state_id = :book_state_id";
@@ -633,7 +723,8 @@ class Database
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function query() {
+    public function query()
+    {
         try {
             $query = "SELECT id, ISBN, Title, Author FROM book WHERE cover_image_path IS NULL";
             $stmt = $this->db->prepare($query);
