@@ -12,7 +12,6 @@ if (!$db->initialisation()) {
 }
 
 $ids = array_column($_SESSION['search'], 'id');
-var_dump($ids);
 $books = [];
 foreach ($ids as $id) {
     $book = $db->getBooksById($id);
