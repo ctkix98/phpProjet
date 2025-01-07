@@ -514,18 +514,19 @@ class Database
 
     public function addBook(Book $book): bool
     {
+        $tempIsbn = $book->getIsbn();
         try {
             $ok = true;
 
             // Vérifier si le livre existe déjà dans la base de données
             $checkSql = "SELECT COUNT(*) FROM Book WHERE ISBN = :isbn";
             $checkStmt = $this->db->prepare($checkSql);
-            $checkStmt->bindParam(':isbn', $book->isbn);
+            $checkStmt->bindParam(':isbn', $tempIsbn);
             $checkStmt->execute();
 
             // Si le livre existe déjà, on arrête ici
             if ($checkStmt->fetchColumn() > 0) {
-                echo "Le livre '{$book->title}' existe déjà dans la base de données.";
+                echo "Le livre '{$book->getTitle()}' existe déjà dans la base de données.";
                 echo "<br>";
                 return false;
             }
