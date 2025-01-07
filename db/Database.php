@@ -561,6 +561,33 @@ class Database
         return $ok;
     }
 
+    public function deleteBook($bookId)
+    {
+        try {
+            // Préparer la requête SQL pour supprimer le livre
+            $sql = "DELETE FROM book WHERE id = :id";
+            $stmt = $this->getDb()->prepare($sql);
+
+            // Lier le paramètre :id à l'ID du livre
+            $stmt->bindParam(':id', $bookId, PDO::PARAM_INT);
+
+            // Exécuter la requête
+            $stmt->execute();
+
+            // Vérifier si une ligne a été supprimée
+            if ($stmt->rowCount() > 0) {
+                return true; // Succès
+            } else {
+                return false; // Le livre n'a pas été trouvé ou supprimé
+            }
+        } catch (PDOException $e) {
+            // Enregistrer l'erreur
+            error_log("Erreur lors de la suppression du livre : " . $e->getMessage());
+            return false;
+        }
+    }
+
+
 
     public function addBookState($state)
     {
