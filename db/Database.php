@@ -384,6 +384,7 @@ class Database
                     $book['first_publish_year'] ?? 'Unknown',
                     $book['availability']['isbn'] ?? 'NULL',
                     $book['availability']['openlibrary_work'] ?? 'NULL',
+                    $book['id'] ?? 'NULL'
                 );
                 $this->addBook($bookObject);
             }
@@ -419,33 +420,39 @@ class Database
             $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN, cover_image_path)
                     VALUES (:title, :author, :theme, :parution_date, :isbn, :cover_image_path)";
             $stmt = $this->db->prepare($sql);
+            $bookTitle = $book->getTitle();
+            $bookAuthor = $book->getAuthor();
+            $bookTheme = $book->getTheme();
+            $bookParution_date = $book->getyear();
+            $bookISBN = $book->getISBN();
+            $bookCover_image_path = $book->getCoverImagePath();
 
             // Lier les paramètres
-            $stmt->bindParam(':title', $book->title);
-            $stmt->bindParam(':author', $book->author);
-            $stmt->bindParam(':theme', $book->theme);
-            $stmt->bindParam(':parution_date', $book->parution_date);
+            $stmt->bindParam(':title', $bookTitle, PDO::PARAM_STR);
+            $stmt->bindParam(':author', $bookAuthor);
+            $stmt->bindParam(':theme', $bookTheme);
+            $stmt->bindParam(':parution_date', $bookParution_date);
 
             // Gestion de l'ISBN
-            if ($book->isbn === 'NULL' || empty($book->isbn)) {
+            if ($book->getIsbn() === 'NULL' || empty($book->getISBN())) {
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
-                $stmt->bindParam(':isbn', $book->isbn);
+                $stmt->bindParam(':isbn', $bookISBN, PDO::PARAM_STR);
             }
 
             // Gestion du chemin de l'image de couverture
-            if (empty($book->cover_image_path)) {
+            if (empty($book->getCoverImagePath())) {
                 $stmt->bindValue(':cover_image_path', null, PDO::PARAM_NULL);
             } else {
-                $stmt->bindParam(':cover_image_path', $book->cover_image_path);
+                $stmt->bindParam(':cover_image_path', $bookCover_image_path);
             }
 
             // Exécuter la requête
             $ok = $ok && $stmt->execute();
-            echo $book->title . " ajouté avec succès.";
+            echo $book->getTitle() . " ajouté avec succès.";
             echo "<br>";
         } catch (\PDOException $e) {
-            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
+            echo "Erreur lors de l'ajout du livre '{$book->getTitle()}': " . $e->getMessage();
         }
         return $ok;
     }
@@ -633,7 +640,8 @@ class Database
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getBooksById($bookId) {
+    function getBooksById($bookId)
+    {
         $sql = "SELECT * FROM book WHERE id = :book_id";
         $stmt = $this->getDb()->prepare($sql);
         $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
