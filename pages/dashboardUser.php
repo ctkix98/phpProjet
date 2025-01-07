@@ -22,7 +22,7 @@ require_once __DIR__ . '/../config/session.php';
 <body>
     <header>
         <ul>
-            <li><a href="index.php">Babel</a></li>
+            <li><a href="homepage.php">Babel</a></li>
             <li><a href="about.php">A propos</a></li>
             <li> <a href="../pages/verification/library.php">Bibliothèque</a></li>
 

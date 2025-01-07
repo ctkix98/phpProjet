@@ -10,9 +10,9 @@
 <body>
     <header>
         <nav>
-            <div><a href="/pages/index.php">Babel</a></div>
+            <div><a href="/pages/homepage.php">Babel</a></div>
             <ul class="menu">
-                <li><a href="/pages/index.php">Accueil</a></li>
+                <li><a href="/pages/homepage.php">Accueil</a></li>
                 <li><a href="/pages/about.php">A propos</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <li><a href="/pages/libraryUser.php">Ma bibliothèque</a></li>
