@@ -4,10 +4,12 @@ require_once('../../db/Database.php');
 session_start();
 
 // Initialisation de la base de données
-$db = new Database();
-if (!$db->initialisation()) {
-    $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
-    header('Location: ../messages/message.php', true, 303);
+try {
+    $db = new Database();
+} catch (Exception $e) {
+    $message = "Erreur lors de l'accès à la base de données : " . $e->getMessage();
+    $_SESSION['message'] = $message;
+    header('Location: ../messages/message.php');
     exit();
 }
 

@@ -2,9 +2,13 @@
 require_once('../../db/Database.php');
 session_start();
 
-$db = new Database();
-if (!$db->initialisation()) {
-  echo "Problème d'initialisation <br>";
+try {
+  $db = new Database();
+} catch (Exception $e) {
+  $message = "Erreur lors de l'accès à la base de données : " . $e->getMessage();
+  $_SESSION['message'] = $message;
+  header('Location: ../messages/message.php');
+  exit();
 }
 
 // Get all books registered in database

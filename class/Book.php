@@ -13,15 +13,16 @@ class Book
 
 
     // Constructeur
-    public function __construct($title, $author, $theme, $parution_date, $isbn, $cover_image_path = null, $id)
+    public function __construct($title, $author, $theme, $parution_date, $isbn, $id, $cover_image_path = null)
     {
         $this->title = $title;
         $this->author = $author;
         $this->theme = $theme;
         $this->parution_date = $parution_date;
         $this->isbn = $isbn;
-        $this->cover_image_path = $cover_image_path;
         $this->id = $id;
+        $this->cover_image_path = $cover_image_path;
+
     }
 
     // Getter pour le titre

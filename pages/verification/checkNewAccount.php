@@ -48,10 +48,6 @@ $donneeUtilisateur['password'] = password_hash($donneeUtilisateur['password'], P
 
 // Appel de la DB
 $db = new Database();
-if ($db->initialisation()) {
-    echo "Initialisation réussie :-) <br>";
-}
-
 // Création d'une nouvelle personne avec les données enregistrées
 $personne = new Personne(
     $donneeUtilisateur['pseudo'],
