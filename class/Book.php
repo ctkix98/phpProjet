@@ -2,23 +2,26 @@
 
 class Book
 {
-    public $title;
-    public $author;
-    public $theme;
-    public $parution_date;
-    public $isbn;
-    public $cover_image_path;
-    
+    private $title;
+    private $author;
+    private $theme;
+    private $parution_date;
+    private $isbn;
+    private $cover_image_path;
+
+    private $id;
+
 
     // Constructeur
-    public function __construct($title, $author, $theme, $parution_date, $isbn, $cover_image_path = null) {
+    public function __construct($title, $author, $theme, $parution_date, $isbn, $cover_image_path = null, $id)
+    {
         $this->title = $title;
         $this->author = $author;
         $this->theme = $theme;
         $this->parution_date = $parution_date;
         $this->isbn = $isbn;
         $this->cover_image_path = $cover_image_path;
-        
+        $this->id = $id;
     }
 
     // Getter pour le titre
@@ -34,27 +37,27 @@ class Book
     }
 
     // Getter pour l'auteur
-    public function getWriter()
+    public function getAuthor()
     {
         return $this->author;
     }
 
     // Setter pour l'auteur
-    public function setWriter($author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }
 
     // Getter pour la maison d'édition
-    public function getEditor()
+    public function getTheme()
     {
         return $this->theme;
     }
 
     // Setter pour la maison d'édition
-    public function setEditor($editor)
+    public function setTheme($theme)
     {
-        $this->theme = $editor;
+        $this->theme = $theme;
     }
 
     // Getter pour l'année de publication
@@ -92,7 +95,17 @@ class Book
     {
         $this->cover_image_path = $cover_image_path;
     }
+    // Getter pour l'ID du livre
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    // Setter pour l'ID du livre
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     // Méthode pour afficher les informations du livre
     public function displayBookInfo()
@@ -125,7 +138,7 @@ class Book
         return [
             'title' => $this->title,
             'author' => $this->author,
-            'editor' => $this->theme,
+            'theme' => $this->theme,
             'parution_date' => $this->parution_date,
             'isbn' => $this->isbn,
             'cover_image_path' => $this->cover_image_path,
@@ -136,12 +149,13 @@ class Book
     public static function fromArray($data)
     {
         return new self(
-            $data['title'], 
-            $data['author'], 
-            $data['theme'], 
-            $data['parution_date'], 
+            $data['title'],
+            $data['author'],
+            $data['theme'],
+            $data['parution_date'],
             $data['isbn'],
-            isset($data['cover_image_path']) ? $data['cover_image_path'] : null, 
+            isset($data['cover_image_path']) ? $data['cover_image_path'] : null,
+            isset($data['id']) ? $data['id'] : null
         );
     }
 }

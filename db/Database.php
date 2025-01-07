@@ -21,7 +21,7 @@ class Database
             // die("Erreur de connexion. Veuillez réessayer plus tard.");
             die("Erreur de connexion : " . $e->getMessage());
         }
-        $this->initialistion();
+        $this->initialisation();
     }
 
     // Getter pour accéder à $db
@@ -216,7 +216,7 @@ class Database
         }
         return $ok;
     }
-    public function initialistion(): bool
+    public function initialisation(): bool
     {
         $ok = true;
         $ok = $ok && $this->createTableBookState();
@@ -385,6 +385,7 @@ class Database
                     $book['first_publish_year'] ?? 'Unknown',
                     $book['availability']['isbn'] ?? 'NULL',
                     $book['availability']['openlibrary_work'] ?? 'NULL',
+                    $book['id'] ?? 'NULL'
                 );
                 $this->addBook($bookObject);
             }
@@ -530,33 +531,39 @@ class Database
             $sql = "INSERT INTO Book (Title, Author, Theme, Parution_date, ISBN, cover_image_path)
                     VALUES (:title, :author, :theme, :parution_date, :isbn, :cover_image_path)";
             $stmt = $this->db->prepare($sql);
+            $bookTitle = $book->getTitle();
+            $bookAuthor = $book->getAuthor();
+            $bookTheme = $book->getTheme();
+            $bookParution_date = $book->getyear();
+            $bookISBN = $book->getISBN();
+            $bookCover_image_path = $book->getCoverImagePath();
 
             // Lier les paramètres
-            $stmt->bindParam(':title', $book->title);
-            $stmt->bindParam(':author', $book->author);
-            $stmt->bindParam(':theme', $book->theme);
-            $stmt->bindParam(':parution_date', $book->parution_date);
+            $stmt->bindParam(':title', $bookTitle, PDO::PARAM_STR);
+            $stmt->bindParam(':author', $bookAuthor);
+            $stmt->bindParam(':theme', $bookTheme);
+            $stmt->bindParam(':parution_date', $bookParution_date);
 
             // Gestion de l'ISBN
-            if ($book->isbn === 'NULL' || empty($book->isbn)) {
+            if ($book->getIsbn() === 'NULL' || empty($book->getISBN())) {
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
-                $stmt->bindParam(':isbn', $book->isbn);
+                $stmt->bindParam(':isbn', $bookISBN, PDO::PARAM_STR);
             }
 
             // Gestion du chemin de l'image de couverture
-            if (empty($book->cover_image_path)) {
+            if (empty($book->getCoverImagePath())) {
                 $stmt->bindValue(':cover_image_path', null, PDO::PARAM_NULL);
             } else {
-                $stmt->bindParam(':cover_image_path', $book->cover_image_path);
+                $stmt->bindParam(':cover_image_path', $bookCover_image_path);
             }
 
             // Exécuter la requête
             $ok = $ok && $stmt->execute();
-            echo $book->title . " ajouté avec succès.";
+            echo $book->getTitle() . " ajouté avec succès.";
             echo "<br>";
         } catch (\PDOException $e) {
-            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
+            echo "Erreur lors de l'ajout du livre '{$book->getTitle()}': " . $e->getMessage();
         }
         return $ok;
     }
@@ -610,22 +617,27 @@ class Database
                     VALUES (:title, :author, :theme, :parution_date, :isbn, :validation_status)";
 
             $stmt = $this->db->prepare($sql);
+            $bookTitle = $book->getTitle();
+            $bookAuthor = $book->getAuthor();
+            $bookTheme = $book->getTheme();
+            $bookParution_date = $book->getyear();
+            $bookISBN = $book->getISBN();
 
             // Lier les paramètres de la requête avec les propriétés du livre
-            $stmt->bindParam(':title', $book->title);
-            $stmt->bindParam(':author', $book->author);
-            $stmt->bindParam(':theme', $book->theme);
-            $stmt->bindParam(':parution_date', $book->parution_date);
+            $stmt->bindParam(':title', $bookTitle, PDO::PARAM_STR);
+            $stmt->bindParam(':author', $bookAuthor);
+            $stmt->bindParam(':theme', $bookTheme);
+            $stmt->bindParam(':parution_date', $bookParution_date);
 
             // Définir le statut de validation à "pending"
             $validationStatus = 'pending';  // Déclaration de la variable ici
             $stmt->bindParam(':validation_status', $validationStatus);  // Puis lier la variable
 
             // Vérifier si l'ISBN est fourni
-            if ($book->isbn === 'NULL' || empty($book->isbn)) {
+            if ($book->getIsbn() === 'NULL' || empty($book->getISBN())) {
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
-                $stmt->bindParam(':isbn', $book->isbn);
+                $stmt->bindParam(':isbn', $bookISBN);
             }
 
             // Exécuter la requête pour insérer le livre avec son statut de validation
@@ -633,12 +645,12 @@ class Database
 
             // Vérifier si l'exécution a réussi
             if ($ok) {
-                echo $book->title . " ajouté et soumis à validation.";
+                echo $book->getTitle() . " ajouté et soumis à validation.";
                 echo "<br>";
             }
         } catch (\PDOException $e) {
             // En cas d'erreur, afficher le message d'erreur
-            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
+            echo "Erreur lors de l'ajout du livre '{$book->gettitle()}': " . $e->getMessage();
             $ok = false;
         }
 
@@ -706,7 +718,8 @@ class Database
                     $row['Theme'],
                     $row['Parution_date'],
                     $row['ISBN'],
-                    $row['cover_image_url']
+                    $row['cover_image_url'],
+                    $row['id'],
                 );
             }
             return $books;
@@ -761,6 +774,8 @@ class Database
 
     function getBooksByState($userId, $state)
     {
+    function getBooksByState($userId, $state)
+    {
         $sql = "SELECT b.* FROM book b
                 JOIN lecture l ON b.id = l.book_id
                 WHERE l.user_id = :user_id AND l.book_state_id = :book_state_id";
@@ -786,5 +801,16 @@ class Database
             echo "Erreur lors de la récupération des IDs des livres : " . $e->getMessage();
             return [];
         }
+    }
+
+    public function searchBooks($researchedWord)
+    {
+        echo "Searching books";
+        $query = "SELECT id FROM book WHERE Title LIKE :researchedWord OR Author LIKE :researchedWord";
+        $researchedWord = '%' . $researchedWord . '%';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':researchedWord', $researchedWord);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
