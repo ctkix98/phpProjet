@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../db/Database.php';
-session_start();
+
 
 if (filter_has_var(INPUT_POST, 'submit')) {
     $bookId = filter_input(INPUT_POST, 'book_id', FILTER_DEFAULT);
