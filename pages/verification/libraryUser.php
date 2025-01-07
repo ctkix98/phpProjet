@@ -28,7 +28,7 @@ $booksReadDropped = $db->getBooksByState($userId, 'read-dropped');
 <body>
     <header>
         <ul>
-            <li><a href="./../index.php">Babel</a></li>
+            <li><a href="homepage.php">Babel</a></li>
             <li><a href="./../about.php">A propos</a></li>
             <li><a href="library.php">Bibliothèque</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>

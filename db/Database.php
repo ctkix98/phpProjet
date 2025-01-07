@@ -402,22 +402,22 @@ class Database
         $year = $book->getYear();
         $isbn = $book->getIsbn();
         $coverImage = $book->getCoverImagePath(); // Récupérer le chemin de l'image de couverture
-        
+
         // Requête SQL avec ON CONFLICT pour SQLite (utilisation de ISBN comme clé unique)
         $query = "INSERT INTO book (Title, Author, Theme, Parution_date, ISBN, cover_image_path) 
                   VALUES (:title, :author, :genre, :year, :isbn, :cover_image)
                   ON CONFLICT(ISBN) DO UPDATE
                   SET Title = :title, Author = :author, Theme = :genre, Parution_date = :year, cover_image_path = :cover_image";
-        
+
         // Préparer la requête
         $stmt = $this->db->prepare($query);
-    
+
         // Vérification des valeurs avant de lier les paramètres
         if (!$stmt) {
             echo "Erreur de préparation de la requête SQL : " . implode(", ", $this->db->errorInfo());
             return false;
         }
-    
+
         // Lier les paramètres de manière sécurisée
         $stmt->bindParam(':title', $title, PDO::PARAM_STR);
         $stmt->bindParam(':author', $author, PDO::PARAM_STR);
@@ -425,7 +425,7 @@ class Database
         $stmt->bindParam(':year', $year, PDO::PARAM_STR);  // Parution_date est en texte, donc on passe une chaîne
         $stmt->bindParam(':isbn', $isbn, PDO::PARAM_STR);
         $stmt->bindParam(':cover_image', $coverImage, PDO::PARAM_STR);
-        
+
         // Essayer d'exécuter la requête
         try {
             return $stmt->execute();
@@ -434,16 +434,16 @@ class Database
             return false;
         }
     }
-    
-    
-    
+
+
+
 
     public function insertBooks(): bool
     {
         try {
             // Commence une transaction
             $this->db->beginTransaction();
-            
+
             // Créer une instance de la classe Book
             $books = [
                 new Book("Daphné et le duc", "Anthony Julia Quinn", "Romance", "2021", "9782290254738", "/assets/images/covers/daphne_et_duc.jpeg"),
@@ -462,11 +462,11 @@ class Database
                 new Book("Le messie de Dune", "Frank Herbert", "Fantasy", "2021", "9782221255728", "/assets/images/covers/messie_dune.jpeg"),
                 new Book("Les figurants", "Delphine de Vigan", "Science", "2024", "9782073083999", "/assets/images/covers/figurants.jpeg"),
             ];
-    
+
             foreach ($books as $book) {
                 $this->insertOrUpdateBook($book);
             }
-    
+
             // Si tout est ok, valide la transaction
             $this->db->commit();
             return true;
@@ -478,7 +478,7 @@ class Database
             return false;
         }
     }
-    
+
 
     public function getAllBooks()
     {
@@ -500,6 +500,28 @@ class Database
             return [];
         }
     }
+
+    public function getRandomBooks()
+    {
+        try {
+            // Préparation de la requête pour récupérer 10 livres de manière aléatoire
+            $sql = "SELECT * FROM book ORDER BY RANDOM() LIMIT 10";
+            $stmt = $this->getDb()->prepare($sql);
+
+            // Exécution de la requête
+            $stmt->execute();
+
+            // Récupération des résultats sous forme de tableau associatif
+            $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $books;
+        } catch (PDOException $e) {
+            // Gestion des erreurs : enregistrez l'erreur dans un journal ou affichez un message
+            error_log("Erreur lors de la récupération des livres : " . $e->getMessage());
+            return [];
+        }
+    }
+
 
     public function addBook(Book $book): bool
     {
@@ -538,6 +560,33 @@ class Database
         }
         return $ok;
     }
+
+    public function deleteBook($bookId)
+    {
+        try {
+            // Préparer la requête SQL pour supprimer le livre
+            $sql = "DELETE FROM book WHERE id = :id";
+            $stmt = $this->getDb()->prepare($sql);
+
+            // Lier le paramètre :id à l'ID du livre
+            $stmt->bindParam(':id', $bookId, PDO::PARAM_INT);
+
+            // Exécuter la requête
+            $stmt->execute();
+
+            // Vérifier si une ligne a été supprimée
+            if ($stmt->rowCount() > 0) {
+                return true; // Succès
+            } else {
+                return false; // Le livre n'a pas été trouvé ou supprimé
+            }
+        } catch (PDOException $e) {
+            // Enregistrer l'erreur
+            error_log("Erreur lors de la suppression du livre : " . $e->getMessage());
+            return false;
+        }
+    }
+
 
 
     public function addBookState($state)
