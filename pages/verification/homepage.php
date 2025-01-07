@@ -3,10 +3,7 @@ require_once('../../db/Database.php');
 session_start();
 
 $db = new Database();
-if (!$db->initialistion()) {
-    echo "Erreur lors de l'accès à la base de données.";
-    exit();
-}
+
 
 // Récupération de 10 livres aléatoires
 $tenBooks = $db->getRandomBooks();
