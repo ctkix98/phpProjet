@@ -13,6 +13,10 @@ $currentState = isset($_SESSION['book_states'][$bookId])
     ? $_SESSION['book_states'][$bookId]
     : getCurrentBookState($bookId, $userId, $db);
 
+    if (!isset($_SESSION['book_states'][$bookId])) {
+        $_SESSION['book_states'][$bookId] = $currentState;
+    }
+
 // Vérifiez si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sauvegardez l'état sélectionné dans une variable de session
