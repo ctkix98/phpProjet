@@ -34,7 +34,7 @@ JS :
 
 #Page d'accueil privée (connecté)
 - Bouton déconnexion lien a
-- Fonction pour afficher les livres --> identique à celle de l'index.php
+- Fonction pour afficher les livres --> identique à celle de l'homepage.php
 - Page de compte : lien a : vers compte
 - Page bibliothèque : lien a : vers la bibliothèque
 

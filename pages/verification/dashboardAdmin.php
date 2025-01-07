@@ -1,15 +1,15 @@
 <?php
-require_once('/MAMP/htdocs/phpProjet/db/Database.php');
+require_once('../../db/Database.php');
 session_start();
 
 // Vérifiez si l'utilisateur est un administrateur
 if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur']['pseudo'] !== 'admin') {
-    header('Location: index.php');
+    header('Location: ../pages/verification/homepage.php');
     exit();
 }
 
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
     $_SESSION['message'] = "Erreur lors de l'accès à la base de données.";
     header('Location: ../messages/message.php', true, 303);
     exit();
@@ -63,7 +63,7 @@ $allBooks = $db->getAllBooks();
 <body>
     <header>
         <ul>
-            <li><a href="../index.php">Babel</a></li>
+            <li><a href="homepage.php">Babel</a></li>
             <li><a href="../about.php">A propos</a></li>
             <li> <a href="library.php">Bibliothèque</a></li>
             <?php if (isset($_SESSION['utilisateur'])): ?>

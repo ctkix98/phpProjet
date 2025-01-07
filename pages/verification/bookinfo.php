@@ -33,52 +33,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Traitement de l'avis et de la note
-var_dump($_POST);
+// Récupérer les informations du livre
 
-if (filter_has_var(INPUT_POST, 'submit')) {
-    $comment = filter_input(INPUT_POST, 'comment', FILTER_DEFAULT);
-    $grade = filter_input(INPUT_POST, 'rating', FILTER_DEFAULT);
-    echo ("coucou");
+var_dump($_GET);
+$book = $db->getBooksById($bookId);
 
-    // Insertion du commentaire dans la base de données
-    $sqlComment = "INSERT INTO comment (user_id, book_id, content, date) VALUES (:user_id, :book_id, :content, DATE('now'))";
-    $stmtComment = $db->getDb()->prepare($sqlComment);
-    $stmtComment->bindParam(':user_id', $userId, PDO::PARAM_INT);
-    $stmtComment->bindParam(':book_id', $bookId, PDO::PARAM_INT);
-    $stmtComment->bindParam(':content', $comment, PDO::PARAM_STR);
-    $stmtComment->execute();
+$bookId = $_GET['id'] ?? null;
 
-    // Insertion de la note dans la base de données
-    $sqlGrade = "INSERT INTO grade (user_id, book_id, grade) VALUES (:user_id, :book_id, :grade)";
-    $stmtGrade = $db->getDb()->prepare($sqlGrade);
-    $stmtGrade->bindParam(':user_id', $userId, PDO::PARAM_INT);
-    $stmtGrade->bindParam(':book_id', $bookId, PDO::PARAM_INT);
-    $stmtGrade->bindParam(':grade', $rating, PDO::PARAM_INT);
-    $stmtGrade->execute();
+if ($bookId) {
+    $db = new Database();
+    $book = $db->getBooksById($bookId);
+    var_dump($book);
 
-    // Redirection pour éviter la resoumission du formulaire
-    header("Location: " . $_SERVER['PHP_SELF'] . "?id=$bookId");
-    exit;
+    if ($book) {
+        $coverPath = !empty($book['cover_image_path'])
+            ? '../../' . htmlspecialchars($book['cover_image_path'])
+            : '../../assets/images/covers/placeholder-mylibrary.jpg';
+    } else {
+        echo "Livre non trouvé.";
+        exit();
+    }
+} else {
+    echo "ID du livre manquant.";
+    exit();
 }
-
-
-$sql = "SELECT 
-            u.pseudo AS username, 
-            g.grade AS rating, 
-            c.content AS comment, 
-            c.date AS created_at
-        FROM comment c
-        JOIN grade g ON c.user_id = g.user_id AND c.book_id = g.book_id
-        JOIN users u ON c.user_id = u.id
-        WHERE c.book_id = :book_id
-        ORDER BY c.date DESC";
-$stmt = $db->getDb()->prepare($sql);
-$stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
-$stmt->execute();
-$reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -95,7 +73,7 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <header>
         <ul>
-            <li><a href="../index.php">Babel</a></li>
+            <li><a href="../verification/homepage.php">Babel</a></li>
             <li><a href="../about.php">A propos</a></li>
             <li> <a href="library.php">Bibliothèque</a></li>
 
@@ -121,16 +99,16 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <section class="book-container">
                 <!-- Colonne gauche : Image -->
                 <div class="book-image-container">
-                    <img src="../assets/images/ldli_cromalin2-scaled.jpg" alt="La librairie des livres interdits">
+                    <img src="<?php echo $coverPath; ?>" alt="<?php echo htmlspecialchars($book['title']); ?>">
                 </div>
                 <div class="book-container">
                     <!-- book related -->
-                    <h1 class="title"><strong>La librairie des livres interdits</strong></h1>
-                    <h2 class="author">Marc Levy</h2>
+                    <h1 class="title"><strong><?php echo htmlspecialchars($book['Title']); ?></strong></h1>
+                    <h2 class="author"><?php echo htmlspecialchars($book['Author']); ?></h2>
                     <p class="total-rating"><strong>Note :</strong> ★★★★☆ (avis: 174)</p>
-                    <p class="theme"><strong>Thème :</strong> romance </p>
-                    <p class="parution-date"><strong>Parution :</strong>19 novembre 2024</p>
-                    <h4 class="isbn"><strong>ISBN :</strong>9782221243619</h4>
+                    <p class="theme"><strong>Thème :</strong> <?php echo htmlspecialchars($book['Theme']); ?></p>
+                    <p class="parution-date"><strong>Parution :</strong> <?php echo htmlspecialchars($book['Parution_date']); ?></p>
+                    <h4 class="isbn"><strong>ISBN :</strong> <?php echo htmlspecialchars($book['ISBN']); ?></h4>
 
                     <!-- book state -->
                     <div>
@@ -154,7 +132,7 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </option>
                             </select>
                             <input type="hidden" name="book_id" value="<?php echo $bookId; ?>">
-                            <input type="submit" value="Valider">
+                            <input type="submit" name="submit" value="Valider">
                         </form>
                     </div>
                 </div>
@@ -176,16 +154,12 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <input type="submit" name="submit" value="Envoyer">
                 </form>
                 <h3>Avis des autres lecteurs</h3>
-                <div id="reviews-list">
-                    <?php foreach ($reviews as $review): ?>
-                        <div class="comment-container">
-                            <h3 class="username"><?php echo htmlspecialchars($review['username']); ?></h3>
-                            <div class="score">
-                                <p class="user-rating"><?php echo str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']); ?></p>
-                            </div>
-                            <p class="comment-text"><?php echo htmlspecialchars($review['comment']); ?></p>
-                        </div>
-                    <?php endforeach; ?>
+                <div class="comment-container">
+                    <h3 class="username">Leila01</h3>
+                    <div class="score">
+                        <p class="user-rating">★★★★☆</p>
+                    </div>
+                    <p class="comment-text">Marc Levy, c'est vraiment top</p>
                 </div>
             </section>
         <?php else: ?>

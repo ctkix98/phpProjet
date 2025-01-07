@@ -4,7 +4,7 @@ session_start();
 
 // Instancier la base de données
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
     echo "Erreur lors de l'accès à la base de données.";
     exit();
 }
@@ -59,7 +59,7 @@ function formatISBN($isbn)
     <body>
         <header>
             <ul>
-                <li><a href="../index.php">Babel</a></li>
+                <li><a href="homepage.php">Babel</a></li>
                 <li><a href="../about.php">À propos</a></li>
                 <li><a href="library.php">Bibliothèque</a></li>
                 <?php if (isset($_SESSION['utilisateur'])): ?>

@@ -3,7 +3,7 @@ require_once('../../db/Database.php');
 session_start();
 
 $db = new Database();
-if (!$db->initialistion()) {
+if (!$db->initialisation()) {
   echo "Problème d'initialisation <br>";
 }
 
@@ -26,7 +26,7 @@ $allBooks = $db->getAllBooks();
 <body>
   <header>
     <ul>
-      <li><a href="../index.php">Babel</a></li>
+      <li><a href="homepage.php">Babel</a></li>
       <li><a href="../about.php">A propos</a></li>
       <li><a href="library.php">Bibliothèque</a></li>
       <?php if (isset($_SESSION['utilisateur'])): ?>
@@ -46,9 +46,9 @@ $allBooks = $db->getAllBooks();
   </header>
   <main>
     <div class="form-container">
-      <form>
-        <input type="text" id="search" placeholder="Recherche par titre ou auteur" />
-        <input type="submit" value="Recherche" />
+      <form action="searchbar.php" method="POST">
+        <input type="text" id="search" name="search" placeholder="Recherche par titre ou auteur" />
+        <input type="submit" name="submit" value="Recherche" />
       </form>
     </div>
     <div class="books-container">
