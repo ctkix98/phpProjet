@@ -479,22 +479,27 @@ class Database
                     VALUES (:title, :author, :theme, :parution_date, :isbn, :validation_status)";
 
             $stmt = $this->db->prepare($sql);
+            $bookTitle = $book->getTitle();
+            $bookAuthor = $book->getAuthor();
+            $bookTheme = $book->getTheme();
+            $bookParution_date = $book->getyear();
+            $bookISBN = $book->getISBN();
 
             // Lier les paramètres de la requête avec les propriétés du livre
-            $stmt->bindParam(':title', $book->title);
-            $stmt->bindParam(':author', $book->author);
-            $stmt->bindParam(':theme', $book->theme);
-            $stmt->bindParam(':parution_date', $book->parution_date);
+            $stmt->bindParam(':title', $bookTitle, PDO::PARAM_STR);
+            $stmt->bindParam(':author', $bookAuthor);
+            $stmt->bindParam(':theme', $bookTheme);
+            $stmt->bindParam(':parution_date', $bookParution_date);
 
             // Définir le statut de validation à "pending"
             $validationStatus = 'pending';  // Déclaration de la variable ici
             $stmt->bindParam(':validation_status', $validationStatus);  // Puis lier la variable
 
             // Vérifier si l'ISBN est fourni
-            if ($book->isbn === 'NULL' || empty($book->isbn)) {
+            if ($book->getIsbn() === 'NULL' || empty($book->getISBN())) {
                 $stmt->bindValue(':isbn', null, PDO::PARAM_NULL);
             } else {
-                $stmt->bindParam(':isbn', $book->isbn);
+                $stmt->bindParam(':isbn', $bookISBN);
             }
 
             // Exécuter la requête pour insérer le livre avec son statut de validation
@@ -502,12 +507,12 @@ class Database
 
             // Vérifier si l'exécution a réussi
             if ($ok) {
-                echo $book->title . " ajouté et soumis à validation.";
+                echo $book->getTitle() . " ajouté et soumis à validation.";
                 echo "<br>";
             }
         } catch (\PDOException $e) {
             // En cas d'erreur, afficher le message d'erreur
-            echo "Erreur lors de l'ajout du livre '{$book->title}': " . $e->getMessage();
+            echo "Erreur lors de l'ajout du livre '{$book->gettitle()}': " . $e->getMessage();
             $ok = false;
         }
 
@@ -575,7 +580,8 @@ class Database
                     $row['Theme'],
                     $row['Parution_date'],
                     $row['ISBN'],
-                    $row['cover_image_url']
+                    $row['cover_image_url'],
+                    $row['id'],
                 );
             }
             return $books;
