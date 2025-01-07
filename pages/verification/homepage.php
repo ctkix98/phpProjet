@@ -87,7 +87,7 @@ function displayBooks($books)
 
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <div class="add-book-form">
-                    <form action="../pages/verification/checkNewBook.php" method="POST">
+                    <form action="../verification/checkNewBook.php" method="POST">
                         <h2>Ajouter un livre</h2>
 
                         <div class="form-group">
@@ -115,7 +115,7 @@ function displayBooks($books)
                             <input type="text" id="isbn" name="isbn" placeholder="978-3-16-148410-0" required>
                             <div id="isbn-error" style="color: red; font-size: 12px; display: none;"></div>
                         </div>
-
+                        <input type="hidden" name="action" value="submit">
                         <button type="submit" name="submit" class="button-soumission">Soumettre l'ouvrage</button>
                     </form>
                 </div>
